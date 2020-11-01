@@ -1,35 +1,42 @@
-CXX = g++
+
 ifdef GCOV
 # To build library with gcov profiling information
 # $ make GCOV=1
 CXX_EXTRA = -fprofile-arcs -ftest-coverage
 endif
-CXX_FLAGS = -O3 -Wall -Wextra -shared -std=c++11 -fPIC $(CXX_EXTRA)
-PY_INC = `python3 -m pybind11 --includes`
-# Focus Stacking Library
-TARGET = focus_stacking
-SRCS = gaussian_blur.cpp
-LIBRARY = $(TARGET)$(shell python3-config --extension-suffix)
+
+CXX       = g++
+PY_INC    = $(shell python3 -m pybind11 --includes)
+CXXFLAGS = -O3 -Wall -Wextra -shared -std=c++11 -fPIC $(CXX_EXTRA) $(PY_INC)
+TARGET    = focus_stacking
+SRCS      = gaussian_blur.cpp
+FSLIB     = $(TARGET)$(shell python3-config --extension-suffix)
+OUT_DIR   = output
+
+ifeq (, $(shell which lcov))
+	$(error "No lcov not found, consider doing: sudo apt-get install lcov")
+endif
+
 
 .PHONY: clean test lcov
-default: $(LIBRARY)
+default: $(FSLIB)
 
-$(LIBRARY): $(SRCS)
-	$(CXX) $(CXX_FLAGS) $(PY_INC) $? -o $@
+$(FSLIB): $(SRCS)
+	$(CXX) $(CXXFLAGS) $? -o $@
 
-test: $(LIBRARY)
+test: $(FSLIB)
 	python3 -m pytest -v
 
-# For ubuntu, please install lcov first.
-# $ sudo apt install lcov
-# Steps to produce code coverage report
-# $ make GCOV=1 test
-# $ make lcov
-# Then open file ./output/index.html with browser.
 lcov:
+	make clean
+	make GCOV=1
+	make test
 	lcov --capture --directory . --output-file $(TARGET).info --test-name $(TARGET)
-	genhtml $(TARGET).info --output-directory output --title "$(TARGET)" --show-details --legend
+	genhtml $(TARGET).info --output-directory $(OUT_DIR) --title "$(TARGET)" --show-details --legend
+	# Then open file ./output/index.html with browser.
+	# xdg-open ./$(OUT_DIR)/index.html
 
 clean:
-	rm -Rf $(LIBRARY) __pycache__ .pytest_cache .cache
-	rm -Rf default.profraw output $(TARGET).info $(TARGET).gcda $(TARGET).gcno *.gcov
+	rm -rf $(SRCS:.cpp=.o) $(FSLIB) __pycache__ .pytest_cache .cache
+	rm -rf default.profraw $(OUT_DIR) $(TARGET).info *.gcov
+	rm -rf $(SRCS:.cpp=.gcda) $(SRCS:.cpp=.gcno)
