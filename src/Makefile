@@ -21,7 +21,7 @@ endif
 .PHONY: clean test lcov
 default: $(FSLIB)
 
-$(FSLIB): $(SRCS)
+$(FSLIB): $(SRCS:.cpp=.o)
 	$(CXX) $(CXXFLAGS) $? -o $@
 
 test: $(FSLIB)
