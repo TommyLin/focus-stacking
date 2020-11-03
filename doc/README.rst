@@ -7,13 +7,6 @@ at different focus distances to give a resulting image with a greater depth of
 field (DOF) than any of the individual source images.
 
 
-Basic Information
-=================
-
-Git hub repository:
-https://github.com/TommyLin/focus-stacking
-
-
 Problem To Solve
 ================
 
