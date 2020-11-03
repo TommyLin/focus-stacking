@@ -1,11 +1,14 @@
+[2020 Numerical Software Development](https://github.com/yungyuc/nsd) Term Project
+
+
 Focus Stacking
-==============
+--------------
 
 A digital image processing technique which combines multiple images taken at different focus distances to give a resulting image with a greater depth of field (DOF) than any of the individual source images.
 
 
-Schedule
-========
+Schedule Control
+----------------
 
 - [ ] 11/02 [Python] Generate defocused photos (Gaussian blur)
 - [ ] 11/09 [C++] Evaluate SSIM of two photos
