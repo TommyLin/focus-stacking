@@ -2,7 +2,7 @@
 Digital Image Focus Stacking
 ============================
 
-Wiki: A digital image processing technique which combines multiple images taken
+A digital image processing technique which combines multiple images taken
 at different focus distances to give a resulting image with a greater depth of
 field (DOF) than any of the individual source images.
 
@@ -99,6 +99,7 @@ varies fast. Follow steps aim to find the edges in a photo.
 
 Structural Similarity Index Measure (SSIM)
 __________________________________________
+
 The structural similarity index measure (SSIM) is a method for predicting the
 perceived quality of digital television and cinematic pictures, as well as other
 kinds of digital images and videos. SSIM is used for measuring the similarity
