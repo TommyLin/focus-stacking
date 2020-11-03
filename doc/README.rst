@@ -23,7 +23,7 @@ shot. Here are three photos to show the effect of aperture size.
 
 +-------------------------------------+-------------------------------------+------------------------------------+
 | .. image:: wiki/Dof_blocks_f1_4.jpg | .. image:: wiki/Dof_blocks_f4_0.jpg | .. image:: wiki/Dof_blocks_f22.jpg |
-| Aperture=/1.4, DOF=0.8cm            | Aperture=f/4.0, DOF=2.2cm           | Aperture=f/22, DOF=12.4cm          |
+| Aperture=f/1.4, DOF=0.8cm           | Aperture=f/4.0, DOF=2.2cm           | Aperture=f/22, DOF=12.4cm          |
 +-------------------------------------+-------------------------------------+------------------------------------+
 *. Source: https://en.wikipedia.org/wiki/Depth_of_field
 
