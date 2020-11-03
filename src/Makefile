@@ -9,7 +9,7 @@ CXX       = g++
 PY_INC    = $(shell python3 -m pybind11 --includes)
 CXXFLAGS = -O3 -Wall -Wextra -shared -std=c++11 -fPIC $(CXX_EXTRA) $(PY_INC)
 TARGET    = focus_stacking
-SRCS      = gaussian_blur.cpp
+SRCS      = gaussian_blur.cpp edge_detect.cpp
 FSLIB     = $(TARGET)$(shell python3-config --extension-suffix)
 OUT_DIR   = output
 
