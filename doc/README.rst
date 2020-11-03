@@ -90,6 +90,11 @@ varies fast. Follow steps aim to find the edges in a photo.
    the LoG(i.e. the highest value in the image stack) and take the RGB value for
    that pixel from the corresponding image.
 
+:star::star::star: Deep Learning :star::star::star:
+___________________________________________________
+
+The idea of filter image with **KERNEL** is basic of deep learning neural network.
+
 Structural Similarity Index Measure (SSIM)
 __________________________________________
 
