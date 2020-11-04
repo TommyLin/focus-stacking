@@ -4,8 +4,8 @@ import sys
 import matplotlib.image as mpimg
 from skimage import filters
 
-def edge_detect(fin, fout):
-    if fin == '' or fout =='':
+def edge_detect(fin = "../images/fly1.jpg", fout = "fly_edge.jpg"):
+    if fin == "" or fout == "":
         raise SyntaxError('No parameter')
 
     image = mpimg.imread(fin)
