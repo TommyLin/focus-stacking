@@ -84,6 +84,12 @@ varies fast. Follow steps aim to find the edges in a photo.
    -1  8 -1
    -1 -1 -1
 
+Using ``skimage.filters.sobel()`` to filter "fly" image.
+
++-----------------------------------+
+| .. image:: ../images/fly_edge.jpg |
++-----------------------------------+
+
 3. Take absolute value of Laplacian of Gaussian (LoG) result. This will quantify
    the strength of edges with respect to the size and strength of kernel.
 4. Create a blank image, loop through each pixel and find the strongest edge in
