@@ -5,16 +5,17 @@ import pytest
 import tempfile
 import edge_detect as ed
 
+fin='../images/fly1.jpg'
+
 def testInvalidParameters():
     with pytest.raises(SyntaxError):
         ed.edge_detect('', '')
     with pytest.raises(SyntaxError):
-        ed.edge_detect('../images/fly1.jpg', '')
+        ed.edge_detect(fin, '')
     with pytest.raises(SyntaxError):
         ed.edge_detect('', 'fly1_edge1.jpg')
 
 def testNormal():
-    fin='../images/fly1.jpg'
 #    fout=tempfile.TemporaryFile()
     fout='fly.jpg'
     ed.edge_detect(fin, fout)
