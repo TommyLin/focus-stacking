@@ -98,11 +98,9 @@ Using ``skimage.filters.gaussian()`` to filter "fly.jpg" image.
 Using ``skimage.filters.sobel()`` to filter "fly.jpg" image. 
 `:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/edge_detect.py>`_
 
-+------------------------------------+------------------------------------+
-| .. image:: ../images/fly1.jpg      | .. image:: ../images/fly2.jpg      |
-+------------------------------------+------------------------------------+
-| .. image:: ../images/fly1_edge.jpg | .. image:: ../images/fly2_edge.jpg |
-+------------------------------------+------------------------------------+
++------------------------------------+-------------------------------------+-------------------------------------+
+| .. image:: ../images/fly1_edge.jpg | .. image:: ../images/fly1_edge1.jpg | .. image:: ../images/fly1_edge2.jpg |
++------------------------------------+-------------------------------------+-------------------------------------+
 
 3. Take absolute value of Laplacian of Gaussian (LoG) result. This will quantify
    the strength of edges with respect to the size and strength of kernel.
