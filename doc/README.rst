@@ -44,17 +44,16 @@ __________________________________
 | u      |  distance to subject | 5cm ~ 20cm for Camera          |
 +--------+----------------------+--------------------------------+
 For example: A Canon APS-C camera with conditions in previous table and assume 
-N=10, u=10cm=100mm, this will result:
+N=10, u=20cm=200mm, this will result:
 
-**DOF = 0.36mm**
+**DOF = 1.44mm**
 
-The value of DOF=0.36mm is too small to get a clear image for object.
-Fortunately, photographer can take multiple **"digital"** photos and stack these
-photos together to make a focused photo in large area.
+The value of DOF=1.44mm is too small to get a clear image for object. Here is an
+example:
 
-+-------------------------------------------------------+
-| .. image:: wiki/750px-Focus_stacking_Tachinid_fly.jpg |
-+-------------------------------------------------------+
++-------------------------+
+| .. image:: wiki/fly.jpg |
++-------------------------+
 *. Source: https://en.wikipedia.org/wiki/Focus_stacking
 
 
@@ -84,8 +83,11 @@ varies fast. Follow steps aim to find the edges in a photo.
    -1  8 -1
    -1 -1 -1
 
-Using ``skimage.filters.sobel()`` to filter "fly" image.
+Using ``skimage.filters.sobel()`` to filter "fly" image. 
+`:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/edge_detect.py>`_
 
++-----------------------------------+
+| .. image:: ../images/fly.jpg      |
 +-----------------------------------+
 | .. image:: ../images/fly_edge.jpg |
 +-----------------------------------+
