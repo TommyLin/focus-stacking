@@ -1,7 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 import sys
-import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from skimage import filters
 
@@ -9,12 +8,8 @@ def edge_detect(fin, fout):
     if fin == '' or fout =='':
         raise SyntaxError('No parameter')
 
-    image=mpimg.imread(fin)
-
+    image = mpimg.imread(fin)
     edges = filters.sobel(image)
-#    plt.imshow(edges, cmap='gray')
-#    plt.show()
-
     mpimg.imsave(fout, edges)
 
 #@pytest.mark.skip
