@@ -2,6 +2,7 @@
 
 import os
 import pytest
+import tempfile
 import edge_detect as ed
 
 def testInvalidParameters():
@@ -13,9 +14,10 @@ def testInvalidParameters():
         ed.edge_detect('', 'fly1_edge1.jpg')
 
 def testNormal():
-    # TODO Replace fixed to temporary file name
-    fout='fly1_edge1.jpg'
-    ed.edge_detect('../images/fly1.jpg', fout)
+    fin='../images/fly1.jpg'
+#    fout=tempfile.TemporaryFile()
+    fout='fly.jpg'
+    ed.edge_detect(fin, fout)
     assert (os.path.isfile(fout)) == True
-    # TODO Remove temporary file
+    os.remove(fout)
 
