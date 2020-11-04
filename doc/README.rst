@@ -25,7 +25,8 @@ shot. Here are three photos to show the effect of aperture size.
 | .. image:: wiki/Dof_blocks_f1_4.jpg | .. image:: wiki/Dof_blocks_f4_0.jpg | .. image:: wiki/Dof_blocks_f22.jpg |
 | Aperture=f/1.4, DOF=0.8cm           | Aperture=f/4.0, DOF=2.2cm           | Aperture=f/22, DOF=12.4cm          |
 +-------------------------------------+-------------------------------------+------------------------------------+
-*. Source: https://en.wikipedia.org/wiki/Depth_of_field
+
+:information_source: Source: https://en.wikipedia.org/wiki/Depth_of_field
 
 Definition of depth of field (DOF)
 __________________________________
@@ -43,6 +44,7 @@ __________________________________
 +--------+----------------------+--------------------------------+
 | u      |  distance to subject | 5cm ~ 20cm for Camera          |
 +--------+----------------------+--------------------------------+
+
 For example: A Canon APS-C camera with conditions in previous table and assume 
 N=10, u=20cm=200mm, this will result:
 
@@ -54,7 +56,8 @@ example:
 +-------------------------------+-------------------------------+
 | .. image:: ../images/fly1.jpg | .. image:: ../images/fly2.jpg |
 +-------------------------------+-------------------------------+
-*. Source: https://en.wikipedia.org/wiki/Focus_stacking
+
+:information_source: Source: https://en.wikipedia.org/wiki/Focus_stacking
 
 
 Algorithm
@@ -280,13 +283,14 @@ Steps to create code coverage information:
 2. Running test
 
    ``$ python3 -m pytest -v``
-   (This will create *.gcov)
+   (This will create \*.gcov)
 
-3. Generate html formate report from *.gcov
+3. Generate html formate report from \*.gcov
 
    ``$ make lcov``
-   
+
    Makefile
+
 ::
 
    TARGET = _vector
