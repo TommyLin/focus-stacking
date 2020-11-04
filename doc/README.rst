@@ -51,9 +51,9 @@ N=10, u=20cm=200mm, this will result:
 The value of DOF=1.44mm is too small to get a clear image for object. Here is an
 example:
 
-+-------------------------+
-| .. image:: wiki/fly.jpg |
-+-------------------------+
++-------------------------------+-------------------------------+
+| .. image:: ../images/fly1.jpg | .. image:: ../images/fly2.jpg |
++-------------------------------+-------------------------------+
 *. Source: https://en.wikipedia.org/wiki/Focus_stacking
 
 
@@ -83,14 +83,14 @@ varies fast. Follow steps aim to find the edges in a photo.
    -1  8 -1
    -1 -1 -1
 
-Using ``skimage.filters.sobel()`` to filter "fly" image. 
+Using ``skimage.filters.sobel()`` to filter "fly.jpg" image. 
 `:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/edge_detect.py>`_
 
-+-----------------------------------+
-| .. image:: ../images/fly.jpg      |
-+-----------------------------------+
-| .. image:: ../images/fly_edge.jpg |
-+-----------------------------------+
++------------------------------------+------------------------------------+
+| .. image:: ../images/fly1.jpg      | .. image:: ../images/fly2.jpg      |
++------------------------------------+------------------------------------+
+| .. image:: ../images/fly1_edge.jpg | .. image:: ../images/fly2_edge.jpg |
++------------------------------------+------------------------------------+
 
 3. Take absolute value of Laplacian of Gaussian (LoG) result. This will quantify
    the strength of edges with respect to the size and strength of kernel.
