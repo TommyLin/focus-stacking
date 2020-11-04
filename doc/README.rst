@@ -26,7 +26,7 @@ shot. Here are three photos to show the effect of aperture size.
 | Aperture=f/1.4, DOF=0.8cm           | Aperture=f/4.0, DOF=2.2cm           | Aperture=f/22, DOF=12.4cm          |
 +-------------------------------------+-------------------------------------+------------------------------------+
 
-:information_source: Source: https://en.wikipedia.org/wiki/Depth_of_field
+\:information_source: Source: https://en.wikipedia.org/wiki/Depth_of_field
 
 Definition of depth of field (DOF)
 __________________________________
@@ -57,7 +57,7 @@ example:
 | .. image:: ../images/fly1.jpg | .. image:: ../images/fly2.jpg |
 +-------------------------------+-------------------------------+
 
-:information_source: Source: https://en.wikipedia.org/wiki/Focus_stacking
+\:information_source: Source: https://en.wikipedia.org/wiki/Focus_stacking
 
 
 Algorithm
