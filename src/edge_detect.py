@@ -5,10 +5,17 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from skimage import filters
 
-image=mpimg.imread(sys.argv[1])
+def edge_detect(fin, fout):
+    if fin == '' or fout =='':
+        raise SyntaxError('No parameter')
 
-edges = filters.sobel(image)
-plt.imshow(edges, cmap='gray')
-plt.show()
+    image=mpimg.imread(fin)
 
-mpimg.imsave(sys.argv[2], edges)
+    edges = filters.sobel(image)
+#    plt.imshow(edges, cmap='gray')
+#    plt.show()
+
+    mpimg.imsave(fout, edges)
+
+#@pytest.mark.skip
+#edge_detect(sys.argv[1], sys.argv[2])
