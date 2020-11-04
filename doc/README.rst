@@ -74,9 +74,18 @@ varies fast. Follow steps aim to find the edges in a photo.
 
 ::
 
-   1  2  1
-   2  4  2
-   1  2  1
+   (sigma=1)
+   0.0585 0.0965 0.0585
+   0.0965 0.1591 0.0965
+   0.0585 0.0965 0.0585
+
+Using ``skimage.filters.gaussian()`` to filter "fly.jpg" image. 
+`:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/gaussian_blur.py>`_
+
++-------------------------------+-------------------------------------+-------------------------------------+
+| .. image:: ../images/fly1.jpg | .. image:: ../images/fly1_blur1.jpg | .. image:: ../images/fly1_blur2.jpg |
+| Original                      | sigma=1                             | sigma=2                             |
++-------------------------------+-------------------------------------+-------------------------------------+
 
 2. Perform a **Laplacian Edge Detection kernel** on Gaussian Blurred image:
 
