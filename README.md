@@ -11,7 +11,7 @@ Schedule Control
 ----------------
 
 - [ ] ![](https://progress-bar.dev/50) 11/02 [Python] Generate defocused photos (Gaussian blur)
-- [ ] ![](https://progress-bar.dev/0) 11/09 [C++] Evaluate SSIM of two photos
+- [ ] ![](https://progress-bar.dev/30) 11/09 [C++] Evaluate SSIM of two photos
 - [ ] ![](https://progress-bar.dev/0) 11/16 Github CI
 - [ ] ![](https://progress-bar.dev/20) 11/23 [Python] Setup testing environment
 - [ ] ![](https://progress-bar.dev/0) 11/30 [Python] Browse directory and read image
