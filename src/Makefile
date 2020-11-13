@@ -18,8 +18,8 @@ ifeq (, $(shell which lcov))
 endif
 
 
+.DEFAULT_GOAL = $(FSLIB)
 .PHONY: clean test lcov
-default: $(FSLIB)
 
 $(FSLIB): $(SRCS:.cpp=.o)
 	$(CXX) $(CXXFLAGS) $? -o $@
