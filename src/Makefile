@@ -8,6 +8,7 @@ endif
 CXX       = g++
 PY_INC    = $(shell python3 -m pybind11 --includes)
 CXXFLAGS  = -O3 -Wall -Wextra -std=c++17 -fPIC $(CXX_EXTRA) $(PY_INC)
+LDFLAGS   = -lstdc++fs
 TARGET    = focus_stacking
 SRCS      = gaussian_blur.cpp edge_detect.cpp
 FSLIB     = $(TARGET)$(shell python3-config --extension-suffix)
@@ -28,7 +29,7 @@ $(FSLIB): $(SRCS:.cpp=.o)
 	$(CXX) $(CXXFLAGS) -shared $? -o $@
 
 %: %.cpp
-	$(CXX) $(CXXFLAGS) $? -o $@
+	$(CXX) $(CXXFLAGS) $? -o $@ $(LDFLAGS)
 
 test: $(FSLIB)
 	python3 -m pytest -v
