@@ -19,8 +19,10 @@ endif
 
 BINARY    = scan_dir
 
-.DEFAULT_GOAL = $(FSLIB)
+.DEFAULT_GOAL = all
 .PHONY: clean test lcov
+
+all: $(FSLIB) $(BINARY)
 
 $(FSLIB): $(SRCS:.cpp=.o)
 	$(CXX) $(CXXFLAGS) -shared $? -o $@
