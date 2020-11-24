@@ -10,7 +10,7 @@ PY_INC    = $(shell python3 -m pybind11 --includes)
 CXXFLAGS  = -O3 -Wall -Wextra -std=c++17 -fPIC $(CXX_EXTRA) $(PY_INC)
 LDFLAGS   = -lstdc++fs
 TARGET    = focus_stacking
-SRCS      = gaussian_blur.cpp edge_detect.cpp
+SRCS      = gaussian_blur.cpp edge_detect.cpp scan_dir.cpp
 FSLIB     = $(TARGET)$(shell python3-config --extension-suffix)
 OUT_DIR   = output
 
@@ -18,7 +18,7 @@ ifeq (, $(shell which lcov))
 	$(error "No lcov not found, consider doing: sudo apt-get install lcov")
 endif
 
-BINARY    = scan_dir
+BINARY    =
 
 .DEFAULT_GOAL = all
 .PHONY: clean test lcov
