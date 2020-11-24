@@ -19,7 +19,3 @@ int scan_dir(char *path)
 
     return 0;
 }
-
-PYBIND11_MODULE(focus_stacking, m) {
-    m.def("scan_dir", &scan_dir, "Scan image files in folder");
-}
