@@ -44,7 +44,7 @@ lcov:
 	# xdg-open ./$(OUT_DIR)/index.html
 
 clean:
-	rm -rf $(SRCS:.cpp=.o) $(FSLIB) __pycache__ .pytest_cache .cache
-	rm -rf default.profraw $(OUT_DIR) $(TARGET).info *.gcov
-	rm -rf $(SRCS:.cpp=.gcda) $(SRCS:.cpp=.gcno)
+	@rm -rfv $(SRCS:.cpp=.o) $(FSLIB) __pycache__ .pytest_cache .cache
+	@rm -rfv default.profraw $(OUT_DIR) $(TARGET).info *.gcov
+	@rm -rfv $(SRCS:.cpp=.gcda) $(SRCS:.cpp=.gcno)
 	@rm -rfv $(BINARY)
