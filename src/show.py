@@ -5,12 +5,14 @@ import matplotlib.image as mpimg
 import sys
 
 
-def images(filename):
-    image=mpimg.imread(filename)
-    plt.imshow(image)
-    plt.show()
-
 if len(sys.argv) > 1:
+    fig = plt.figure()
+    no_images = len(sys.argv) - 1
     for i in range(1,len(sys.argv)):
         print (sys.argv[i])
-        images (sys.argv[i])
+        image = mpimg.imread(sys.argv[i])
+        fig.add_subplot(1, no_images, i)
+        plt.imshow(image)
+        if (i != 1):
+            plt.axis('off')
+    plt.show()
