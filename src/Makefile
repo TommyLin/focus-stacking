@@ -31,8 +31,10 @@ CXXFLAGS := ${CXXFLAGS} \
 	-std=c++17 -O3 -g -m64 \
 	-Wall -Wextra -Werror -shared \
 	-I${MKLROOT}/include \
+	-I../inc \
 	-fPIC `python3 -m pybind11 --includes` \
 	${FLAGS}
+
 LDFLAGS = -lpthread -lm -ldl -lstdc++fs ${MKLLINKLINE}
 
 TARGET  = focus_stacking

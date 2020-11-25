@@ -4,11 +4,10 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from skimage import filters
 
-image=mpimg.imread('../images/fly1.jpg')
+def gaussian_blur(fin = "../images/fly1.jpg", fout = "fly1_blur.jpg"):
+    if fin == "" or fout == "":
+        raise SyntaxError('No parameter')
 
-filtered_img = filters.gaussian(image, sigma=1, multichannel=True)
-
-plt.imshow(filtered_img)
-plt.show()
-
-mpimg.imsave('fly1_blur1.jpg', filtered_img)
+    image = mpimg.imread(fin)
+    blured = filters.gaussian(image, sigma=1, multichannel=True)
+    mpimg.imsave(fout, blured)
