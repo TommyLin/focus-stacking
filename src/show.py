@@ -5,11 +5,13 @@ import matplotlib.image as mpimg
 import sys
 
 
+def images(filename):
+    image=mpimg.imread(filename)
+    plt.imshow(image)
+    plt.show()
+
 #image=mpimg.imread('../images/fly1.jpg')
 if len(sys.argv) > 1:
-    print (sys.argv[1])
-    image=mpimg.imread(sys.argv[1])
-
-plt.imshow(image)
-plt.show()
-
+    for i in range(1,len(sys.argv)):
+        print (sys.argv[i])
+        images (sys.argv[i])
