@@ -10,7 +10,6 @@ def images(filename):
     plt.imshow(image)
     plt.show()
 
-#image=mpimg.imread('../images/fly1.jpg')
 if len(sys.argv) > 1:
     for i in range(1,len(sys.argv)):
         print (sys.argv[i])
