@@ -7,6 +7,7 @@ from skimage import filters
 
 #files = ['../images/fly1.jpg', '../images/fly2.jpg']
 files = ['../images/fly1.jpg']
+save_image = False
 
 def get_gray(rgb):
     r, g, b = rgb[0], rgb[1], rgb[2]
@@ -37,16 +38,23 @@ for filename in files:
     plt.imshow(rgb2gray(edges))
 
     blured = filters.gaussian(image, sigma=1, multichannel=True)
-    mpimg.imsave('result-01.jpg', blured)
+    if (save_image):
+        mpimg.imsave('result-01.jpg', blured)
     ax = fig.add_subplot(2, 2, 3)
     ax.set_title('Blur(Orig)')
     plt.imshow(blured)
 
     edges = filters.sobel(blured)
-    mpimg.imsave('result-02.jpg', edges)
+    if (save_image):
+        mpimg.imsave('result-02.jpg', edges)
     ax = fig.add_subplot(2, 2, 4)
     ax.set_title('Edge(Blured)')
     plt.axis('off')
     plt.imshow(rgb2gray(edges))
 
 plt.show()
+
+# debug part
+height = image.shape[0]
+width = image.shape[1]
+print('Image size', image.size, '= (', height, 'x', width, ') x 3' )
