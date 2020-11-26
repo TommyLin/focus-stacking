@@ -5,8 +5,7 @@ import matplotlib.image as mpimg
 from skimage import filters
 
 
-#files = ['../images/fly1.jpg', '../images/fly2.jpg']
-files = ['../images/fly1.jpg']
+files = ['../images/fly1.jpg', '../images/fly2.jpg']
 save_image = False
 
 def get_gray(rgb):
@@ -21,10 +20,12 @@ def rgb2gray(image):
             gray[i][j] = get_gray(image[i][j])
     return gray
 
-fig = plt.figure()
+
+image = []
 
 for filename in files:
-    print (filename)
+    print ('[', files.index(filename), '] ', filename)
+    fig = plt.figure()
     image = mpimg.imread(filename)
     ax = fig.add_subplot(2, 2, 1)
     ax.set_title('Original')
