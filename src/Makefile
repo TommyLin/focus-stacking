@@ -41,10 +41,11 @@ TARGET  = focus_stacking
 FSLIB   = $(TARGET)$(shell python3-config --extension-suffix)
 OUT_DIR = output
 
-SRCS    = focus_stacking.cpp \
-		  gaussian_blur.cpp \
-		  edge_detect.cpp \
-		  scan_dir.cpp
+SRCS    = \
+	focus_stacking.cpp \
+	gaussian_blur.cpp \
+	edge_detect.cpp \
+	scan_dir.cpp
 
 ifeq (, $(shell which lcov))
 	$(error "No lcov not found, consider doing: sudo apt-get install lcov")
