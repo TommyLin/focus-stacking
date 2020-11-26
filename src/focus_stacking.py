@@ -52,7 +52,9 @@ for filename in files:
     plt.axis('off')
     plt.imshow(rgb2gray(edges))
 
-plt.show()
+    plt.show(block=False)
+    plt.pause(3)
+    fig.savefig('result-01.png')
 
 # debug part
 height = image.shape[0]
