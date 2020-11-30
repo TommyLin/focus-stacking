@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
-#from skimage.measure import compare_ssim
+# from skimage.measure import compare_ssim
 from skimage.metrics import structural_similarity
 import matplotlib.image as mpimg
 
-#import numpy as np
-#import cv2
-#import os
-#import glob
+# import numpy as np
+# import cv2
+# import os
+# import glob
 
 
 # TODO Scan images files in directory automatically
@@ -30,4 +30,3 @@ s34 = structural_similarity(image3, image4, multichannel=True)
 print("s1x {0:2.4f} {0:2.4f} {0:2.4f}".format(s12, s13, s14))
 print("s2x          {0:2.4f} {0:2.4f}".format(s23, s24))
 print("s3x                   {0:2.4f}".format(s34))
-

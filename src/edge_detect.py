@@ -13,6 +13,6 @@ def edge_detect(fin="../images/fly1.jpg", fout="fly_edge.jpg"):
     edges = filters.sobel(image)
     mpimg.imsave(fout, edges)
 
+
 # @pytest.mark.skip
 # edge_detect(sys.argv[1], sys.argv[2])
-

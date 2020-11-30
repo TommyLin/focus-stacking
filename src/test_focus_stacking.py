@@ -3,5 +3,6 @@
 import pytest
 import focus_stacking as fs
 
+
 def testGaussianBlur():
-    fs.gaussian_blur();
+    fs.gaussian_blur()

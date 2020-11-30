@@ -1,4 +1,4 @@
-[2020 Numerical Software Development](https://github.com/yungyuc/nsd) Term Project
+# [2020 Numerical Software Development](https://github.com/yungyuc/nsd) Term Project
 
 
 Focus Stacking
