@@ -8,6 +8,7 @@ A digital image processing technique which combines multiple images taken at dif
 
 ## Schedule Control
 
+
 - [ ] ![50%](https://progress-bar.dev/50) 11/02 [Python] Generate defocused photos (Gaussian blur)
 - [ ] ![ 0%](https://progress-bar.dev/0) 11/09 [C++] Evaluate SSIM of two photos
 - [ ] ![ 0%](https://progress-bar.dev/0) 11/16 Github CI
