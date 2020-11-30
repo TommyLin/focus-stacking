@@ -1,0 +1,60 @@
+name: focus_stacking
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+        matrix:
+          os: [ubuntu-18.04]
+
+        fail-fast: false
+
+    steps:
+
+    - name: setup
+      run: echo "${HOME}/opt/conda/bin" >> $GITHUB_PATH
+
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: dependency (ubuntu)
+      if: matrix.os != 'macos-latest'
+      run: |
+        sudo apt-get -q update
+        sudo apt-get -qy install \
+            curl build-essential make cmake libc6-dev gcc-7 g++-7 gcc-multilib
+
+    - name: dependency (conda+pip+custom)
+      run: |
+        curl -sSL -o miniconda.sh \
+          https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+        bash miniconda.sh -b -p ${HOME}/opt/conda
+        rm -rf miniconda.sh
+
+        export PATH="${HOME}/opt/conda/bin:$PATH"
+        hash -r
+        conda config --set channel_priority strict
+        conda update --all --yes
+        conda install --yes pip python=3.7 numpy scipy pytest pandas matplotlib mkl-include
+
+        pip install nbgitpuller sphinx-gallery notebook jupyterlab rise cxxfilt
+        pip install https://github.com/aldanor/ipybind/tarball/master
+
+        export INSTALL_PREFIX=${INSTALL_PREFIX:-${HOME}/opt/conda}
+        contrib/install.sh everything
+
+    - name: Run pytest
+      run: |
+        cd src
+        python3 -m pytest -v
