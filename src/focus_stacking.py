@@ -9,6 +9,7 @@ save_image = False
 
 
 def gaussian_blur:
+    return 1
 
 
 def get_gray(rgb):
