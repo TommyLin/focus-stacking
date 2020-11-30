@@ -5,7 +5,6 @@ import sys
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
-
 if len(sys.argv) > 1:
     fig = plt.figure()
     no_images = len(sys.argv) - 1

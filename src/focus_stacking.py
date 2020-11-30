@@ -4,9 +4,11 @@ import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 from skimage import filters
 
-
 files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 save_image = False
+
+
+def gaussian_blur:
 
 
 def get_gray(rgb):

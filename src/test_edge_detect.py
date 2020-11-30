@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
 import os
-import tempfile
+# import tempfile
 
 import edge_detect as ed
 import pytest
-
 
 fin = "../images/fly1.jpg"
 fout = "fly.jpg"

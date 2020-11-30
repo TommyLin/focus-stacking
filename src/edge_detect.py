@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import sys
+# import sys
 
 import matplotlib.image as mpimg
 from skimage import filters
