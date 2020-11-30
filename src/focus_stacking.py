@@ -8,8 +8,13 @@ files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 save_image = False
 
 
-def gaussian_blur:
-    return 1
+def gaussian_blur(fin="../images/fly1.jpg", fout="fly1_blur.jpg"):
+    if fin == "" or fout == "":
+        raise SyntaxError("No parameter")
+
+    image = mpimg.imread(fin)
+    blured = filters.gaussian(image, sigma=1, multichannel=True)
+    mpimg.imsave(fout, blured)
 
 
 def get_gray(rgb):

@@ -2,8 +2,6 @@
 
 import os
 
-# import tempfile
-
 import edge_detect as ed
 import pytest
 

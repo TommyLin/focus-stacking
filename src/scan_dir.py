@@ -26,7 +26,7 @@ s23 = structural_similarity(image2, image3, multichannel=True)
 s24 = structural_similarity(image2, image4, multichannel=True)
 s34 = structural_similarity(image3, image4, multichannel=True)
 
-
-print("s1x {0:2.4f} {0:2.4f} {0:2.4f}".format(s12, s13, s14))
-print("s2x          {0:2.4f} {0:2.4f}".format(s23, s24))
-print("s3x                   {0:2.4f}".format(s34))
+# TODO Using https://blog.techbridge.cc/2019/05/03/how-to-use-python-string-format-method/
+# print("s1x {0:2.4f} {0:2.4f} {0:2.4f}".format(s12, s13, s14))
+# print("s2x          {0:2.4f} {0:2.4f}".format(s23, s24))
+# print("s3x                   {0:2.4f}".format(s34))
