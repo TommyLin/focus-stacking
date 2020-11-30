@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 from skimage import filters
 
 
 files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 save_image = False
+
 
 def get_gray(rgb):
     r, g, b = rgb[0], rgb[1], rgb[2]
@@ -25,7 +26,7 @@ def rgb2gray(image):
 image = []
 
 for filename in files:
-    print ("[", files.index(filename), "] ", filename)
+    print("[", files.index(filename), "] ", filename)
     fig = plt.figure()
     image = mpimg.imread(filename)
     ax = fig.add_subplot(2, 2, 1)
@@ -61,4 +62,4 @@ for filename in files:
 # debug part
 height = image.shape[0]
 width = image.shape[1]
-print("Image size", image.size, "= (", height, "x", width, ") x 3" )
+print("Image size", image.size, "= (", height, "x", width, ") x 3")

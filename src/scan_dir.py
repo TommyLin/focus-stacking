@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 # from skimage.measure import compare_ssim
-from skimage.metrics import structural_similarity
 import matplotlib.image as mpimg
+from skimage.metrics import structural_similarity
 
 # import numpy as np
 # import cv2

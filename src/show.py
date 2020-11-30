@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import sys
+
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 
 
 if len(sys.argv) > 1:
