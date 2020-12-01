@@ -22,7 +22,7 @@ jobs:
     steps:
 
     - name: setup
-      run: echo "${HOME}/opt/conda/bin" >> $GITHUB_PATH
+      run: echo "::add-path::${HOME}/opt/conda/bin"
 
     - uses: actions/checkout@v1
       with:
@@ -46,7 +46,7 @@ jobs:
         hash -r
         conda config --set channel_priority strict
         conda update --all --yes
-        conda install --yes pip python=3.7 numpy scipy pytest pandas matplotlib mkl-include
+        conda install --yes pip python numpy scipy pytest pandas matplotlib mkl-include
 
         pip install nbgitpuller sphinx-gallery notebook jupyterlab rise cxxfilt
         pip install https://github.com/aldanor/ipybind/tarball/master
