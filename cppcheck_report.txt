@@ -1,5 +1,0 @@
-src/focus_stacking.cpp:6:0: style: The function 'PYBIND11_MODULE' is never used. [unusedFunction]
-
-^
-nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
-
