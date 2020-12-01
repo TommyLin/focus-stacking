@@ -22,8 +22,8 @@ jobs:
           platform:
           output_file:
 
-      - name: publish report
-        uses: mikeal/publish-to-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: 'develop' # your branch name goes here
+#      - name: publish report
+#        uses: mikeal/publish-to-github-action@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          BRANCH_NAME: 'develop' # your branch name goes here
