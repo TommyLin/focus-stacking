@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
-import pytest
 import focus_stacking as fs
 
+# import pytest
+
+
 def testGaussianBlur():
-    fs.gaussian_blur();
+    fs.gaussian_blur()
