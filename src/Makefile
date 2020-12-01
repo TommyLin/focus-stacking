@@ -48,7 +48,7 @@ SRCS    = \
 	scan_dir.cpp
 
 ifeq (, $(shell which lcov))
-	$(error "No lcov not found, consider doing: sudo apt-get -y install lcov")
+$(error "lcov not found, consider doing: sudo apt-get -y install lcov")
 endif
 
 
