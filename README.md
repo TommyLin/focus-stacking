@@ -6,6 +6,12 @@
 A digital image processing technique which combines multiple images taken at different focus distances to give a resulting image with a greater depth of field (DOF) than any of the individual source images.
 
 
+## Github Actions Status
+* [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/Super-Linter/badge.svg)](https://github.com/marketplace/actions/super-linter)
+* [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/cppcheck-action/badge.svg)](https://github.com/marketplace/actions/super-linter)
+* [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/focus_stacking/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
+
 ## Schedule Control
 
 
