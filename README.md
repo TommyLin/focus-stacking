@@ -8,8 +8,8 @@ A digital image processing technique which combines multiple images taken at dif
 
 ## Github Actions Status
 * [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/Super-Linter/badge.svg)](https://github.com/marketplace/actions/super-linter)
-* [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/cppcheck-action/badge.svg)](https://github.com/marketplace/actions/super-linter)
-* [![GitHub Super-Linter](https://github.com/TommyLin/focus-stacking/workflows/focus_stacking/badge.svg)](https://github.com/marketplace/actions/super-linter)
+* [![GitHub cppcheck-action](https://github.com/TommyLin/focus-stacking/workflows/cppcheck-action/badge.svg)](https://github.com/deep5050/cppcheck-action)
+* [![make pytest basic check](https://github.com/TommyLin/focus-stacking/workflows/make_pytest_check/badge.svg)](https://github.com/TommyLin/focus-stacking/actions?query=workflow%3Amake_pytest_check)
 
 
 ## Schedule Control
