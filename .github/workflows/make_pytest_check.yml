@@ -1,4 +1,4 @@
-name: focus_stacking
+name: make_pytest_check
 
 on:
   push:
