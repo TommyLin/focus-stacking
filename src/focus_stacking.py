@@ -13,8 +13,8 @@ def gaussian_blur(fin="../images/fly1.jpg", fout="fly1_blur.jpg"):
         raise SyntaxError("No parameter")
 
     image = mpimg.imread(fin)
-    blured = filters.gaussian(image, sigma=1, multichannel=True)
-    mpimg.imsave(fout, blured)
+    blurred = filters.gaussian(image, sigma=1, multichannel=True)
+    mpimg.imsave(fout, blurred)
 
 
 def get_gray(rgb):
@@ -48,18 +48,18 @@ for filename in files:
     plt.axis("off")
     plt.imshow(rgb2gray(edges))
 
-    blured = filters.gaussian(image, sigma=1, multichannel=True)
+    blurred = filters.gaussian(image, sigma=1, multichannel=True)
     if save_image:
-        mpimg.imsave("result-01.jpg", blured)
+        mpimg.imsave("result-01.jpg", blurred)
     ax = fig.add_subplot(2, 2, 3)
     ax.set_title("Blur(Orig)")
-    plt.imshow(blured)
+    plt.imshow(blurred)
 
-    edges = filters.sobel(blured)
+    edges = filters.sobel(blurred)
     if save_image:
         mpimg.imsave("result-02.jpg", edges)
     ax = fig.add_subplot(2, 2, 4)
-    ax.set_title("Edge(Blured)")
+    ax.set_title("Edge(Blurred)")
     plt.axis("off")
     plt.imshow(rgb2gray(edges))
 

@@ -9,5 +9,5 @@ def gaussian_blur(fin="../images/fly1.jpg", fout="fly1_blur.jpg"):
         raise SyntaxError("No parameter")
 
     image = mpimg.imread(fin)
-    blured = filters.gaussian(image, sigma=1, multichannel=True)
-    mpimg.imsave(fout, blured)
+    blurred = filters.gaussian(image, sigma=1, multichannel=True)
+    mpimg.imsave(fout, blurred)
