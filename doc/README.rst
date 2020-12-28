@@ -138,7 +138,7 @@ help to stack photos took with stepped focus distances.
 System Architecture
 ===================
 
-**Image capture** (hardware)
+**Image capture** (hardware control)
 ____________________________
 
 [Camera] --- PTP ---- [Control [#]_]
@@ -147,7 +147,10 @@ ____________________________
 but the hardware part is not included in this project.
 
 .. [#] Control could be PC or embedded system such as Raspberry PI.
-.. [#] This can be achived by using `Canon Digital Camera Software Development Kit (CD-SDK) <https://asia.canon/en/campaign/developerresources>`_.
+.. [#] This can be achived by using `Canon's EOS Digital Camera SDK(EDSDK) <https://www.codeproject.com/articles/688276/canon-edsdk-tutorial-in-csharp>`_ or `Canon’s Camera Control API(CCAPI) <https://www.canonbody.com/canon-usa-introduction-to-canons-camera-control-api-with-canon-developer-community/>`_.
+
+   .. image:: ./Canon-EDSDK.jpg
+   .. image:: ./Canon-CCAPI.png
 
 
 **Focus stacking** (software)
