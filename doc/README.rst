@@ -145,16 +145,20 @@ ____________________________
 
    [Camera] --- PTP ---- [Host] [#]_
 
-   "**Command**" [#]_ camera to shoot photos with stepped focus distances.
+   Host "**command**" [#]_ camera to shoot photos with fixed focal distances.
 
    (NOT included in this project)
 
-   .. [#] Control could be PC or embedded system such as Raspberry PI.
+   .. [#] Host could be a PC or an embedded system such as Raspberry PI board.
    .. [#] This can be achived by using `Canon's EOS Digital Camera SDK(EDSDK) <https://www.codeproject.com/articles/688276/canon-edsdk-tutorial-in-csharp>`_ or `Canon’s Camera Control API(CCAPI) <https://www.canonbody.com/canon-usa-introduction-to-canons-camera-control-api-with-canon-developer-community/>`_.
 
        .. image:: ./Canon-EDSDK.jpg
        .. image:: ./Canon-CCAPI.png
 
+2. Control from camera itself
+
+   * `Magic lantern <https://magiclantern.fm/>`_
+      .. image:: ./MagicLantern.png
 
 **Focus stacking** (software)
 _____________________________
