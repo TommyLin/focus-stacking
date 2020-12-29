@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 
 import matplotlib.pyplot as plt
+import sys
+
 from PIL import Image, ImageFilter
 
-filename = "../images/fly1.jpg"
+print("len(sys.argv)=", len(sys.argv))
+
+if (len(sys.argv) >= 2):
+    filename = sys.argv[1]
+else:
+    filename = "../images/fly1.jpg"
+
 debug_show = False
 rows = 2 + 1 * debug_show
 print("rows = ", rows)
