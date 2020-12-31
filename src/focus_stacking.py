@@ -46,12 +46,16 @@ imagefiles = [f for f in listdir(target_dir) if isfile(join(target_dir, f))]
 print(target_dir, imagefiles)
 files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 
-image = []
+images = []
 
-for filename in files:
-    print("[", files.index(filename), "] ", filename)
+for i, file_name in enumerate(imagefiles):
+    images.append(mpimg.imread(target_dir + file_name))
+
+print("Image files = ", len(images))
+
+for i, image in enumerate(images):
+    print("[{i}]".format(i=i), imagefiles[i])
     fig = plt.figure()
-    image = mpimg.imread(filename)
     ax = fig.add_subplot(2, 2, 1)
     ax.set_title("Original")
     plt.axis("off")

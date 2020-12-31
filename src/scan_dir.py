@@ -22,8 +22,8 @@ print(target_dir, imagefiles)
 
 images = []
 
-for i, img in enumerate(imagefiles):
-    images.append(mpimg.imread(target_dir + img))
+for i, file_name in enumerate(imagefiles):
+    images.append(mpimg.imread(target_dir + file_name))
 
 print("Image files = ", len(images))
 
