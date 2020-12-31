@@ -311,10 +311,10 @@ Steps to create code coverage information:
 
    Makefile
 
-::
+   ::
 
-   TARGET = _vector
-   lcov:
+      TARGET = _vector
+      lcov:
            lcov --capture --directory . --output-file $(TARGET).info --test-name $(TARGET)
            genhtml $(TARGET).info --output-directory output --title "$(TARGET)" --show-details --legend
 
@@ -360,17 +360,17 @@ Original
 
 Then become
 
-- Week 1: |50%| 11/02 [Python] Generate defocused photos (Gaussian blur)
-- Week 2: |100%| 11/09 [C++] Evaluate SSIM of two photos  => :dart: `[Performance Index] <https://github.com/TommyLin/focus-stacking/milestone/5>`_
-- Week 3: |100%| 11/16 Github CI => :dart: `[Github Actions implementation] <https://github.com/TommyLin/focus-stacking/milestone/2>`_ / :dart: `[Try Github functions] <https://github.com/TommyLin/focus-stacking/milestone/3>`_
-- Week 4: |100%| 11/23 [Python] Setup testing environment
-- Week 5: |50%| 11/30 [Python] Browse directory and read image
-- Week 6: |30%| 12/07 [C++] Gaussian blur & Laplacian edge detection => :dart: `[C++ implementation and acceleration] <https://github.com/TommyLin/focus-stacking/milestone/4>`_
-- Week 7: |0%| 12/14 [C++] Image stacking => :dart: `[Functions implemented by Python] <https://github.com/TommyLin/focus-stacking/milestone/1>`_
-- Week 8: |0%| 12/21 [Python/C++] Debug and optimization
-- |0%| 12/28 Term project presentation 1
-- |0%| 01/04 **Term project presentation 2** (V)
-- |0%| 01/11 No meeting (optional lecture is not planned)
+* Week 1: |50%| 11/02 [Python] Generate defocused photos (Gaussian blur)
+* Week 2: |100%| 11/09 [C++] Evaluate SSIM of two photos  => :dart: `[Performance Index] <https://github.com/TommyLin/focus-stacking/milestone/5>`_
+* Week 3: |100%| 11/16 Github CI => :dart: `[Github Actions implementation] <https://github.com/TommyLin/focus-stacking/milestone/2>`_ / :dart: `[Try Github functions] <https://github.com/TommyLin/focus-stacking/milestone/3>`_
+* Week 4: |100%| 11/23 [Python] Setup testing environment
+* Week 5: |50%| 11/30 [Python] Browse directory and read image
+* Week 6: |30%| 12/07 [C++] Gaussian blur & Laplacian edge detection => :dart: `[C++ implementation and acceleration] <https://github.com/TommyLin/focus-stacking/milestone/4>`_
+* Week 7: |0%| 12/14 [C++] Image stacking => :dart: `[Functions implemented by Python] <https://github.com/TommyLin/focus-stacking/milestone/1>`_
+* Week 8: |0%| 12/21 [Python/C++] Debug and optimization
+* |0%| 12/28 Term project presentation 1
+* |0%| 01/04 **Term project presentation 2** (V)
+* |0%| 01/11 No meeting (optional lecture is not planned)
 
 .. |0%| image:: https://progress-bar.dev/0
 .. |10%| image:: https://progress-bar.dev/10
