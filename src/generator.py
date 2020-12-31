@@ -24,6 +24,7 @@ ax = fig.add_subplot(rows, 2, 1)
 ax.set_title("Original")
 plt.axis("off")
 plt.imshow(image0)
+image0.save("00.png");
 
 
 image1 = image0.crop((0, 0, (w >> 1), h))

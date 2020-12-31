@@ -8,7 +8,7 @@ from os.path import isfile, join
 from skimage.metrics import structural_similarity
 
 
-print("len(sys.argv) =", len(sys.argv))
+print("len(sys.argv) =", len(sys.argv), sys.argv)
 
 if (len(sys.argv) >= 2):
     target_dir = sys.argv[1]
@@ -35,5 +35,3 @@ for i in range(len(images)):
         ssim = structural_similarity(images[i], images[j], multichannel=True)
         print("({i},{j})".format(i=i, j=j), end=" {0:2.4f}, ".format(ssim))
     print()
-
-
