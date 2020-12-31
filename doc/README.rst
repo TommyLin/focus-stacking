@@ -31,7 +31,7 @@ shot. Here are three photos to show the effect of aperture size.
 Definition of depth of field (DOF)
 __________________________________
 
-.. image:: DOF_equation.png
+.. image:: ./img/DOF_equation.png
 
 +--------+----------------------+--------------------------------+
 | Symbol | Definition           | Example                        |
@@ -155,13 +155,13 @@ ____________________________
    .. [#] Host could be a PC or an embedded system such as Raspberry PI board.
    .. [#] This can be achived by using `Canon's EOS Digital Camera SDK(EDSDK) <https://www.codeproject.com/articles/688276/canon-edsdk-tutorial-in-csharp>`_ or `Canon’s Camera Control API(CCAPI) <https://www.canonbody.com/canon-usa-introduction-to-canons-camera-control-api-with-canon-developer-community/>`_.
 
-       .. image:: ./Canon-EDSDK.jpg
-       .. image:: ./Canon-CCAPI.png
+       .. image:: ./img/Canon-EDSDK.jpg
+       .. image:: ./img/Canon-CCAPI.png
 
 2. Control from camera itself
 
    * `Magic lantern <https://magiclantern.fm/>`_
-      .. image:: ./MagicLantern.png
+      .. image:: ./img/MagicLantern.png
 
 **Focus stacking** (software)
 _____________________________
@@ -390,7 +390,7 @@ Scrum
 
 The Scrum Team consists of three roles:
 
-.. image:: ./scrum_team.png
+.. image:: ./img/scrum_team.png
 
 Source: `Equality - The Roles in Scrum <https://www.scrum.org/resources/blog/equality-roles-scrum>`_
 
