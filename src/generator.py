@@ -53,6 +53,7 @@ image3.paste(image2, ((w >> 1), 0, w, h))
 ax = fig.add_subplot(rows, 2, rows * 2 - 1)
 ax.set_title("Blurred left")
 plt.imshow(image3)
+image3.save("01.png");
 
 
 image4 = Image.new("RGB", (w, h))
@@ -62,5 +63,6 @@ image4.paste(blurred2, ((w >> 1), 0, w, h))
 ax = fig.add_subplot(rows, 2, rows * 2)
 ax.set_title("Blurred right")
 plt.imshow(image4)
+image4.save("02.png");
 
 plt.show()
