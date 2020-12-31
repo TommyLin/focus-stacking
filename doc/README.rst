@@ -388,7 +388,11 @@ Then become
 Scrum
 =====
 
-.. image:: https://scrumorg-website-prod.s3.amazonaws.com/drupal/inline-images/Scrum%20Roles.png
+The Scrum Team consists of three roles:
+
+.. image:: ./scrum_team.png
+
+Source: `Equality - The Roles in Scrum <https://www.scrum.org/resources/blog/equality-roles-scrum>`_
 
 
 References
@@ -398,3 +402,4 @@ References
 2. https://en.wikipedia.org/wiki/Depth_of_field
 3. https://en.wikipedia.org/wiki/Circle_of_confusion
 4. https://en.wikipedia.org/wiki/Structural_similarity
+5. `Scrum的三大主要角色 <https://www.projectup.net/article/view/id/7032>`_
