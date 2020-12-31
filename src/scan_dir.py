@@ -2,31 +2,38 @@
 
 # from skimage.measure import compare_ssim
 import matplotlib.image as mpimg
+import sys
+from os import listdir
+from os.path import isfile, join
 from skimage.metrics import structural_similarity
 
-# import numpy as np
-# import cv2
-# import os
-# import glob
+
+print("len(sys.argv) =", len(sys.argv))
+
+if (len(sys.argv) >= 2):
+    target_dir = sys.argv[1]
+else:
+    target_dir = "../images/group/"
 
 
-# TODO Scan images files in directory automatically
-target_dir = "../images/group/"
+imagefiles = [f for f in listdir(target_dir) if isfile(join(target_dir, f))]
+
+print(target_dir, imagefiles)
+
+images = []
+
+for i, img in enumerate(imagefiles):
+    images.append(mpimg.imread(target_dir + img))
+
+print("Image files = ", len(images))
+
+if len(images) < 2:
+    exit
+
+for i in range(len(images)):
+    for j in range(len(images)-1, i, -1):
+        ssim = structural_similarity(images[i], images[j], multichannel=True)
+        print("({i},{j})".format(i=i, j=j), end=" {0:2.4f}, ".format(ssim))
+    print()
 
 
-image1 = mpimg.imread(target_dir + "fly1.jpg")
-image2 = mpimg.imread(target_dir + "fly2.jpg")
-image3 = mpimg.imread(target_dir + "fly3.jpg")
-image4 = mpimg.imread(target_dir + "fly4.jpg")
-
-s12 = structural_similarity(image1, image2, multichannel=True)
-s13 = structural_similarity(image1, image3, multichannel=True)
-s14 = structural_similarity(image1, image4, multichannel=True)
-s23 = structural_similarity(image2, image3, multichannel=True)
-s24 = structural_similarity(image2, image4, multichannel=True)
-s34 = structural_similarity(image3, image4, multichannel=True)
-
-# TODO Using https://blog.techbridge.cc/2019/05/03/how-to-use-python-string-format-method/
-# print("s1x {0:2.4f} {0:2.4f} {0:2.4f}".format(s12, s13, s14))
-# print("s2x          {0:2.4f} {0:2.4f}".format(s23, s24))
-# print("s3x                   {0:2.4f}".format(s34))
