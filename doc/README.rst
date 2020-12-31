@@ -134,6 +134,9 @@ Macro photography or optical microscopy users who wants to take a clear image.
 They must have equipment to take multiple digital photos. This project could
 help to stack photos took with stepped focus distances.
 
+1. [Service] firmware update - Install "Magic Lantern" plug-in to camera.
+2. [Software] Automatic focus stacking software
+
 
 System Architecture
 ===================
