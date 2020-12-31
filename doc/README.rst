@@ -385,6 +385,12 @@ Then become
 .. |100%| image:: https://progress-bar.dev/100
 
 
+Scrum
+=====
+
+.. image:: https://scrumorg-website-prod.s3.amazonaws.com/drupal/inline-images/Scrum%20Roles.png
+
+
 References
 ==========
 
