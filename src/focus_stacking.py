@@ -2,9 +2,11 @@
 
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
+import sys
+from os import listdir
+from os.path import isfile, join
 from skimage import filters
 
-files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 save_image = False
 
 
@@ -30,6 +32,19 @@ def rgb2gray(image):
             gray[i][j] = get_gray(image[i][j])
     return gray
 
+
+print("len(sys.argv) =", len(sys.argv), sys.argv)
+
+if (len(sys.argv) >= 2):
+    target_dir = sys.argv[1]
+else:
+    target_dir = "../images/group/"
+
+
+imagefiles = [f for f in listdir(target_dir) if isfile(join(target_dir, f))]
+
+print(target_dir, imagefiles)
+files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 
 image = []
 
