@@ -72,35 +72,35 @@ varies fast. Follow steps aim to find the edges in a photo.
 
 1. Perform a **Gaussian blur** on image with following kernel:
 
-::
+   ::
 
-   (sigma=1)
-   0.0585 0.0965 0.0585
-   0.0965 0.1591 0.0965
-   0.0585 0.0965 0.0585
+      (sigma=1)
+      0.0585 0.0965 0.0585
+      0.0965 0.1591 0.0965
+      0.0585 0.0965 0.0585
 
-Using ``skimage.filters.gaussian()`` to filter "fly.jpg" image. 
-`:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/gaussian_blur.py>`_
+   Using ``skimage.filters.gaussian()`` to filter "fly.jpg" image. 
+   `:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/gaussian_blur.py>`_
 
-+-------------------------------+-------------------------------------+-------------------------------------+
-| .. image:: ../images/fly1.jpg | .. image:: ../images/fly1_blur1.jpg | .. image:: ../images/fly1_blur2.jpg |
-| Original                      | sigma=1                             | sigma=2                             |
-+-------------------------------+-------------------------------------+-------------------------------------+
+   +-------------------------------+-------------------------------------+-------------------------------------+
+   | .. image:: ../images/fly1.jpg | .. image:: ../images/fly1_blur1.jpg | .. image:: ../images/fly1_blur2.jpg |
+   | Original                      | sigma=1                             | sigma=2                             |
+   +-------------------------------+-------------------------------------+-------------------------------------+
 
 2. Perform a **Laplacian Edge Detection kernel** on Gaussian Blurred image:
 
-::
+   ::
 
-   -1 -1 -1
-   -1  8 -1
-   -1 -1 -1
+      -1 -1 -1
+      -1  8 -1
+      -1 -1 -1
 
-Using ``skimage.filters.sobel()`` to filter "fly.jpg" image. 
-`:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/edge_detect.py>`_
+   Using ``skimage.filters.sobel()`` to filter "fly.jpg" image. 
+   `:eyes: View Python source :eyes: <https://github.com/TommyLin/focus-stacking/blob/master/src/edge_detect.py>`_
 
-+------------------------------------+-------------------------------------+-------------------------------------+
-| .. image:: ../images/fly1_edge.jpg | .. image:: ../images/fly1_edge1.jpg | .. image:: ../images/fly1_edge2.jpg |
-+------------------------------------+-------------------------------------+-------------------------------------+
+   +------------------------------------+-------------------------------------+-------------------------------------+
+   | .. image:: ../images/fly1_edge.jpg | .. image:: ../images/fly1_edge1.jpg | .. image:: ../images/fly1_edge2.jpg |
+   +------------------------------------+-------------------------------------+-------------------------------------+
 
 3. Take absolute value of Laplacian of Gaussian (LoG) result. This will quantify
    the strength of edges with respect to the size and strength of kernel.
