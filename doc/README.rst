@@ -394,6 +394,11 @@ The Scrum Team consists of three roles:
 
 Source: `Equality - The Roles in Scrum <https://www.scrum.org/resources/blog/equality-roles-scrum>`_
 
+Target: (for Product Owner)
+
+1. Automatic photo system with super DOF.
+2. This term project.
+
 
 References
 ==========
