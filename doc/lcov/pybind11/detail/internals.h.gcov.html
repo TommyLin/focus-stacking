@@ -1,0 +1,433 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - _vector - pybind11/detail/internals.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">pybind11/detail</a> - internals.h<span style="font-size: 80%;"> (source / <a href="internals.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">_vector</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">26</td>
+            <td class="headerCovTableEntry">42</td>
+            <td class="headerCovTableEntryLo">61.9 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-01-03 20:25:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryMed">75.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :     pybind11/detail/internals.h: Internal data structure and related functions
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            :     Copyright (c) 2017 Wenzel Jakob &lt;wenzel.jakob@epfl.ch&gt;
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            :     All rights reserved. Use of this source code is governed by a
+<span class="lineNum">       7 </span>            :     BSD-style license that can be found in the LICENSE file.
+<span class="lineNum">       8 </span>            : */
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #pragma once
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #include &quot;../pytypes.h&quot;
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : NAMESPACE_BEGIN(PYBIND11_NAMESPACE)
+<span class="lineNum">      15 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">      16 </span>            : // Forward declarations
+<span class="lineNum">      17 </span>            : inline PyTypeObject *make_static_property_type();
+<span class="lineNum">      18 </span>            : inline PyTypeObject *make_default_metaclass();
+<span class="lineNum">      19 </span>            : inline PyObject *make_object_base_type(PyTypeObject *metaclass);
+<span class="lineNum">      20 </span>            : 
+<span class="lineNum">      21 </span>            : // The old Python Thread Local Storage (TLS) API is deprecated in Python 3.7 in favor of the new
+<span class="lineNum">      22 </span>            : // Thread Specific Storage (TSS) API.
+<span class="lineNum">      23 </span>            : #if PY_VERSION_HEX &gt;= 0x03070000
+<span class="lineNum">      24 </span>            : #    define PYBIND11_TLS_KEY_INIT(var) Py_tss_t *var = nullptr
+<span class="lineNum">      25 </span>            : #    define PYBIND11_TLS_GET_VALUE(key) PyThread_tss_get((key))
+<span class="lineNum">      26 </span>            : #    define PYBIND11_TLS_REPLACE_VALUE(key, value) PyThread_tss_set((key), (value))
+<span class="lineNum">      27 </span>            : #    define PYBIND11_TLS_DELETE_VALUE(key) PyThread_tss_set((key), nullptr)
+<span class="lineNum">      28 </span>            : #    define PYBIND11_TLS_FREE(key) PyThread_tss_free(key)
+<span class="lineNum">      29 </span>            : #else
+<span class="lineNum">      30 </span>            :     // Usually an int but a long on Cygwin64 with Python 3.x
+<span class="lineNum">      31 </span>            : #    define PYBIND11_TLS_KEY_INIT(var) decltype(PyThread_create_key()) var = 0
+<span class="lineNum">      32 </span>            : #    define PYBIND11_TLS_GET_VALUE(key) PyThread_get_key_value((key))
+<span class="lineNum">      33 </span>            : #    if PY_MAJOR_VERSION &lt; 3
+<span class="lineNum">      34 </span>            : #        define PYBIND11_TLS_DELETE_VALUE(key)                               \
+<span class="lineNum">      35 </span>            :              PyThread_delete_key_value(key)
+<span class="lineNum">      36 </span>            : #        define PYBIND11_TLS_REPLACE_VALUE(key, value)                       \
+<span class="lineNum">      37 </span>            :              do {                                                            \
+<span class="lineNum">      38 </span>            :                  PyThread_delete_key_value((key));                           \
+<span class="lineNum">      39 </span>            :                  PyThread_set_key_value((key), (value));                     \
+<span class="lineNum">      40 </span>            :              } while (false)
+<span class="lineNum">      41 </span>            : #    else
+<span class="lineNum">      42 </span>            : #        define PYBIND11_TLS_DELETE_VALUE(key)                               \
+<span class="lineNum">      43 </span>            :              PyThread_set_key_value((key), nullptr)
+<span class="lineNum">      44 </span>            : #        define PYBIND11_TLS_REPLACE_VALUE(key, value)                       \
+<span class="lineNum">      45 </span>            :              PyThread_set_key_value((key), (value))
+<span class="lineNum">      46 </span>            : #    endif
+<span class="lineNum">      47 </span>            : #    define PYBIND11_TLS_FREE(key) (void)key
+<span class="lineNum">      48 </span>            : #endif
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            : // Python loads modules by default with dlopen with the RTLD_LOCAL flag; under libc++ and possibly
+<span class="lineNum">      51 </span>            : // other STLs, this means `typeid(A)` from one module won't equal `typeid(A)` from another module
+<span class="lineNum">      52 </span>            : // even when `A` is the same, non-hidden-visibility type (e.g. from a common include).  Under
+<span class="lineNum">      53 </span>            : // libstdc++, this doesn't happen: equality and the type_index hash are based on the type name,
+<span class="lineNum">      54 </span>            : // which works.  If not under a known-good stl, provide our own name-based hash and equality
+<span class="lineNum">      55 </span>            : // functions that use the type name.
+<span class="lineNum">      56 </span>            : #if defined(__GLIBCXX__)
+<span class="lineNum">      57 </span>            : inline bool same_type(const std::type_info &amp;lhs, const std::type_info &amp;rhs) { return lhs == rhs; }
+<span class="lineNum">      58 </span>            : using type_hash = std::hash&lt;std::type_index&gt;;
+<span class="lineNum">      59 </span>            : using type_equal_to = std::equal_to&lt;std::type_index&gt;;
+<span class="lineNum">      60 </span>            : #else
+<span class="lineNum">      61 </span>            : inline bool same_type(const std::type_info &amp;lhs, const std::type_info &amp;rhs) {
+<span class="lineNum">      62 </span>            :     return lhs.name() == rhs.name() || std::strcmp(lhs.name(), rhs.name()) == 0;
+<span class="lineNum">      63 </span>            : }
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            : struct type_hash {
+<span class="lineNum">      66 </span>            :     size_t operator()(const std::type_index &amp;t) const {
+<span class="lineNum">      67 </span>            :         size_t hash = 5381;
+<span class="lineNum">      68 </span>            :         const char *ptr = t.name();
+<span class="lineNum">      69 </span>            :         while (auto c = static_cast&lt;unsigned char&gt;(*ptr++))
+<span class="lineNum">      70 </span>            :             hash = (hash * 33) ^ c;
+<span class="lineNum">      71 </span>            :         return hash;
+<span class="lineNum">      72 </span>            :     }
+<span class="lineNum">      73 </span>            : };
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : struct type_equal_to {
+<span class="lineNum">      76 </span>            :     bool operator()(const std::type_index &amp;lhs, const std::type_index &amp;rhs) const {
+<span class="lineNum">      77 </span>            :         return lhs.name() == rhs.name() || std::strcmp(lhs.name(), rhs.name()) == 0;
+<span class="lineNum">      78 </span>            :     }
+<span class="lineNum">      79 </span>            : };
+<span class="lineNum">      80 </span>            : #endif
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            : template &lt;typename value_type&gt;
+<span class="lineNum">      83 </span>            : using type_map = std::unordered_map&lt;std::type_index, value_type, type_hash, type_equal_to&gt;;
+<span class="lineNum">      84 </span>            : 
+<span class="lineNum">      85 </span>            : struct overload_hash {
+<span class="lineNum">      86 </span>            :     inline size_t operator()(const std::pair&lt;const PyObject *, const char *&gt;&amp; v) const {
+<span class="lineNum">      87 </span>            :         size_t value = std::hash&lt;const void *&gt;()(v.first);
+<span class="lineNum">      88 </span>            :         value ^= std::hash&lt;const void *&gt;()(v.second)  + 0x9e3779b9 + (value&lt;&lt;6) + (value&gt;&gt;2);
+<span class="lineNum">      89 </span>            :         return value;
+<span class="lineNum">      90 </span>            :     }
+<span class="lineNum">      91 </span>            : };
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            : /// Internal data structure used to track registered instances and types.
+<a name="94"><span class="lineNum">      94 </span>            : /// Whenever binary incompatible changes are made to this structure,</a>
+<span class="lineNum">      95 </span>            : /// `PYBIND11_INTERNALS_VERSION` must be incremented.
+<span class="lineNum">      96 </span><span class="lineCov">          2 : struct internals {</span>
+<span class="lineNum">      97 </span>            :     type_map&lt;type_info *&gt; registered_types_cpp; // std::type_index -&gt; pybind11's type information
+<span class="lineNum">      98 </span>            :     std::unordered_map&lt;PyTypeObject *, std::vector&lt;type_info *&gt;&gt; registered_types_py; // PyTypeObject* -&gt; base type_info(s)
+<span class="lineNum">      99 </span>            :     std::unordered_multimap&lt;const void *, instance*&gt; registered_instances; // void * -&gt; instance*
+<span class="lineNum">     100 </span>            :     std::unordered_set&lt;std::pair&lt;const PyObject *, const char *&gt;, overload_hash&gt; inactive_overload_cache;
+<span class="lineNum">     101 </span>            :     type_map&lt;std::vector&lt;bool (*)(PyObject *, void *&amp;)&gt;&gt; direct_conversions;
+<span class="lineNum">     102 </span>            :     std::unordered_map&lt;const PyObject *, std::vector&lt;PyObject *&gt;&gt; patients;
+<span class="lineNum">     103 </span>            :     std::forward_list&lt;void (*) (std::exception_ptr)&gt; registered_exception_translators;
+<span class="lineNum">     104 </span>            :     std::unordered_map&lt;std::string, void *&gt; shared_data; // Custom data to be shared across extensions
+<span class="lineNum">     105 </span>            :     std::vector&lt;PyObject *&gt; loader_patient_stack; // Used by `loader_life_support`
+<span class="lineNum">     106 </span>            :     std::forward_list&lt;std::string&gt; static_strings; // Stores the std::strings backing detail::c_str()
+<span class="lineNum">     107 </span>            :     PyTypeObject *static_property_type;
+<span class="lineNum">     108 </span>            :     PyTypeObject *default_metaclass;
+<span class="lineNum">     109 </span>            :     PyObject *instance_base;
+<span class="lineNum">     110 </span>            : #if defined(WITH_THREAD)
+<span class="lineNum">     111 </span>            :     PYBIND11_TLS_KEY_INIT(tstate);
+<span class="lineNum">     112 </span>            :     PyInterpreterState *istate = nullptr;
+<span class="lineNum">     113 </span>            :     ~internals() {
+<span class="lineNum">     114 </span>            :         // This destructor is called *after* Py_Finalize() in finalize_interpreter().
+<span class="lineNum">     115 </span>            :         // That *SHOULD BE* fine. The following details what happens whe PyThread_tss_free is called.
+<span class="lineNum">     116 </span>            :         // PYBIND11_TLS_FREE is PyThread_tss_free on python 3.7+. On older python, it does nothing.
+<span class="lineNum">     117 </span>            :         // PyThread_tss_free calls PyThread_tss_delete and PyMem_RawFree.
+<span class="lineNum">     118 </span>            :         // PyThread_tss_delete just calls TlsFree (on Windows) or pthread_key_delete (on *NIX). Neither
+<span class="lineNum">     119 </span>            :         // of those have anything to do with CPython internals.
+<span class="lineNum">     120 </span>            :         // PyMem_RawFree *requires* that the `tstate` be allocated with the CPython allocator.
+<span class="lineNum">     121 </span>            :         PYBIND11_TLS_FREE(tstate);
+<span class="lineNum">     122 </span>            :     }
+<span class="lineNum">     123 </span>            : #endif
+<span class="lineNum">     124 </span>            : };
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            : /// Additional type information which does not fit into the PyTypeObject.
+<span class="lineNum">     127 </span>            : /// Changes to this struct also require bumping `PYBIND11_INTERNALS_VERSION`.
+<span class="lineNum">     128 </span>            : struct type_info {
+<span class="lineNum">     129 </span>            :     PyTypeObject *type;
+<span class="lineNum">     130 </span>            :     const std::type_info *cpptype;
+<span class="lineNum">     131 </span>            :     size_t type_size, type_align, holder_size_in_ptrs;
+<span class="lineNum">     132 </span>            :     void *(*operator_new)(size_t);
+<span class="lineNum">     133 </span>            :     void (*init_instance)(instance *, const void *);
+<span class="lineNum">     134 </span>            :     void (*dealloc)(value_and_holder &amp;v_h);
+<span class="lineNum">     135 </span>            :     std::vector&lt;PyObject *(*)(PyObject *, PyTypeObject *)&gt; implicit_conversions;
+<span class="lineNum">     136 </span>            :     std::vector&lt;std::pair&lt;const std::type_info *, void *(*)(void *)&gt;&gt; implicit_casts;
+<span class="lineNum">     137 </span>            :     std::vector&lt;bool (*)(PyObject *, void *&amp;)&gt; *direct_conversions;
+<span class="lineNum">     138 </span>            :     buffer_info *(*get_buffer)(PyObject *, void *) = nullptr;
+<span class="lineNum">     139 </span>            :     void *get_buffer_data = nullptr;
+<span class="lineNum">     140 </span>            :     void *(*module_local_load)(PyObject *, const type_info *) = nullptr;
+<span class="lineNum">     141 </span>            :     /* A simple type never occurs as a (direct or indirect) parent
+<span class="lineNum">     142 </span>            :      * of a class that makes use of multiple inheritance */
+<span class="lineNum">     143 </span>            :     bool simple_type : 1;
+<span class="lineNum">     144 </span>            :     /* True if there is no multiple inheritance in this type's inheritance tree */
+<span class="lineNum">     145 </span>            :     bool simple_ancestors : 1;
+<span class="lineNum">     146 </span>            :     /* for base vs derived holder_type checks */
+<span class="lineNum">     147 </span>            :     bool default_holder : 1;
+<span class="lineNum">     148 </span>            :     /* true if this is a type registered with py::module_local */
+<span class="lineNum">     149 </span>            :     bool module_local : 1;
+<span class="lineNum">     150 </span>            : };
+<span class="lineNum">     151 </span>            : 
+<span class="lineNum">     152 </span>            : /// Tracks the `internals` and `type_info` ABI version independent of the main library version
+<span class="lineNum">     153 </span>            : #define PYBIND11_INTERNALS_VERSION 4
+<span class="lineNum">     154 </span>            : 
+<span class="lineNum">     155 </span>            : /// On MSVC, debug and release builds are not ABI-compatible!
+<span class="lineNum">     156 </span>            : #if defined(_MSC_VER) &amp;&amp; defined(_DEBUG)
+<span class="lineNum">     157 </span>            : #   define PYBIND11_BUILD_TYPE &quot;_debug&quot;
+<span class="lineNum">     158 </span>            : #else
+<span class="lineNum">     159 </span>            : #   define PYBIND11_BUILD_TYPE &quot;&quot;
+<span class="lineNum">     160 </span>            : #endif
+<span class="lineNum">     161 </span>            : 
+<span class="lineNum">     162 </span>            : /// Let's assume that different compilers are ABI-incompatible.
+<span class="lineNum">     163 </span>            : #if defined(_MSC_VER)
+<span class="lineNum">     164 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_msvc&quot;
+<span class="lineNum">     165 </span>            : #elif defined(__INTEL_COMPILER)
+<span class="lineNum">     166 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_icc&quot;
+<span class="lineNum">     167 </span>            : #elif defined(__clang__)
+<span class="lineNum">     168 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_clang&quot;
+<span class="lineNum">     169 </span>            : #elif defined(__PGI)
+<span class="lineNum">     170 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_pgi&quot;
+<span class="lineNum">     171 </span>            : #elif defined(__MINGW32__)
+<span class="lineNum">     172 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_mingw&quot;
+<span class="lineNum">     173 </span>            : #elif defined(__CYGWIN__)
+<span class="lineNum">     174 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_gcc_cygwin&quot;
+<span class="lineNum">     175 </span>            : #elif defined(__GNUC__)
+<span class="lineNum">     176 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_gcc&quot;
+<span class="lineNum">     177 </span>            : #else
+<span class="lineNum">     178 </span>            : #   define PYBIND11_COMPILER_TYPE &quot;_unknown&quot;
+<span class="lineNum">     179 </span>            : #endif
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            : #if defined(_LIBCPP_VERSION)
+<span class="lineNum">     182 </span>            : #  define PYBIND11_STDLIB &quot;_libcpp&quot;
+<span class="lineNum">     183 </span>            : #elif defined(__GLIBCXX__) || defined(__GLIBCPP__)
+<span class="lineNum">     184 </span>            : #  define PYBIND11_STDLIB &quot;_libstdcpp&quot;
+<span class="lineNum">     185 </span>            : #else
+<span class="lineNum">     186 </span>            : #  define PYBIND11_STDLIB &quot;&quot;
+<span class="lineNum">     187 </span>            : #endif
+<span class="lineNum">     188 </span>            : 
+<span class="lineNum">     189 </span>            : /// On Linux/OSX, changes in __GXX_ABI_VERSION__ indicate ABI incompatibility.
+<span class="lineNum">     190 </span>            : #if defined(__GXX_ABI_VERSION)
+<span class="lineNum">     191 </span>            : #  define PYBIND11_BUILD_ABI &quot;_cxxabi&quot; PYBIND11_TOSTRING(__GXX_ABI_VERSION)
+<span class="lineNum">     192 </span>            : #else
+<span class="lineNum">     193 </span>            : #  define PYBIND11_BUILD_ABI &quot;&quot;
+<span class="lineNum">     194 </span>            : #endif
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            : #if defined(WITH_THREAD)
+<span class="lineNum">     197 </span>            : #  define PYBIND11_INTERNALS_KIND &quot;&quot;
+<span class="lineNum">     198 </span>            : #else
+<span class="lineNum">     199 </span>            : #  define PYBIND11_INTERNALS_KIND &quot;_without_thread&quot;
+<span class="lineNum">     200 </span>            : #endif
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            : #define PYBIND11_INTERNALS_ID &quot;__pybind11_internals_v&quot; \
+<span class="lineNum">     203 </span>            :     PYBIND11_TOSTRING(PYBIND11_INTERNALS_VERSION) PYBIND11_INTERNALS_KIND PYBIND11_COMPILER_TYPE PYBIND11_STDLIB PYBIND11_BUILD_ABI PYBIND11_BUILD_TYPE &quot;__&quot;
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            : #define PYBIND11_MODULE_LOCAL_ID &quot;__pybind11_module_local_v&quot; \
+<span class="lineNum">     206 </span>            :     PYBIND11_TOSTRING(PYBIND11_INTERNALS_VERSION) PYBIND11_INTERNALS_KIND PYBIND11_COMPILER_TYPE PYBIND11_STDLIB PYBIND11_BUILD_ABI PYBIND11_BUILD_TYPE &quot;__&quot;
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span>            : /// Each module locally stores a pointer to the `internals` data. The data
+<span class="lineNum">     209 </span>            : /// itself is shared among modules with the same `PYBIND11_INTERNALS_ID`.
+<span class="lineNum">     210 </span>            : inline internals **&amp;get_internals_pp() {
+<span class="lineNum">     211 </span>            :     static internals **internals_pp = nullptr;
+<span class="lineNum">     212 </span>            :     return internals_pp;
+<span class="lineNum">     213 </span>            : }
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span><span class="lineCov">          3 : inline void translate_exception(std::exception_ptr p) {</span>
+<span class="lineNum">     216 </span>            :     try {
+<span class="lineNum">     217 </span><span class="lineCov">          3 :         if (p) std::rethrow_exception(p);</span>
+<span class="lineNum">     218 </span><span class="lineNoCov">          0 :     } catch (error_already_set &amp;e)           { e.restore();                                    return;</span>
+<span class="lineNum">     219 </span><span class="lineNoCov">          0 :     } catch (const builtin_exception &amp;e)     { e.set_error();                                  return;</span>
+<span class="lineNum">     220 </span><span class="lineNoCov">          0 :     } catch (const std::bad_alloc &amp;e)        { PyErr_SetString(PyExc_MemoryError,   e.what()); return;</span>
+<span class="lineNum">     221 </span><span class="lineNoCov">          0 :     } catch (const std::domain_error &amp;e)     { PyErr_SetString(PyExc_ValueError,    e.what()); return;</span>
+<span class="lineNum">     222 </span><span class="lineCov">          3 :     } catch (const std::invalid_argument &amp;e) { PyErr_SetString(PyExc_ValueError,    e.what()); return;</span>
+<span class="lineNum">     223 </span><span class="lineNoCov">          0 :     } catch (const std::length_error &amp;e)     { PyErr_SetString(PyExc_ValueError,    e.what()); return;</span>
+<span class="lineNum">     224 </span><span class="lineNoCov">          0 :     } catch (const std::out_of_range &amp;e)     { PyErr_SetString(PyExc_IndexError,    e.what()); return;</span>
+<span class="lineNum">     225 </span><span class="lineNoCov">          0 :     } catch (const std::range_error &amp;e)      { PyErr_SetString(PyExc_ValueError,    e.what()); return;</span>
+<span class="lineNum">     226 </span><span class="lineNoCov">          0 :     } catch (const std::overflow_error &amp;e)   { PyErr_SetString(PyExc_OverflowError, e.what()); return;</span>
+<span class="lineNum">     227 </span><span class="lineNoCov">          0 :     } catch (const std::exception &amp;e)        { PyErr_SetString(PyExc_RuntimeError,  e.what()); return;</span>
+<span class="lineNum">     228 </span><span class="lineNoCov">          0 :     } catch (...) {</span>
+<span class="lineNum">     229 </span><span class="lineNoCov">          0 :         PyErr_SetString(PyExc_RuntimeError, &quot;Caught an unknown exception!&quot;);</span>
+<span class="lineNum">     230 </span>            :         return;
+<span class="lineNum">     231 </span>            :     }
+<span class="lineNum">     232 </span>            : }
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span>            : #if !defined(__GLIBCXX__)
+<span class="lineNum">     235 </span>            : inline void translate_local_exception(std::exception_ptr p) {
+<span class="lineNum">     236 </span>            :     try {
+<span class="lineNum">     237 </span>            :         if (p) std::rethrow_exception(p);
+<span class="lineNum">     238 </span>            :     } catch (error_already_set &amp;e)       { e.restore();   return;
+<span class="lineNum">     239 </span>            :     } catch (const builtin_exception &amp;e) { e.set_error(); return;
+<span class="lineNum">     240 </span>            :     }
+<span class="lineNum">     241 </span>            : }
+<span class="lineNum">     242 </span>            : #endif
+<span class="lineNum">     243 </span>            : 
+<span class="lineNum">     244 </span>            : /// Return a reference to the current `internals` data
+<span class="lineNum">     245 </span><span class="lineCov">        159 : PYBIND11_NOINLINE inline internals &amp;get_internals() {</span>
+<span class="lineNum">     246 </span>            :     auto **&amp;internals_pp = get_internals_pp();
+<span class="lineNum">     247 </span><span class="lineCov">        159 :     if (internals_pp &amp;&amp; *internals_pp)</span>
+<span class="lineNum">     248 </span>            :         return **internals_pp;
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            :     // Ensure that the GIL is held since we will need to make Python calls.
+<span class="lineNum">     251 </span>            :     // Cannot use py::gil_scoped_acquire here since that constructor calls get_internals.
+<span class="lineNum">     252 </span>            :     struct gil_scoped_acquire_local {
+<span class="lineNum">     253 </span><span class="lineCov">          1 :         gil_scoped_acquire_local() : state (PyGILState_Ensure()) {}</span>
+<span class="lineNum">     254 </span><span class="lineCov">          1 :         ~gil_scoped_acquire_local() { PyGILState_Release(state); }</span>
+<span class="lineNum">     255 </span>            :         const PyGILState_STATE state;
+<span class="lineNum">     256 </span>            :     } gil;
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span><span class="lineCov">          1 :     constexpr auto *id = PYBIND11_INTERNALS_ID;</span>
+<span class="lineNum">     259 </span><span class="lineCov">          1 :     auto builtins = handle(PyEval_GetBuiltins());</span>
+<span class="lineNum">     260 </span><span class="lineCov">          3 :     if (builtins.contains(id) &amp;&amp; isinstance&lt;capsule&gt;(builtins[id])) {</span>
+<span class="lineNum">     261 </span><span class="lineNoCov">          0 :         internals_pp = static_cast&lt;internals **&gt;(capsule(builtins[id]));</span>
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span>            :         // We loaded builtins through python's builtins, which means that our `error_already_set`
+<span class="lineNum">     264 </span>            :         // and `builtin_exception` may be different local classes than the ones set up in the
+<span class="lineNum">     265 </span>            :         // initial exception translator, below, so add another for our local exception classes.
+<span class="lineNum">     266 </span>            :         //
+<span class="lineNum">     267 </span>            :         // libstdc++ doesn't require this (types there are identified only by name)
+<span class="lineNum">     268 </span>            : #if !defined(__GLIBCXX__)
+<span class="lineNum">     269 </span>            :         (*internals_pp)-&gt;registered_exception_translators.push_front(&amp;translate_local_exception);
+<span class="lineNum">     270 </span>            : #endif
+<span class="lineNum">     271 </span>            :     } else {
+<span class="lineNum">     272 </span><span class="lineCov">          1 :         if (!internals_pp) internals_pp = new internals*();</span>
+<span class="lineNum">     273 </span><span class="lineCov">          1 :         auto *&amp;internals_ptr = *internals_pp;</span>
+<span class="lineNum">     274 </span><span class="lineCov">          1 :         internals_ptr = new internals();</span>
+<span class="lineNum">     275 </span>            : #if defined(WITH_THREAD)
+<span class="lineNum">     276 </span><span class="lineCov">          1 :         PyEval_InitThreads();</span>
+<span class="lineNum">     277 </span><span class="lineCov">          1 :         PyThreadState *tstate = PyThreadState_Get();</span>
+<span class="lineNum">     278 </span>            :         #if PY_VERSION_HEX &gt;= 0x03070000
+<span class="lineNum">     279 </span>            :             internals_ptr-&gt;tstate = PyThread_tss_alloc();
+<span class="lineNum">     280 </span>            :             if (!internals_ptr-&gt;tstate || PyThread_tss_create(internals_ptr-&gt;tstate))
+<span class="lineNum">     281 </span>            :                 pybind11_fail(&quot;get_internals: could not successfully initialize the TSS key!&quot;);
+<span class="lineNum">     282 </span>            :             PyThread_tss_set(internals_ptr-&gt;tstate, tstate);
+<span class="lineNum">     283 </span>            :         #else
+<span class="lineNum">     284 </span><span class="lineCov">          1 :             internals_ptr-&gt;tstate = PyThread_create_key();</span>
+<span class="lineNum">     285 </span><span class="lineCov">          1 :             if (internals_ptr-&gt;tstate == -1)</span>
+<span class="lineNum">     286 </span><span class="lineNoCov">          0 :                 pybind11_fail(&quot;get_internals: could not successfully initialize the TLS key!&quot;);</span>
+<span class="lineNum">     287 </span><span class="lineCov">          1 :             PyThread_set_key_value(internals_ptr-&gt;tstate, tstate);</span>
+<span class="lineNum">     288 </span>            :         #endif
+<span class="lineNum">     289 </span><span class="lineCov">          1 :         internals_ptr-&gt;istate = tstate-&gt;interp;</span>
+<span class="lineNum">     290 </span>            : #endif
+<span class="lineNum">     291 </span><span class="lineCov">          3 :         builtins[id] = capsule(internals_pp);</span>
+<span class="lineNum">     292 </span><span class="lineCov">          1 :         internals_ptr-&gt;registered_exception_translators.push_front(&amp;translate_exception);</span>
+<span class="lineNum">     293 </span><span class="lineCov">          1 :         internals_ptr-&gt;static_property_type = make_static_property_type();</span>
+<span class="lineNum">     294 </span><span class="lineCov">          1 :         internals_ptr-&gt;default_metaclass = make_default_metaclass();</span>
+<span class="lineNum">     295 </span><span class="lineCov">          1 :         internals_ptr-&gt;instance_base = make_object_base_type(internals_ptr-&gt;default_metaclass);</span>
+<span class="lineNum">     296 </span>            :     }
+<span class="lineNum">     297 </span><span class="lineCov">          1 :     return **internals_pp;</span>
+<span class="lineNum">     298 </span>            : }
+<a name="299"><span class="lineNum">     299 </span>            : </a>
+<span class="lineNum">     300 </span>            : /// Works like `internals.registered_types_cpp`, but for module-local registered types:
+<span class="lineNum">     301 </span><span class="lineNoCov">          0 : inline type_map&lt;type_info *&gt; &amp;registered_local_types_cpp() {</span>
+<span class="lineNum">     302 </span><span class="lineNoCov">          0 :     static type_map&lt;type_info *&gt; locals{};</span>
+<span class="lineNum">     303 </span><span class="lineNoCov">          0 :     return locals;</span>
+<span class="lineNum">     304 </span>            : }
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            : /// Constructs a std::string with the given arguments, stores it in `internals`, and returns its
+<span class="lineNum">     307 </span>            : /// `c_str()`.  Such strings objects have a long storage duration -- the internal strings are only
+<span class="lineNum">     308 </span>            : /// cleared when the program exits or after interpreter shutdown (when embedding), and so are
+<span class="lineNum">     309 </span>            : /// suitable for c-style strings needed by Python internals (such as PyTypeObject's tp_name).
+<span class="lineNum">     310 </span>            : template &lt;typename... Args&gt;
+<span class="lineNum">     311 </span>            : const char *c_str(Args &amp;&amp;...args) {
+<span class="lineNum">     312 </span>            :     auto &amp;strings = get_internals().static_strings;
+<span class="lineNum">     313 </span>            :     strings.emplace_front(std::forward&lt;Args&gt;(args)...);
+<span class="lineNum">     314 </span>            :     return strings.front().c_str();
+<span class="lineNum">     315 </span>            : }
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            : /// Returns a named pointer that is shared among all extension modules (using the same
+<span class="lineNum">     320 </span>            : /// pybind11 version) running in the current interpreter. Names starting with underscores
+<span class="lineNum">     321 </span>            : /// are reserved for internal usage. Returns `nullptr` if no matching entry was found.
+<span class="lineNum">     322 </span>            : inline PYBIND11_NOINLINE void *get_shared_data(const std::string &amp;name) {
+<span class="lineNum">     323 </span>            :     auto &amp;internals = detail::get_internals();
+<span class="lineNum">     324 </span>            :     auto it = internals.shared_data.find(name);
+<span class="lineNum">     325 </span>            :     return it != internals.shared_data.end() ? it-&gt;second : nullptr;
+<span class="lineNum">     326 </span>            : }
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            : /// Set the shared data that can be later recovered by `get_shared_data()`.
+<span class="lineNum">     329 </span>            : inline PYBIND11_NOINLINE void *set_shared_data(const std::string &amp;name, void *data) {
+<span class="lineNum">     330 </span>            :     detail::get_internals().shared_data[name] = data;
+<span class="lineNum">     331 </span>            :     return data;
+<span class="lineNum">     332 </span>            : }
+<span class="lineNum">     333 </span>            : 
+<span class="lineNum">     334 </span>            : /// Returns a typed reference to a shared data entry (by using `get_shared_data()`) if
+<span class="lineNum">     335 </span>            : /// such entry exists. Otherwise, a new object of default-constructible type `T` is
+<span class="lineNum">     336 </span>            : /// added to the shared data under the given name and a reference to it is returned.
+<span class="lineNum">     337 </span>            : template&lt;typename T&gt;
+<span class="lineNum">     338 </span>            : T &amp;get_or_create_shared_data(const std::string &amp;name) {
+<span class="lineNum">     339 </span>            :     auto &amp;internals = detail::get_internals();
+<span class="lineNum">     340 </span>            :     auto it = internals.shared_data.find(name);
+<span class="lineNum">     341 </span>            :     T *ptr = (T *) (it != internals.shared_data.end() ? it-&gt;second : nullptr);
+<span class="lineNum">     342 </span>            :     if (!ptr) {
+<span class="lineNum">     343 </span>            :         ptr = new T();
+<span class="lineNum">     344 </span>            :         internals.shared_data[name] = ptr;
+<span class="lineNum">     345 </span>            :     }
+<span class="lineNum">     346 </span>            :     return *ptr;
+<span class="lineNum">     347 </span>            : }
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            : NAMESPACE_END(PYBIND11_NAMESPACE)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

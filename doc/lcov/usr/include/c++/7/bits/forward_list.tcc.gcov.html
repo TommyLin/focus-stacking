@@ -1,0 +1,583 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - _vector - /usr/include/c++/7/bits/forward_list.tcc</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">usr/include/c++/7/bits</a> - forward_list.tcc<span style="font-size: 80%;"> (source / <a href="forward_list.tcc.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">_vector</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-01-03 20:25:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryHi">-</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // &lt;forward_list.tcc&gt; -*- C++ -*-</a>
+<span class="lineNum">       2 </span>            : 
+<span class="lineNum">       3 </span>            : // Copyright (C) 2008-2017 Free Software Foundation, Inc.
+<span class="lineNum">       4 </span>            : //
+<span class="lineNum">       5 </span>            : // This file is part of the GNU ISO C++ Library.  This library is free
+<span class="lineNum">       6 </span>            : // software; you can redistribute it and/or modify it under the
+<span class="lineNum">       7 </span>            : // terms of the GNU General Public License as published by the
+<span class="lineNum">       8 </span>            : // Free Software Foundation; either version 3, or (at your option)
+<span class="lineNum">       9 </span>            : // any later version.
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : // This library is distributed in the hope that it will be useful,
+<span class="lineNum">      12 </span>            : // but WITHOUT ANY WARRANTY; without even the implied warranty of
+<span class="lineNum">      13 </span>            : // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+<span class="lineNum">      14 </span>            : // GNU General Public License for more details.
+<span class="lineNum">      15 </span>            : 
+<span class="lineNum">      16 </span>            : // Under Section 7 of GPL version 3, you are granted additional
+<span class="lineNum">      17 </span>            : // permissions described in the GCC Runtime Library Exception, version
+<span class="lineNum">      18 </span>            : // 3.1, as published by the Free Software Foundation.
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : // You should have received a copy of the GNU General Public License and
+<span class="lineNum">      21 </span>            : // a copy of the GCC Runtime Library Exception along with this program;
+<span class="lineNum">      22 </span>            : // see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see
+<span class="lineNum">      23 </span>            : // &lt;http://www.gnu.org/licenses/&gt;.
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : /** @file bits/forward_list.tcc
+<span class="lineNum">      26 </span>            :  *  This is an internal header file, included by other library headers.
+<span class="lineNum">      27 </span>            :  *  Do not attempt to use it directly. @headername{forward_list}
+<span class="lineNum">      28 </span>            :  */
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : #ifndef _FORWARD_LIST_TCC
+<span class="lineNum">      31 </span>            : #define _FORWARD_LIST_TCC 1
+<span class="lineNum">      32 </span>            : 
+<span class="lineNum">      33 </span>            : namespace std _GLIBCXX_VISIBILITY(default)
+<span class="lineNum">      34 </span>            : {
+<span class="lineNum">      35 </span>            : _GLIBCXX_BEGIN_NAMESPACE_CONTAINER
+<span class="lineNum">      36 </span>            : 
+<span class="lineNum">      37 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">      38 </span>            :     _Fwd_list_base&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">      39 </span>            :     _Fwd_list_base(_Fwd_list_base&amp;&amp; __lst, _Node_alloc_type&amp;&amp; __a)
+<span class="lineNum">      40 </span>            :     : _M_impl(std::move(__a))
+<span class="lineNum">      41 </span>            :     {
+<span class="lineNum">      42 </span>            :       if (__lst._M_get_Node_allocator() == _M_get_Node_allocator())
+<span class="lineNum">      43 </span>            :         {
+<span class="lineNum">      44 </span>            :           this-&gt;_M_impl._M_head._M_next = __lst._M_impl._M_head._M_next;
+<span class="lineNum">      45 </span>            :           __lst._M_impl._M_head._M_next = 0;
+<span class="lineNum">      46 </span>            :         }
+<span class="lineNum">      47 </span>            :       else
+<span class="lineNum">      48 </span>            :         this-&gt;_M_impl._M_head._M_next = 0;
+<span class="lineNum">      49 </span>            :     }
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">      52 </span>            :     template&lt;typename... _Args&gt;
+<span class="lineNum">      53 </span>            :       _Fwd_list_node_base*
+<span class="lineNum">      54 </span>            :       _Fwd_list_base&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">      55 </span>            :       _M_insert_after(const_iterator __pos, _Args&amp;&amp;... __args)
+<span class="lineNum">      56 </span>            :       {
+<span class="lineNum">      57 </span>            :         _Fwd_list_node_base* __to
+<span class="lineNum">      58 </span>            :           = const_cast&lt;_Fwd_list_node_base*&gt;(__pos._M_node);
+<span class="lineNum">      59 </span>            :         _Node* __thing = _M_create_node(std::forward&lt;_Args&gt;(__args)...);
+<span class="lineNum">      60 </span><span class="lineCov">          1 :         __thing-&gt;_M_next = __to-&gt;_M_next;</span>
+<span class="lineNum">      61 </span><span class="lineCov">          1 :         __to-&gt;_M_next = __thing;</span>
+<span class="lineNum">      62 </span>            :         return __to-&gt;_M_next;
+<span class="lineNum">      63 </span>            :       }
+<span class="lineNum">      64 </span>            : 
+<span class="lineNum">      65 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">      66 </span>            :     _Fwd_list_node_base*
+<span class="lineNum">      67 </span>            :     _Fwd_list_base&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">      68 </span>            :     _M_erase_after(_Fwd_list_node_base* __pos)
+<span class="lineNum">      69 </span>            :     {
+<span class="lineNum">      70 </span>            :       _Node* __curr = static_cast&lt;_Node*&gt;(__pos-&gt;_M_next);
+<span class="lineNum">      71 </span>            :       __pos-&gt;_M_next = __curr-&gt;_M_next;
+<span class="lineNum">      72 </span>            :       _Node_alloc_traits::destroy(_M_get_Node_allocator(),
+<span class="lineNum">      73 </span>            :                                   __curr-&gt;_M_valptr());
+<span class="lineNum">      74 </span>            :       __curr-&gt;~_Node();
+<span class="lineNum">      75 </span>            :       _M_put_node(__curr);
+<span class="lineNum">      76 </span>            :       return __pos-&gt;_M_next;
+<span class="lineNum">      77 </span>            :     }
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">      80 </span>            :     _Fwd_list_node_base*
+<span class="lineNum">      81 </span>            :     _Fwd_list_base&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">      82 </span>            :     _M_erase_after(_Fwd_list_node_base* __pos, 
+<span class="lineNum">      83 </span>            :                    _Fwd_list_node_base* __last)
+<span class="lineNum">      84 </span>            :     {
+<span class="lineNum">      85 </span>            :       _Node* __curr = static_cast&lt;_Node*&gt;(__pos-&gt;_M_next);
+<span class="lineNum">      86 </span>            :       while (__curr != __last)
+<span class="lineNum">      87 </span>            :         {
+<span class="lineNum">      88 </span>            :           _Node* __temp = __curr;
+<span class="lineNum">      89 </span>            :           __curr = static_cast&lt;_Node*&gt;(__curr-&gt;_M_next);
+<span class="lineNum">      90 </span>            :           _Node_alloc_traits::destroy(_M_get_Node_allocator(),
+<span class="lineNum">      91 </span>            :                                       __temp-&gt;_M_valptr());
+<span class="lineNum">      92 </span>            :           __temp-&gt;~_Node();
+<span class="lineNum">      93 </span>            :           _M_put_node(__temp);
+<span class="lineNum">      94 </span>            :         }
+<span class="lineNum">      95 </span>            :       __pos-&gt;_M_next = __last;
+<span class="lineNum">      96 </span>            :       return __last;
+<span class="lineNum">      97 </span>            :     }
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            :   // Called by the range constructor to implement [23.3.4.2]/9
+<span class="lineNum">     100 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     101 </span>            :     template&lt;typename _InputIterator&gt;
+<span class="lineNum">     102 </span>            :       void
+<span class="lineNum">     103 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     104 </span>            :       _M_range_initialize(_InputIterator __first, _InputIterator __last)
+<span class="lineNum">     105 </span>            :       {
+<span class="lineNum">     106 </span>            :         _Node_base* __to = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     107 </span>            :         for (; __first != __last; ++__first)
+<span class="lineNum">     108 </span>            :           {
+<span class="lineNum">     109 </span>            :             __to-&gt;_M_next = this-&gt;_M_create_node(*__first);
+<span class="lineNum">     110 </span>            :             __to = __to-&gt;_M_next;
+<span class="lineNum">     111 </span>            :           }
+<span class="lineNum">     112 </span>            :       }
+<span class="lineNum">     113 </span>            : 
+<span class="lineNum">     114 </span>            :   // Called by forward_list(n,v,a).
+<span class="lineNum">     115 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     116 </span>            :     void
+<span class="lineNum">     117 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     118 </span>            :     _M_fill_initialize(size_type __n, const value_type&amp; __value)
+<span class="lineNum">     119 </span>            :     {
+<span class="lineNum">     120 </span>            :       _Node_base* __to = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     121 </span>            :       for (; __n; --__n)
+<span class="lineNum">     122 </span>            :         {
+<span class="lineNum">     123 </span>            :           __to-&gt;_M_next = this-&gt;_M_create_node(__value);
+<span class="lineNum">     124 </span>            :           __to = __to-&gt;_M_next;
+<span class="lineNum">     125 </span>            :         }
+<span class="lineNum">     126 </span>            :     }
+<span class="lineNum">     127 </span>            : 
+<span class="lineNum">     128 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     129 </span>            :     void
+<span class="lineNum">     130 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     131 </span>            :     _M_default_initialize(size_type __n)
+<span class="lineNum">     132 </span>            :     {
+<span class="lineNum">     133 </span>            :       _Node_base* __to = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     134 </span>            :       for (; __n; --__n)
+<span class="lineNum">     135 </span>            :         {
+<span class="lineNum">     136 </span>            :           __to-&gt;_M_next = this-&gt;_M_create_node();
+<span class="lineNum">     137 </span>            :           __to = __to-&gt;_M_next;
+<span class="lineNum">     138 </span>            :         }
+<span class="lineNum">     139 </span>            :     }
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     142 </span>            :     forward_list&lt;_Tp, _Alloc&gt;&amp;
+<span class="lineNum">     143 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     144 </span>            :     operator=(const forward_list&amp; __list)
+<span class="lineNum">     145 </span>            :     {
+<span class="lineNum">     146 </span>            :       if (std::__addressof(__list) != this)
+<span class="lineNum">     147 </span>            :         {
+<span class="lineNum">     148 </span>            :           if (_Node_alloc_traits::_S_propagate_on_copy_assign())
+<span class="lineNum">     149 </span>            :             {
+<span class="lineNum">     150 </span>            :               auto&amp; __this_alloc = this-&gt;_M_get_Node_allocator();
+<span class="lineNum">     151 </span>            :               auto&amp; __that_alloc = __list._M_get_Node_allocator();
+<span class="lineNum">     152 </span>            :               if (!_Node_alloc_traits::_S_always_equal()
+<span class="lineNum">     153 </span>            :                   &amp;&amp; __this_alloc != __that_alloc)
+<span class="lineNum">     154 </span>            :                 {
+<span class="lineNum">     155 </span>            :                   // replacement allocator cannot free existing storage
+<span class="lineNum">     156 </span>            :                   clear();
+<span class="lineNum">     157 </span>            :                 }
+<span class="lineNum">     158 </span>            :               std::__alloc_on_copy(__this_alloc, __that_alloc);
+<span class="lineNum">     159 </span>            :             }
+<span class="lineNum">     160 </span>            :           assign(__list.cbegin(), __list.cend());
+<span class="lineNum">     161 </span>            :         }
+<span class="lineNum">     162 </span>            :       return *this;
+<span class="lineNum">     163 </span>            :     }
+<span class="lineNum">     164 </span>            : 
+<span class="lineNum">     165 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     166 </span>            :     void
+<span class="lineNum">     167 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     168 </span>            :     _M_default_insert_after(const_iterator __pos, size_type __n)
+<span class="lineNum">     169 </span>            :     {
+<span class="lineNum">     170 </span>            :       const_iterator __saved_pos = __pos;
+<span class="lineNum">     171 </span>            :       __try
+<span class="lineNum">     172 </span>            :         {
+<span class="lineNum">     173 </span>            :           for (; __n; --__n)
+<span class="lineNum">     174 </span>            :             __pos = emplace_after(__pos);
+<span class="lineNum">     175 </span>            :         }
+<span class="lineNum">     176 </span>            :       __catch(...)
+<span class="lineNum">     177 </span>            :         {
+<span class="lineNum">     178 </span>            :           erase_after(__saved_pos, ++__pos);
+<span class="lineNum">     179 </span>            :           __throw_exception_again;
+<span class="lineNum">     180 </span>            :         }
+<span class="lineNum">     181 </span>            :     }
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     184 </span>            :     void
+<span class="lineNum">     185 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     186 </span>            :     resize(size_type __sz)
+<span class="lineNum">     187 </span>            :     {
+<span class="lineNum">     188 </span>            :       iterator __k = before_begin();
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :       size_type __len = 0;
+<span class="lineNum">     191 </span>            :       while (__k._M_next() != end() &amp;&amp; __len &lt; __sz)
+<span class="lineNum">     192 </span>            :         {
+<span class="lineNum">     193 </span>            :           ++__k;
+<span class="lineNum">     194 </span>            :           ++__len;
+<span class="lineNum">     195 </span>            :         }
+<span class="lineNum">     196 </span>            :       if (__len == __sz)
+<span class="lineNum">     197 </span>            :         erase_after(__k, end());
+<span class="lineNum">     198 </span>            :       else
+<span class="lineNum">     199 </span>            :         _M_default_insert_after(__k, __sz - __len);
+<span class="lineNum">     200 </span>            :     }
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     203 </span>            :     void
+<span class="lineNum">     204 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     205 </span>            :     resize(size_type __sz, const value_type&amp; __val)
+<span class="lineNum">     206 </span>            :     {
+<span class="lineNum">     207 </span>            :       iterator __k = before_begin();
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :       size_type __len = 0;
+<span class="lineNum">     210 </span>            :       while (__k._M_next() != end() &amp;&amp; __len &lt; __sz)
+<span class="lineNum">     211 </span>            :         {
+<span class="lineNum">     212 </span>            :           ++__k;
+<span class="lineNum">     213 </span>            :           ++__len;
+<span class="lineNum">     214 </span>            :         }
+<span class="lineNum">     215 </span>            :       if (__len == __sz)
+<span class="lineNum">     216 </span>            :         erase_after(__k, end());
+<span class="lineNum">     217 </span>            :       else
+<span class="lineNum">     218 </span>            :         insert_after(__k, __sz - __len, __val);
+<span class="lineNum">     219 </span>            :     }
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     222 </span>            :     typename forward_list&lt;_Tp, _Alloc&gt;::iterator
+<span class="lineNum">     223 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     224 </span>            :     _M_splice_after(const_iterator __pos,
+<span class="lineNum">     225 </span>            :                     const_iterator __before, const_iterator __last)
+<span class="lineNum">     226 </span>            :     {
+<span class="lineNum">     227 </span>            :       _Node_base* __tmp = const_cast&lt;_Node_base*&gt;(__pos._M_node);
+<span class="lineNum">     228 </span>            :       _Node_base* __b = const_cast&lt;_Node_base*&gt;(__before._M_node);
+<span class="lineNum">     229 </span>            :       _Node_base* __end = __b;
+<span class="lineNum">     230 </span>            : 
+<span class="lineNum">     231 </span>            :       while (__end &amp;&amp; __end-&gt;_M_next != __last._M_node)
+<span class="lineNum">     232 </span>            :         __end = __end-&gt;_M_next;
+<span class="lineNum">     233 </span>            : 
+<span class="lineNum">     234 </span>            :       if (__b != __end)
+<span class="lineNum">     235 </span>            :         return iterator(__tmp-&gt;_M_transfer_after(__b, __end));      
+<span class="lineNum">     236 </span>            :       else
+<span class="lineNum">     237 </span>            :         return iterator(__tmp);
+<span class="lineNum">     238 </span>            :     }
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     241 </span>            :     void
+<span class="lineNum">     242 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     243 </span>            :     splice_after(const_iterator __pos, forward_list&amp;&amp;,
+<span class="lineNum">     244 </span>            :                  const_iterator __i) noexcept
+<span class="lineNum">     245 </span>            :     {
+<span class="lineNum">     246 </span>            :       const_iterator __j = __i;
+<span class="lineNum">     247 </span>            :       ++__j;
+<span class="lineNum">     248 </span>            : 
+<span class="lineNum">     249 </span>            :       if (__pos == __i || __pos == __j)
+<span class="lineNum">     250 </span>            :         return;
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :       _Node_base* __tmp = const_cast&lt;_Node_base*&gt;(__pos._M_node);
+<span class="lineNum">     253 </span>            :       __tmp-&gt;_M_transfer_after(const_cast&lt;_Node_base*&gt;(__i._M_node),
+<span class="lineNum">     254 </span>            :                                const_cast&lt;_Node_base*&gt;(__j._M_node));
+<span class="lineNum">     255 </span>            :     }
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     258 </span>            :     typename forward_list&lt;_Tp, _Alloc&gt;::iterator
+<span class="lineNum">     259 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     260 </span>            :     insert_after(const_iterator __pos, size_type __n, const _Tp&amp; __val)
+<span class="lineNum">     261 </span>            :     {
+<span class="lineNum">     262 </span>            :       if (__n)
+<span class="lineNum">     263 </span>            :         {
+<span class="lineNum">     264 </span>            :           forward_list __tmp(__n, __val, get_allocator());
+<span class="lineNum">     265 </span>            :           return _M_splice_after(__pos, __tmp.before_begin(), __tmp.end());
+<span class="lineNum">     266 </span>            :         }
+<span class="lineNum">     267 </span>            :       else
+<span class="lineNum">     268 </span>            :         return iterator(const_cast&lt;_Node_base*&gt;(__pos._M_node));
+<span class="lineNum">     269 </span>            :     }
+<span class="lineNum">     270 </span>            : 
+<span class="lineNum">     271 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     272 </span>            :     template&lt;typename _InputIterator, typename&gt;
+<span class="lineNum">     273 </span>            :       typename forward_list&lt;_Tp, _Alloc&gt;::iterator
+<span class="lineNum">     274 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     275 </span>            :       insert_after(const_iterator __pos,
+<span class="lineNum">     276 </span>            :                    _InputIterator __first, _InputIterator __last)
+<span class="lineNum">     277 </span>            :       {
+<span class="lineNum">     278 </span>            :         forward_list __tmp(__first, __last, get_allocator());
+<span class="lineNum">     279 </span>            :         if (!__tmp.empty())
+<span class="lineNum">     280 </span>            :           return _M_splice_after(__pos, __tmp.before_begin(), __tmp.end());
+<span class="lineNum">     281 </span>            :         else
+<span class="lineNum">     282 </span>            :           return iterator(const_cast&lt;_Node_base*&gt;(__pos._M_node));
+<span class="lineNum">     283 </span>            :       }
+<span class="lineNum">     284 </span>            : 
+<span class="lineNum">     285 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     286 </span>            :     void
+<span class="lineNum">     287 </span>            :     forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     288 </span>            :     remove(const _Tp&amp; __val)
+<span class="lineNum">     289 </span>            :     {
+<span class="lineNum">     290 </span>            :       _Node_base* __curr = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     291 </span>            :       _Node_base* __extra = nullptr;
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            :       while (_Node* __tmp = static_cast&lt;_Node*&gt;(__curr-&gt;_M_next))
+<span class="lineNum">     294 </span>            :         {
+<span class="lineNum">     295 </span>            :           if (*__tmp-&gt;_M_valptr() == __val)
+<span class="lineNum">     296 </span>            :             {
+<span class="lineNum">     297 </span>            :               if (__tmp-&gt;_M_valptr() != std::__addressof(__val))
+<span class="lineNum">     298 </span>            :                 {
+<span class="lineNum">     299 </span>            :                   this-&gt;_M_erase_after(__curr);
+<span class="lineNum">     300 </span>            :                   continue;
+<span class="lineNum">     301 </span>            :                 }
+<span class="lineNum">     302 </span>            :               else
+<span class="lineNum">     303 </span>            :                 __extra = __curr;
+<span class="lineNum">     304 </span>            :             }
+<span class="lineNum">     305 </span>            :           __curr = __curr-&gt;_M_next;
+<span class="lineNum">     306 </span>            :         }
+<span class="lineNum">     307 </span>            : 
+<span class="lineNum">     308 </span>            :       if (__extra)
+<span class="lineNum">     309 </span>            :         this-&gt;_M_erase_after(__extra);
+<span class="lineNum">     310 </span>            :     }
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     313 </span>            :     template&lt;typename _Pred&gt;
+<span class="lineNum">     314 </span>            :       void
+<span class="lineNum">     315 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     316 </span>            :       remove_if(_Pred __pred)
+<span class="lineNum">     317 </span>            :       {
+<span class="lineNum">     318 </span>            :         _Node_base* __curr = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     319 </span>            :         while (_Node* __tmp = static_cast&lt;_Node*&gt;(__curr-&gt;_M_next))
+<span class="lineNum">     320 </span>            :           {
+<span class="lineNum">     321 </span>            :             if (__pred(*__tmp-&gt;_M_valptr()))
+<span class="lineNum">     322 </span>            :               this-&gt;_M_erase_after(__curr);
+<span class="lineNum">     323 </span>            :             else
+<span class="lineNum">     324 </span>            :               __curr = __curr-&gt;_M_next;
+<span class="lineNum">     325 </span>            :           }
+<span class="lineNum">     326 </span>            :       }
+<span class="lineNum">     327 </span>            : 
+<span class="lineNum">     328 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     329 </span>            :     template&lt;typename _BinPred&gt;
+<span class="lineNum">     330 </span>            :       void
+<span class="lineNum">     331 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     332 </span>            :       unique(_BinPred __binary_pred)
+<span class="lineNum">     333 </span>            :       {
+<span class="lineNum">     334 </span>            :         iterator __first = begin();
+<span class="lineNum">     335 </span>            :         iterator __last = end();
+<span class="lineNum">     336 </span>            :         if (__first == __last)
+<span class="lineNum">     337 </span>            :           return;
+<span class="lineNum">     338 </span>            :         iterator __next = __first;
+<span class="lineNum">     339 </span>            :         while (++__next != __last)
+<span class="lineNum">     340 </span>            :         {
+<span class="lineNum">     341 </span>            :           if (__binary_pred(*__first, *__next))
+<span class="lineNum">     342 </span>            :             erase_after(__first);
+<span class="lineNum">     343 </span>            :           else
+<span class="lineNum">     344 </span>            :             __first = __next;
+<span class="lineNum">     345 </span>            :           __next = __first;
+<span class="lineNum">     346 </span>            :         }
+<span class="lineNum">     347 </span>            :       }
+<span class="lineNum">     348 </span>            : 
+<span class="lineNum">     349 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     350 </span>            :     template&lt;typename _Comp&gt;
+<span class="lineNum">     351 </span>            :       void
+<span class="lineNum">     352 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     353 </span>            :       merge(forward_list&amp;&amp; __list, _Comp __comp)
+<span class="lineNum">     354 </span>            :       {
+<span class="lineNum">     355 </span>            :         _Node_base* __node = &amp;this-&gt;_M_impl._M_head;
+<span class="lineNum">     356 </span>            :         while (__node-&gt;_M_next &amp;&amp; __list._M_impl._M_head._M_next)
+<span class="lineNum">     357 </span>            :           {
+<span class="lineNum">     358 </span>            :             if (__comp(*static_cast&lt;_Node*&gt;
+<span class="lineNum">     359 </span>            :                        (__list._M_impl._M_head._M_next)-&gt;_M_valptr(),
+<span class="lineNum">     360 </span>            :                        *static_cast&lt;_Node*&gt;
+<span class="lineNum">     361 </span>            :                        (__node-&gt;_M_next)-&gt;_M_valptr()))
+<span class="lineNum">     362 </span>            :               __node-&gt;_M_transfer_after(&amp;__list._M_impl._M_head,
+<span class="lineNum">     363 </span>            :                                         __list._M_impl._M_head._M_next);
+<span class="lineNum">     364 </span>            :             __node = __node-&gt;_M_next;
+<span class="lineNum">     365 </span>            :           }
+<span class="lineNum">     366 </span>            :         if (__list._M_impl._M_head._M_next)
+<span class="lineNum">     367 </span>            :           {
+<span class="lineNum">     368 </span>            :             __node-&gt;_M_next = __list._M_impl._M_head._M_next;
+<span class="lineNum">     369 </span>            :             __list._M_impl._M_head._M_next = 0;
+<span class="lineNum">     370 </span>            :           }
+<span class="lineNum">     371 </span>            :       }
+<span class="lineNum">     372 </span>            : 
+<span class="lineNum">     373 </span>            :   template&lt;typename _Tp, typename _Alloc&gt;
+<span class="lineNum">     374 </span>            :     bool
+<span class="lineNum">     375 </span>            :     operator==(const forward_list&lt;_Tp, _Alloc&gt;&amp; __lx,
+<span class="lineNum">     376 </span>            :                const forward_list&lt;_Tp, _Alloc&gt;&amp; __ly)
+<span class="lineNum">     377 </span>            :     {
+<span class="lineNum">     378 </span>            :       //  We don't have size() so we need to walk through both lists
+<span class="lineNum">     379 </span>            :       //  making sure both iterators are valid.
+<span class="lineNum">     380 </span>            :       auto __ix = __lx.cbegin();
+<span class="lineNum">     381 </span>            :       auto __iy = __ly.cbegin();
+<span class="lineNum">     382 </span>            :       while (__ix != __lx.cend() &amp;&amp; __iy != __ly.cend())
+<span class="lineNum">     383 </span>            :         {
+<span class="lineNum">     384 </span>            :           if (!(*__ix == *__iy))
+<span class="lineNum">     385 </span>            :             return false;
+<span class="lineNum">     386 </span>            :           ++__ix;
+<span class="lineNum">     387 </span>            :           ++__iy;
+<span class="lineNum">     388 </span>            :         }
+<span class="lineNum">     389 </span>            :       if (__ix == __lx.cend() &amp;&amp; __iy == __ly.cend())
+<span class="lineNum">     390 </span>            :         return true;
+<span class="lineNum">     391 </span>            :       else
+<span class="lineNum">     392 </span>            :         return false;
+<span class="lineNum">     393 </span>            :     }
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span>            :   template&lt;typename _Tp, class _Alloc&gt;
+<span class="lineNum">     396 </span>            :     template&lt;typename _Comp&gt;
+<span class="lineNum">     397 </span>            :       void
+<span class="lineNum">     398 </span>            :       forward_list&lt;_Tp, _Alloc&gt;::
+<span class="lineNum">     399 </span>            :       sort(_Comp __comp)
+<span class="lineNum">     400 </span>            :       {
+<span class="lineNum">     401 </span>            :         // If `next' is 0, return immediately.
+<span class="lineNum">     402 </span>            :         _Node* __list = static_cast&lt;_Node*&gt;(this-&gt;_M_impl._M_head._M_next);
+<span class="lineNum">     403 </span>            :         if (!__list)
+<span class="lineNum">     404 </span>            :           return;
+<span class="lineNum">     405 </span>            : 
+<span class="lineNum">     406 </span>            :         unsigned long __insize = 1;
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            :         while (1)
+<span class="lineNum">     409 </span>            :           {
+<span class="lineNum">     410 </span>            :             _Node* __p = __list;
+<span class="lineNum">     411 </span>            :             __list = 0;
+<span class="lineNum">     412 </span>            :             _Node* __tail = 0;
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span>            :             // Count number of merges we do in this pass.
+<span class="lineNum">     415 </span>            :             unsigned long __nmerges = 0;
+<span class="lineNum">     416 </span>            : 
+<span class="lineNum">     417 </span>            :             while (__p)
+<span class="lineNum">     418 </span>            :               {
+<span class="lineNum">     419 </span>            :                 ++__nmerges;
+<span class="lineNum">     420 </span>            :                 // There exists a merge to be done.
+<span class="lineNum">     421 </span>            :                 // Step `insize' places along from p.
+<span class="lineNum">     422 </span>            :                 _Node* __q = __p;
+<span class="lineNum">     423 </span>            :                 unsigned long __psize = 0;
+<span class="lineNum">     424 </span>            :                 for (unsigned long __i = 0; __i &lt; __insize; ++__i)
+<span class="lineNum">     425 </span>            :                   {
+<span class="lineNum">     426 </span>            :                     ++__psize;
+<span class="lineNum">     427 </span>            :                     __q = static_cast&lt;_Node*&gt;(__q-&gt;_M_next);
+<span class="lineNum">     428 </span>            :                     if (!__q)
+<span class="lineNum">     429 </span>            :                       break;
+<span class="lineNum">     430 </span>            :                   }
+<span class="lineNum">     431 </span>            : 
+<span class="lineNum">     432 </span>            :                 // If q hasn't fallen off end, we have two lists to merge.
+<span class="lineNum">     433 </span>            :                 unsigned long __qsize = __insize;
+<span class="lineNum">     434 </span>            : 
+<span class="lineNum">     435 </span>            :                 // Now we have two lists; merge them.
+<span class="lineNum">     436 </span>            :                 while (__psize &gt; 0 || (__qsize &gt; 0 &amp;&amp; __q))
+<span class="lineNum">     437 </span>            :                   {
+<span class="lineNum">     438 </span>            :                     // Decide whether next node of merge comes from p or q.
+<span class="lineNum">     439 </span>            :                     _Node* __e;
+<span class="lineNum">     440 </span>            :                     if (__psize == 0)
+<span class="lineNum">     441 </span>            :                       {
+<span class="lineNum">     442 </span>            :                         // p is empty; e must come from q.
+<span class="lineNum">     443 </span>            :                         __e = __q;
+<span class="lineNum">     444 </span>            :                         __q = static_cast&lt;_Node*&gt;(__q-&gt;_M_next);
+<span class="lineNum">     445 </span>            :                         --__qsize;
+<span class="lineNum">     446 </span>            :                       }
+<span class="lineNum">     447 </span>            :                     else if (__qsize == 0 || !__q)
+<span class="lineNum">     448 </span>            :                       {
+<span class="lineNum">     449 </span>            :                         // q is empty; e must come from p.
+<span class="lineNum">     450 </span>            :                         __e = __p;
+<span class="lineNum">     451 </span>            :                         __p = static_cast&lt;_Node*&gt;(__p-&gt;_M_next);
+<span class="lineNum">     452 </span>            :                         --__psize;
+<span class="lineNum">     453 </span>            :                       }
+<span class="lineNum">     454 </span>            :                     else if (!__comp(*__q-&gt;_M_valptr(), *__p-&gt;_M_valptr()))
+<span class="lineNum">     455 </span>            :                       {
+<span class="lineNum">     456 </span>            :                         // First node of q is not lower; e must come from p.
+<span class="lineNum">     457 </span>            :                         __e = __p;
+<span class="lineNum">     458 </span>            :                         __p = static_cast&lt;_Node*&gt;(__p-&gt;_M_next);
+<span class="lineNum">     459 </span>            :                         --__psize;
+<span class="lineNum">     460 </span>            :                       }
+<span class="lineNum">     461 </span>            :                     else
+<span class="lineNum">     462 </span>            :                       {
+<span class="lineNum">     463 </span>            :                         // First node of q is lower; e must come from q.
+<span class="lineNum">     464 </span>            :                         __e = __q;
+<span class="lineNum">     465 </span>            :                         __q = static_cast&lt;_Node*&gt;(__q-&gt;_M_next);
+<span class="lineNum">     466 </span>            :                         --__qsize;
+<span class="lineNum">     467 </span>            :                       }
+<span class="lineNum">     468 </span>            : 
+<span class="lineNum">     469 </span>            :                     // Add the next node to the merged list.
+<span class="lineNum">     470 </span>            :                     if (__tail)
+<span class="lineNum">     471 </span>            :                       __tail-&gt;_M_next = __e;
+<span class="lineNum">     472 </span>            :                     else
+<span class="lineNum">     473 </span>            :                       __list = __e;
+<span class="lineNum">     474 </span>            :                     __tail = __e;
+<span class="lineNum">     475 </span>            :                   }
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span>            :                 // Now p has stepped `insize' places along, and q has too.
+<span class="lineNum">     478 </span>            :                 __p = __q;
+<span class="lineNum">     479 </span>            :               }
+<span class="lineNum">     480 </span>            :             __tail-&gt;_M_next = 0;
+<span class="lineNum">     481 </span>            : 
+<span class="lineNum">     482 </span>            :             // If we have done only one merge, we're finished.
+<span class="lineNum">     483 </span>            :             // Allow for nmerges == 0, the empty list case.
+<span class="lineNum">     484 </span>            :             if (__nmerges &lt;= 1)
+<span class="lineNum">     485 </span>            :               {
+<span class="lineNum">     486 </span>            :                 this-&gt;_M_impl._M_head._M_next = __list;
+<span class="lineNum">     487 </span>            :                 return;
+<span class="lineNum">     488 </span>            :               }
+<span class="lineNum">     489 </span>            : 
+<span class="lineNum">     490 </span>            :             // Otherwise repeat, merging lists twice the size.
+<span class="lineNum">     491 </span>            :             __insize *= 2;
+<span class="lineNum">     492 </span>            :           }
+<span class="lineNum">     493 </span>            :       }
+<span class="lineNum">     494 </span>            :  
+<span class="lineNum">     495 </span>            : _GLIBCXX_END_NAMESPACE_CONTAINER
+<span class="lineNum">     496 </span>            : } // namespace std
+<span class="lineNum">     497 </span>            : 
+<span class="lineNum">     498 </span>            : #endif /* _FORWARD_LIST_TCC */
+<span class="lineNum">     499 </span>            : 
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

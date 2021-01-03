@@ -1,0 +1,577 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - _vector - pybind11/attr.h</title>
+  <link rel="stylesheet" type="text/css" href="../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../index.html">top level</a> - <a href="index.html">pybind11</a> - attr.h<span style="font-size: 80%;"> (source / <a href="attr.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">_vector</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntry">14</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-01-03 20:25:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :     pybind11/attr.h: Infrastructure for processing custom
+<span class="lineNum">       3 </span>            :     type and function attributes
+<span class="lineNum">       4 </span>            : 
+<span class="lineNum">       5 </span>            :     Copyright (c) 2016 Wenzel Jakob &lt;wenzel.jakob@epfl.ch&gt;
+<span class="lineNum">       6 </span>            : 
+<span class="lineNum">       7 </span>            :     All rights reserved. Use of this source code is governed by a
+<span class="lineNum">       8 </span>            :     BSD-style license that can be found in the LICENSE file.
+<span class="lineNum">       9 </span>            : */
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : #pragma once
+<span class="lineNum">      12 </span>            : 
+<span class="lineNum">      13 </span>            : #include &quot;cast.h&quot;
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : NAMESPACE_BEGIN(PYBIND11_NAMESPACE)
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : /// \addtogroup annotations
+<span class="lineNum">      18 </span>            : /// @{
+<span class="lineNum">      19 </span>            : 
+<span class="lineNum">      20 </span>            : /// Annotation for methods
+<span class="lineNum">      21 </span>            : struct is_method { handle class_; is_method(const handle &amp;c) : class_(c) { } };
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : /// Annotation for operators
+<span class="lineNum">      24 </span>            : struct is_operator { };
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span>            : /// Annotation for parent scope
+<span class="lineNum">      27 </span><span class="lineCov">          1 : struct scope { handle value; scope(const handle &amp;s) : value(s) { } };</span>
+<span class="lineNum">      28 </span>            : 
+<span class="lineNum">      29 </span>            : /// Annotation for documentation
+<span class="lineNum">      30 </span>            : struct doc { const char *value; doc(const char *value) : value(value) { } };
+<span class="lineNum">      31 </span>            : 
+<span class="lineNum">      32 </span>            : /// Annotation for function names
+<span class="lineNum">      33 </span><span class="lineCov">          1 : struct name { const char *value; name(const char *value) : value(value) { } };</span>
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : /// Annotation indicating that a function is an overload associated with a given &quot;sibling&quot;
+<span class="lineNum">      36 </span>            : struct sibling { handle value; sibling(const handle &amp;value) : value(value.ptr()) { } };
+<span class="lineNum">      37 </span>            : 
+<span class="lineNum">      38 </span>            : /// Annotation indicating that a class derives from another given type
+<span class="lineNum">      39 </span>            : template &lt;typename T&gt; struct base {
+<span class="lineNum">      40 </span>            :     PYBIND11_DEPRECATED(&quot;base&lt;T&gt;() was deprecated in favor of specifying 'T' as a template argument to class_&quot;)
+<span class="lineNum">      41 </span>            :     base() { }
+<span class="lineNum">      42 </span>            : };
+<span class="lineNum">      43 </span>            : 
+<span class="lineNum">      44 </span>            : /// Keep patient alive while nurse lives
+<span class="lineNum">      45 </span>            : template &lt;size_t Nurse, size_t Patient&gt; struct keep_alive { };
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : /// Annotation indicating that a class is involved in a multiple inheritance relationship
+<span class="lineNum">      48 </span>            : struct multiple_inheritance { };
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            : /// Annotation which enables dynamic attributes, i.e. adds `__dict__` to a class
+<span class="lineNum">      51 </span>            : struct dynamic_attr { };
+<span class="lineNum">      52 </span>            : 
+<span class="lineNum">      53 </span>            : /// Annotation which enables the buffer protocol for a type
+<span class="lineNum">      54 </span>            : struct buffer_protocol { };
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            : /// Annotation which requests that a special metaclass is created for a type
+<span class="lineNum">      57 </span>            : struct metaclass {
+<span class="lineNum">      58 </span>            :     handle value;
+<span class="lineNum">      59 </span>            : 
+<span class="lineNum">      60 </span>            :     PYBIND11_DEPRECATED(&quot;py::metaclass() is no longer required. It's turned on by default now.&quot;)
+<span class="lineNum">      61 </span>            :     metaclass() {}
+<span class="lineNum">      62 </span>            : 
+<span class="lineNum">      63 </span>            :     /// Override pybind11's default metaclass
+<span class="lineNum">      64 </span>            :     explicit metaclass(handle value) : value(value) { }
+<span class="lineNum">      65 </span>            : };
+<span class="lineNum">      66 </span>            : 
+<span class="lineNum">      67 </span>            : /// Annotation that marks a class as local to the module:
+<span class="lineNum">      68 </span>            : struct module_local { const bool value; constexpr module_local(bool v = true) : value(v) { } };
+<span class="lineNum">      69 </span>            : 
+<span class="lineNum">      70 </span>            : /// Annotation to mark enums as an arithmetic type
+<span class="lineNum">      71 </span>            : struct arithmetic { };
+<span class="lineNum">      72 </span>            : 
+<span class="lineNum">      73 </span>            : /** \rst
+<span class="lineNum">      74 </span>            :     A call policy which places one or more guard variables (``Ts...``) around the function call.
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            :     For example, this definition:
+<span class="lineNum">      77 </span>            : 
+<span class="lineNum">      78 </span>            :     .. code-block:: cpp
+<span class="lineNum">      79 </span>            : 
+<span class="lineNum">      80 </span>            :         m.def(&quot;foo&quot;, foo, py::call_guard&lt;T&gt;());
+<span class="lineNum">      81 </span>            : 
+<span class="lineNum">      82 </span>            :     is equivalent to the following pseudocode:
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            :     .. code-block:: cpp
+<span class="lineNum">      85 </span>            : 
+<span class="lineNum">      86 </span>            :         m.def(&quot;foo&quot;, [](args...) {
+<span class="lineNum">      87 </span>            :             T scope_guard;
+<span class="lineNum">      88 </span>            :             return foo(args...); // forwarded arguments
+<span class="lineNum">      89 </span>            :         });
+<span class="lineNum">      90 </span>            :  \endrst */
+<span class="lineNum">      91 </span>            : template &lt;typename... Ts&gt; struct call_guard;
+<span class="lineNum">      92 </span>            : 
+<span class="lineNum">      93 </span>            : template &lt;&gt; struct call_guard&lt;&gt; { using type = detail::void_type; };
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            : template &lt;typename T&gt;
+<span class="lineNum">      96 </span>            : struct call_guard&lt;T&gt; {
+<span class="lineNum">      97 </span>            :     static_assert(std::is_default_constructible&lt;T&gt;::value,
+<span class="lineNum">      98 </span>            :                   &quot;The guard type must be default constructible&quot;);
+<span class="lineNum">      99 </span>            : 
+<span class="lineNum">     100 </span>            :     using type = T;
+<span class="lineNum">     101 </span>            : };
+<span class="lineNum">     102 </span>            : 
+<span class="lineNum">     103 </span>            : template &lt;typename T, typename... Ts&gt;
+<span class="lineNum">     104 </span>            : struct call_guard&lt;T, Ts...&gt; {
+<span class="lineNum">     105 </span>            :     struct type {
+<span class="lineNum">     106 </span>            :         T guard{}; // Compose multiple guard types with left-to-right default-constructor order
+<span class="lineNum">     107 </span>            :         typename call_guard&lt;Ts...&gt;::type next{};
+<span class="lineNum">     108 </span>            :     };
+<span class="lineNum">     109 </span>            : };
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span>            : /// @} annotations
+<span class="lineNum">     112 </span>            : 
+<span class="lineNum">     113 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">     114 </span>            : /* Forward declarations */
+<span class="lineNum">     115 </span>            : enum op_id : int;
+<span class="lineNum">     116 </span>            : enum op_type : int;
+<span class="lineNum">     117 </span>            : struct undefined_t;
+<span class="lineNum">     118 </span>            : template &lt;op_id id, op_type ot, typename L = undefined_t, typename R = undefined_t&gt; struct op_;
+<span class="lineNum">     119 </span>            : inline void keep_alive_impl(size_t Nurse, size_t Patient, function_call &amp;call, handle ret);
+<span class="lineNum">     120 </span>            : 
+<span class="lineNum">     121 </span>            : /// Internal data structure which holds metadata about a keyword argument
+<span class="lineNum">     122 </span>            : struct argument_record {
+<span class="lineNum">     123 </span>            :     const char *name;  ///&lt; Argument name
+<span class="lineNum">     124 </span>            :     const char *descr; ///&lt; Human-readable version of the argument value
+<span class="lineNum">     125 </span>            :     handle value;      ///&lt; Associated Python object
+<span class="lineNum">     126 </span>            :     bool convert : 1;  ///&lt; True if the argument is allowed to convert when loading
+<span class="lineNum">     127 </span>            :     bool none : 1;     ///&lt; True if None is allowed when loading
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            :     argument_record(const char *name, const char *descr, handle value, bool convert, bool none)
+<span class="lineNum">     130 </span>            :         : name(name), descr(descr), value(value), convert(convert), none(none) { }
+<span class="lineNum">     131 </span>            : };
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            : /// Internal data structure which holds metadata about a bound function (signature, overloads, etc.)
+<span class="lineNum">     134 </span><span class="lineCov">          1 : struct function_record {</span>
+<span class="lineNum">     135 </span>            :     function_record()
+<span class="lineNum">     136 </span><span class="lineCov">          1 :         : is_constructor(false), is_new_style_constructor(false), is_stateless(false),</span>
+<span class="lineNum">     137 </span><span class="lineCov">          3 :           is_operator(false), has_args(false), has_kwargs(false), is_method(false) { }</span>
+<span class="lineNum">     138 </span>            : 
+<span class="lineNum">     139 </span>            :     /// Function name
+<span class="lineNum">     140 </span>            :     char *name = nullptr; /* why no C++ strings? They generate heavier code.. */
+<span class="lineNum">     141 </span>            : 
+<span class="lineNum">     142 </span>            :     // User-specified documentation string
+<span class="lineNum">     143 </span>            :     char *doc = nullptr;
+<span class="lineNum">     144 </span>            : 
+<span class="lineNum">     145 </span>            :     /// Human-readable version of the function signature
+<span class="lineNum">     146 </span>            :     char *signature = nullptr;
+<span class="lineNum">     147 </span>            : 
+<span class="lineNum">     148 </span>            :     /// List of registered keyword arguments
+<span class="lineNum">     149 </span>            :     std::vector&lt;argument_record&gt; args;
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :     /// Pointer to lambda function which converts arguments and performs the actual call
+<span class="lineNum">     152 </span>            :     handle (*impl) (function_call &amp;) = nullptr;
+<span class="lineNum">     153 </span>            : 
+<span class="lineNum">     154 </span>            :     /// Storage for the wrapped function pointer and captured data, if any
+<span class="lineNum">     155 </span>            :     void *data[3] = { };
+<span class="lineNum">     156 </span>            : 
+<span class="lineNum">     157 </span>            :     /// Pointer to custom destructor for 'data' (if needed)
+<span class="lineNum">     158 </span>            :     void (*free_data) (function_record *ptr) = nullptr;
+<span class="lineNum">     159 </span>            : 
+<span class="lineNum">     160 </span>            :     /// Return value policy associated with this function
+<span class="lineNum">     161 </span>            :     return_value_policy policy = return_value_policy::automatic;
+<span class="lineNum">     162 </span>            : 
+<span class="lineNum">     163 </span>            :     /// True if name == '__init__'
+<span class="lineNum">     164 </span>            :     bool is_constructor : 1;
+<span class="lineNum">     165 </span>            : 
+<span class="lineNum">     166 </span>            :     /// True if this is a new-style `__init__` defined in `detail/init.h`
+<span class="lineNum">     167 </span>            :     bool is_new_style_constructor : 1;
+<span class="lineNum">     168 </span>            : 
+<span class="lineNum">     169 </span>            :     /// True if this is a stateless function pointer
+<span class="lineNum">     170 </span>            :     bool is_stateless : 1;
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :     /// True if this is an operator (__add__), etc.
+<span class="lineNum">     173 </span>            :     bool is_operator : 1;
+<span class="lineNum">     174 </span>            : 
+<span class="lineNum">     175 </span>            :     /// True if the function has a '*args' argument
+<span class="lineNum">     176 </span>            :     bool has_args : 1;
+<span class="lineNum">     177 </span>            : 
+<span class="lineNum">     178 </span>            :     /// True if the function has a '**kwargs' argument
+<span class="lineNum">     179 </span>            :     bool has_kwargs : 1;
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :     /// True if this is a method
+<span class="lineNum">     182 </span>            :     bool is_method : 1;
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span>            :     /// Number of arguments (including py::args and/or py::kwargs, if present)
+<span class="lineNum">     185 </span>            :     std::uint16_t nargs;
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :     /// Python method object
+<span class="lineNum">     188 </span>            :     PyMethodDef *def = nullptr;
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span>            :     /// Python handle to the parent scope (a class or a module)
+<span class="lineNum">     191 </span>            :     handle scope;
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            :     /// Python handle to the sibling function representing an overload chain
+<span class="lineNum">     194 </span>            :     handle sibling;
+<span class="lineNum">     195 </span>            : 
+<span class="lineNum">     196 </span>            :     /// Pointer to next overload
+<span class="lineNum">     197 </span>            :     function_record *next = nullptr;
+<span class="lineNum">     198 </span>            : };
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            : /// Special data structure which (temporarily) holds metadata about a bound class
+<span class="lineNum">     201 </span>            : struct type_record {
+<span class="lineNum">     202 </span>            :     PYBIND11_NOINLINE type_record()
+<span class="lineNum">     203 </span>            :         : multiple_inheritance(false), dynamic_attr(false), buffer_protocol(false),
+<span class="lineNum">     204 </span>            :           default_holder(true), module_local(false) { }
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :     /// Handle to the parent scope
+<span class="lineNum">     207 </span>            :     handle scope;
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :     /// Name of the class
+<span class="lineNum">     210 </span>            :     const char *name = nullptr;
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            :     // Pointer to RTTI type_info data structure
+<span class="lineNum">     213 </span>            :     const std::type_info *type = nullptr;
+<span class="lineNum">     214 </span>            : 
+<span class="lineNum">     215 </span>            :     /// How large is the underlying C++ type?
+<span class="lineNum">     216 </span>            :     size_t type_size = 0;
+<span class="lineNum">     217 </span>            : 
+<span class="lineNum">     218 </span>            :     /// What is the alignment of the underlying C++ type?
+<span class="lineNum">     219 </span>            :     size_t type_align = 0;
+<span class="lineNum">     220 </span>            : 
+<span class="lineNum">     221 </span>            :     /// How large is the type's holder?
+<span class="lineNum">     222 </span>            :     size_t holder_size = 0;
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span>            :     /// The global operator new can be overridden with a class-specific variant
+<span class="lineNum">     225 </span>            :     void *(*operator_new)(size_t) = nullptr;
+<span class="lineNum">     226 </span>            : 
+<span class="lineNum">     227 </span>            :     /// Function pointer to class_&lt;..&gt;::init_instance
+<span class="lineNum">     228 </span>            :     void (*init_instance)(instance *, const void *) = nullptr;
+<span class="lineNum">     229 </span>            : 
+<span class="lineNum">     230 </span>            :     /// Function pointer to class_&lt;..&gt;::dealloc
+<span class="lineNum">     231 </span>            :     void (*dealloc)(detail::value_and_holder &amp;) = nullptr;
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            :     /// List of base classes of the newly created type
+<span class="lineNum">     234 </span>            :     list bases;
+<span class="lineNum">     235 </span>            : 
+<span class="lineNum">     236 </span>            :     /// Optional docstring
+<span class="lineNum">     237 </span>            :     const char *doc = nullptr;
+<span class="lineNum">     238 </span>            : 
+<span class="lineNum">     239 </span>            :     /// Custom metaclass (optional)
+<span class="lineNum">     240 </span>            :     handle metaclass;
+<span class="lineNum">     241 </span>            : 
+<span class="lineNum">     242 </span>            :     /// Multiple inheritance marker
+<span class="lineNum">     243 </span>            :     bool multiple_inheritance : 1;
+<span class="lineNum">     244 </span>            : 
+<span class="lineNum">     245 </span>            :     /// Does the class manage a __dict__?
+<span class="lineNum">     246 </span>            :     bool dynamic_attr : 1;
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span>            :     /// Does the class implement the buffer protocol?
+<span class="lineNum">     249 </span>            :     bool buffer_protocol : 1;
+<span class="lineNum">     250 </span>            : 
+<span class="lineNum">     251 </span>            :     /// Is the default (unique_ptr) holder type used?
+<span class="lineNum">     252 </span>            :     bool default_holder : 1;
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            :     /// Is the class definition local to the module shared object?
+<span class="lineNum">     255 </span>            :     bool module_local : 1;
+<span class="lineNum">     256 </span>            : 
+<span class="lineNum">     257 </span>            :     PYBIND11_NOINLINE void add_base(const std::type_info &amp;base, void *(*caster)(void *)) {
+<span class="lineNum">     258 </span>            :         auto base_info = detail::get_type_info(base, false);
+<span class="lineNum">     259 </span>            :         if (!base_info) {
+<span class="lineNum">     260 </span>            :             std::string tname(base.name());
+<span class="lineNum">     261 </span>            :             detail::clean_type_id(tname);
+<span class="lineNum">     262 </span>            :             pybind11_fail(&quot;generic_type: type \&quot;&quot; + std::string(name) +
+<span class="lineNum">     263 </span>            :                           &quot;\&quot; referenced unknown base type \&quot;&quot; + tname + &quot;\&quot;&quot;);
+<span class="lineNum">     264 </span>            :         }
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span>            :         if (default_holder != base_info-&gt;default_holder) {
+<span class="lineNum">     267 </span>            :             std::string tname(base.name());
+<span class="lineNum">     268 </span>            :             detail::clean_type_id(tname);
+<span class="lineNum">     269 </span>            :             pybind11_fail(&quot;generic_type: type \&quot;&quot; + std::string(name) + &quot;\&quot; &quot; +
+<span class="lineNum">     270 </span>            :                     (default_holder ? &quot;does not have&quot; : &quot;has&quot;) +
+<span class="lineNum">     271 </span>            :                     &quot; a non-default holder type while its base \&quot;&quot; + tname + &quot;\&quot; &quot; +
+<span class="lineNum">     272 </span>            :                     (base_info-&gt;default_holder ? &quot;does not&quot; : &quot;does&quot;));
+<span class="lineNum">     273 </span>            :         }
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :         bases.append((PyObject *) base_info-&gt;type);
+<span class="lineNum">     276 </span>            : 
+<span class="lineNum">     277 </span>            :         if (base_info-&gt;type-&gt;tp_dictoffset != 0)
+<span class="lineNum">     278 </span>            :             dynamic_attr = true;
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            :         if (caster)
+<span class="lineNum">     281 </span>            :             base_info-&gt;implicit_casts.emplace_back(type, caster);
+<span class="lineNum">     282 </span>            :     }
+<span class="lineNum">     283 </span>            : };
+<span class="lineNum">     284 </span>            : 
+<span class="lineNum">     285 </span><span class="lineCov">         77 : inline function_call::function_call(const function_record &amp;f, handle p) :</span>
+<span class="lineNum">     286 </span><span class="lineCov">        231 :         func(f), parent(p) {</span>
+<span class="lineNum">     287 </span><span class="lineCov">         77 :     args.reserve(f.nargs);</span>
+<span class="lineNum">     288 </span><span class="lineCov">         77 :     args_convert.reserve(f.nargs);</span>
+<span class="lineNum">     289 </span><span class="lineCov">         77 : }</span>
+<span class="lineNum">     290 </span>            : 
+<span class="lineNum">     291 </span>            : /// Tag for a new-style `__init__` defined in `detail/init.h`
+<span class="lineNum">     292 </span>            : struct is_new_style_constructor { };
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            : /**
+<span class="lineNum">     295 </span>            :  * Partial template specializations to process custom attributes provided to
+<span class="lineNum">     296 </span>            :  * cpp_function_ and class_. These are either used to initialize the respective
+<span class="lineNum">     297 </span>            :  * fields in the type_record and function_record data structures or executed at
+<span class="lineNum">     298 </span>            :  * runtime to deal with custom call policies (e.g. keep_alive).
+<span class="lineNum">     299 </span>            :  */
+<span class="lineNum">     300 </span>            : template &lt;typename T, typename SFINAE = void&gt; struct process_attribute;
+<span class="lineNum">     301 </span>            : 
+<span class="lineNum">     302 </span>            : template &lt;typename T&gt; struct process_attribute_default {
+<span class="lineNum">     303 </span>            :     /// Default implementation: do nothing
+<span class="lineNum">     304 </span>            :     static void init(const T &amp;, function_record *) { }
+<span class="lineNum">     305 </span>            :     static void init(const T &amp;, type_record *) { }
+<span class="lineNum">     306 </span>            :     static void precall(function_call &amp;) { }
+<span class="lineNum">     307 </span>            :     static void postcall(function_call &amp;, handle) { }
+<span class="lineNum">     308 </span>            : };
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span>            : /// Process an attribute specifying the function's name
+<span class="lineNum">     311 </span>            : template &lt;&gt; struct process_attribute&lt;name&gt; : process_attribute_default&lt;name&gt; {
+<span class="lineNum">     312 </span><span class="lineCov">          1 :     static void init(const name &amp;n, function_record *r) { r-&gt;name = const_cast&lt;char *&gt;(n.value); }</span>
+<span class="lineNum">     313 </span>            : };
+<span class="lineNum">     314 </span>            : 
+<span class="lineNum">     315 </span>            : /// Process an attribute specifying the function's docstring
+<span class="lineNum">     316 </span>            : template &lt;&gt; struct process_attribute&lt;doc&gt; : process_attribute_default&lt;doc&gt; {
+<span class="lineNum">     317 </span>            :     static void init(const doc &amp;n, function_record *r) { r-&gt;doc = const_cast&lt;char *&gt;(n.value); }
+<span class="lineNum">     318 </span>            : };
+<span class="lineNum">     319 </span>            : 
+<span class="lineNum">     320 </span>            : /// Process an attribute specifying the function's docstring (provided as a C-style string)
+<span class="lineNum">     321 </span>            : template &lt;&gt; struct process_attribute&lt;const char *&gt; : process_attribute_default&lt;const char *&gt; {
+<span class="lineNum">     322 </span><span class="lineCov">          1 :     static void init(const char *d, function_record *r) { r-&gt;doc = const_cast&lt;char *&gt;(d); }</span>
+<span class="lineNum">     323 </span>            :     static void init(const char *d, type_record *r) { r-&gt;doc = const_cast&lt;char *&gt;(d); }
+<span class="lineNum">     324 </span>            : };
+<span class="lineNum">     325 </span>            : template &lt;&gt; struct process_attribute&lt;char *&gt; : process_attribute&lt;const char *&gt; { };
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            : /// Process an attribute indicating the function's return value policy
+<span class="lineNum">     328 </span>            : template &lt;&gt; struct process_attribute&lt;return_value_policy&gt; : process_attribute_default&lt;return_value_policy&gt; {
+<span class="lineNum">     329 </span>            :     static void init(const return_value_policy &amp;p, function_record *r) { r-&gt;policy = p; }
+<span class="lineNum">     330 </span>            : };
+<span class="lineNum">     331 </span>            : 
+<span class="lineNum">     332 </span>            : /// Process an attribute which indicates that this is an overloaded function associated with a given sibling
+<span class="lineNum">     333 </span>            : template &lt;&gt; struct process_attribute&lt;sibling&gt; : process_attribute_default&lt;sibling&gt; {
+<span class="lineNum">     334 </span><span class="lineCov">          1 :     static void init(const sibling &amp;s, function_record *r) { r-&gt;sibling = s.value; }</span>
+<span class="lineNum">     335 </span>            : };
+<span class="lineNum">     336 </span>            : 
+<span class="lineNum">     337 </span>            : /// Process an attribute which indicates that this function is a method
+<span class="lineNum">     338 </span>            : template &lt;&gt; struct process_attribute&lt;is_method&gt; : process_attribute_default&lt;is_method&gt; {
+<span class="lineNum">     339 </span>            :     static void init(const is_method &amp;s, function_record *r) { r-&gt;is_method = true; r-&gt;scope = s.class_; }
+<span class="lineNum">     340 </span>            : };
+<span class="lineNum">     341 </span>            : 
+<span class="lineNum">     342 </span>            : /// Process an attribute which indicates the parent scope of a method
+<span class="lineNum">     343 </span>            : template &lt;&gt; struct process_attribute&lt;scope&gt; : process_attribute_default&lt;scope&gt; {
+<span class="lineNum">     344 </span><span class="lineCov">          1 :     static void init(const scope &amp;s, function_record *r) { r-&gt;scope = s.value; }</span>
+<span class="lineNum">     345 </span>            : };
+<span class="lineNum">     346 </span>            : 
+<span class="lineNum">     347 </span>            : /// Process an attribute which indicates that this function is an operator
+<span class="lineNum">     348 </span>            : template &lt;&gt; struct process_attribute&lt;is_operator&gt; : process_attribute_default&lt;is_operator&gt; {
+<span class="lineNum">     349 </span>            :     static void init(const is_operator &amp;, function_record *r) { r-&gt;is_operator = true; }
+<span class="lineNum">     350 </span>            : };
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            : template &lt;&gt; struct process_attribute&lt;is_new_style_constructor&gt; : process_attribute_default&lt;is_new_style_constructor&gt; {
+<span class="lineNum">     353 </span>            :     static void init(const is_new_style_constructor &amp;, function_record *r) { r-&gt;is_new_style_constructor = true; }
+<span class="lineNum">     354 </span>            : };
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span>            : /// Process a keyword argument attribute (*without* a default value)
+<span class="lineNum">     357 </span>            : template &lt;&gt; struct process_attribute&lt;arg&gt; : process_attribute_default&lt;arg&gt; {
+<span class="lineNum">     358 </span>            :     static void init(const arg &amp;a, function_record *r) {
+<span class="lineNum">     359 </span>            :         if (r-&gt;is_method &amp;&amp; r-&gt;args.empty())
+<span class="lineNum">     360 </span>            :             r-&gt;args.emplace_back(&quot;self&quot;, nullptr, handle(), true /*convert*/, false /*none not allowed*/);
+<span class="lineNum">     361 </span>            :         r-&gt;args.emplace_back(a.name, nullptr, handle(), !a.flag_noconvert, a.flag_none);
+<span class="lineNum">     362 </span>            :     }
+<span class="lineNum">     363 </span>            : };
+<span class="lineNum">     364 </span>            : 
+<span class="lineNum">     365 </span>            : /// Process a keyword argument attribute (*with* a default value)
+<span class="lineNum">     366 </span>            : template &lt;&gt; struct process_attribute&lt;arg_v&gt; : process_attribute_default&lt;arg_v&gt; {
+<span class="lineNum">     367 </span>            :     static void init(const arg_v &amp;a, function_record *r) {
+<span class="lineNum">     368 </span>            :         if (r-&gt;is_method &amp;&amp; r-&gt;args.empty())
+<span class="lineNum">     369 </span>            :             r-&gt;args.emplace_back(&quot;self&quot;, nullptr /*descr*/, handle() /*parent*/, true /*convert*/, false /*none not allowed*/);
+<span class="lineNum">     370 </span>            : 
+<span class="lineNum">     371 </span>            :         if (!a.value) {
+<span class="lineNum">     372 </span>            : #if !defined(NDEBUG)
+<span class="lineNum">     373 </span>            :             std::string descr(&quot;'&quot;);
+<span class="lineNum">     374 </span>            :             if (a.name) descr += std::string(a.name) + &quot;: &quot;;
+<span class="lineNum">     375 </span>            :             descr += a.type + &quot;'&quot;;
+<span class="lineNum">     376 </span>            :             if (r-&gt;is_method) {
+<span class="lineNum">     377 </span>            :                 if (r-&gt;name)
+<span class="lineNum">     378 </span>            :                     descr += &quot; in method '&quot; + (std::string) str(r-&gt;scope) + &quot;.&quot; + (std::string) r-&gt;name + &quot;'&quot;;
+<span class="lineNum">     379 </span>            :                 else
+<span class="lineNum">     380 </span>            :                     descr += &quot; in method of '&quot; + (std::string) str(r-&gt;scope) + &quot;'&quot;;
+<span class="lineNum">     381 </span>            :             } else if (r-&gt;name) {
+<span class="lineNum">     382 </span>            :                 descr += &quot; in function '&quot; + (std::string) r-&gt;name + &quot;'&quot;;
+<span class="lineNum">     383 </span>            :             }
+<span class="lineNum">     384 </span>            :             pybind11_fail(&quot;arg(): could not convert default argument &quot;
+<span class="lineNum">     385 </span>            :                           + descr + &quot; into a Python object (type not registered yet?)&quot;);
+<span class="lineNum">     386 </span>            : #else
+<span class="lineNum">     387 </span>            :             pybind11_fail(&quot;arg(): could not convert default argument &quot;
+<span class="lineNum">     388 </span>            :                           &quot;into a Python object (type not registered yet?). &quot;
+<span class="lineNum">     389 </span>            :                           &quot;Compile in debug mode for more information.&quot;);
+<span class="lineNum">     390 </span>            : #endif
+<span class="lineNum">     391 </span>            :         }
+<span class="lineNum">     392 </span>            :         r-&gt;args.emplace_back(a.name, a.descr, a.value.inc_ref(), !a.flag_noconvert, a.flag_none);
+<span class="lineNum">     393 </span>            :     }
+<span class="lineNum">     394 </span>            : };
+<span class="lineNum">     395 </span>            : 
+<span class="lineNum">     396 </span>            : /// Process a parent class attribute.  Single inheritance only (class_ itself already guarantees that)
+<span class="lineNum">     397 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     398 </span>            : struct process_attribute&lt;T, enable_if_t&lt;is_pyobject&lt;T&gt;::value&gt;&gt; : process_attribute_default&lt;handle&gt; {
+<span class="lineNum">     399 </span>            :     static void init(const handle &amp;h, type_record *r) { r-&gt;bases.append(h); }
+<span class="lineNum">     400 </span>            : };
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            : /// Process a parent class attribute (deprecated, does not support multiple inheritance)
+<span class="lineNum">     403 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     404 </span>            : struct process_attribute&lt;base&lt;T&gt;&gt; : process_attribute_default&lt;base&lt;T&gt;&gt; {
+<span class="lineNum">     405 </span>            :     static void init(const base&lt;T&gt; &amp;, type_record *r) { r-&gt;add_base(typeid(T), nullptr); }
+<span class="lineNum">     406 </span>            : };
+<span class="lineNum">     407 </span>            : 
+<span class="lineNum">     408 </span>            : /// Process a multiple inheritance attribute
+<span class="lineNum">     409 </span>            : template &lt;&gt;
+<span class="lineNum">     410 </span>            : struct process_attribute&lt;multiple_inheritance&gt; : process_attribute_default&lt;multiple_inheritance&gt; {
+<span class="lineNum">     411 </span>            :     static void init(const multiple_inheritance &amp;, type_record *r) { r-&gt;multiple_inheritance = true; }
+<span class="lineNum">     412 </span>            : };
+<span class="lineNum">     413 </span>            : 
+<span class="lineNum">     414 </span>            : template &lt;&gt;
+<span class="lineNum">     415 </span>            : struct process_attribute&lt;dynamic_attr&gt; : process_attribute_default&lt;dynamic_attr&gt; {
+<span class="lineNum">     416 </span>            :     static void init(const dynamic_attr &amp;, type_record *r) { r-&gt;dynamic_attr = true; }
+<span class="lineNum">     417 </span>            : };
+<span class="lineNum">     418 </span>            : 
+<span class="lineNum">     419 </span>            : template &lt;&gt;
+<span class="lineNum">     420 </span>            : struct process_attribute&lt;buffer_protocol&gt; : process_attribute_default&lt;buffer_protocol&gt; {
+<span class="lineNum">     421 </span>            :     static void init(const buffer_protocol &amp;, type_record *r) { r-&gt;buffer_protocol = true; }
+<span class="lineNum">     422 </span>            : };
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            : template &lt;&gt;
+<span class="lineNum">     425 </span>            : struct process_attribute&lt;metaclass&gt; : process_attribute_default&lt;metaclass&gt; {
+<span class="lineNum">     426 </span>            :     static void init(const metaclass &amp;m, type_record *r) { r-&gt;metaclass = m.value; }
+<span class="lineNum">     427 </span>            : };
+<span class="lineNum">     428 </span>            : 
+<span class="lineNum">     429 </span>            : template &lt;&gt;
+<span class="lineNum">     430 </span>            : struct process_attribute&lt;module_local&gt; : process_attribute_default&lt;module_local&gt; {
+<span class="lineNum">     431 </span>            :     static void init(const module_local &amp;l, type_record *r) { r-&gt;module_local = l.value; }
+<span class="lineNum">     432 </span>            : };
+<span class="lineNum">     433 </span>            : 
+<span class="lineNum">     434 </span>            : /// Process an 'arithmetic' attribute for enums (does nothing here)
+<span class="lineNum">     435 </span>            : template &lt;&gt;
+<span class="lineNum">     436 </span>            : struct process_attribute&lt;arithmetic&gt; : process_attribute_default&lt;arithmetic&gt; {};
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span>            : template &lt;typename... Ts&gt;
+<span class="lineNum">     439 </span>            : struct process_attribute&lt;call_guard&lt;Ts...&gt;&gt; : process_attribute_default&lt;call_guard&lt;Ts...&gt;&gt; { };
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span>            : /**
+<span class="lineNum">     442 </span>            :  * Process a keep_alive call policy -- invokes keep_alive_impl during the
+<span class="lineNum">     443 </span>            :  * pre-call handler if both Nurse, Patient != 0 and use the post-call handler
+<span class="lineNum">     444 </span>            :  * otherwise
+<span class="lineNum">     445 </span>            :  */
+<span class="lineNum">     446 </span>            : template &lt;size_t Nurse, size_t Patient&gt; struct process_attribute&lt;keep_alive&lt;Nurse, Patient&gt;&gt; : public process_attribute_default&lt;keep_alive&lt;Nurse, Patient&gt;&gt; {
+<span class="lineNum">     447 </span>            :     template &lt;size_t N = Nurse, size_t P = Patient, enable_if_t&lt;N != 0 &amp;&amp; P != 0, int&gt; = 0&gt;
+<span class="lineNum">     448 </span>            :     static void precall(function_call &amp;call) { keep_alive_impl(Nurse, Patient, call, handle()); }
+<span class="lineNum">     449 </span>            :     template &lt;size_t N = Nurse, size_t P = Patient, enable_if_t&lt;N != 0 &amp;&amp; P != 0, int&gt; = 0&gt;
+<span class="lineNum">     450 </span>            :     static void postcall(function_call &amp;, handle) { }
+<span class="lineNum">     451 </span>            :     template &lt;size_t N = Nurse, size_t P = Patient, enable_if_t&lt;N == 0 || P == 0, int&gt; = 0&gt;
+<span class="lineNum">     452 </span>            :     static void precall(function_call &amp;) { }
+<span class="lineNum">     453 </span>            :     template &lt;size_t N = Nurse, size_t P = Patient, enable_if_t&lt;N == 0 || P == 0, int&gt; = 0&gt;
+<span class="lineNum">     454 </span>            :     static void postcall(function_call &amp;call, handle ret) { keep_alive_impl(Nurse, Patient, call, ret); }
+<span class="lineNum">     455 </span>            : };
+<span class="lineNum">     456 </span>            : 
+<span class="lineNum">     457 </span>            : /// Recursively iterate over variadic template arguments
+<span class="lineNum">     458 </span>            : template &lt;typename... Args&gt; struct process_attributes {
+<span class="lineNum">     459 </span>            :     static void init(const Args&amp;... args, function_record *r) {
+<span class="lineNum">     460 </span>            :         int unused[] = { 0, (process_attribute&lt;typename std::decay&lt;Args&gt;::type&gt;::init(args, r), 0) ... };
+<span class="lineNum">     461 </span>            :         ignore_unused(unused);
+<span class="lineNum">     462 </span>            :     }
+<span class="lineNum">     463 </span>            :     static void init(const Args&amp;... args, type_record *r) {
+<span class="lineNum">     464 </span>            :         int unused[] = { 0, (process_attribute&lt;typename std::decay&lt;Args&gt;::type&gt;::init(args, r), 0) ... };
+<span class="lineNum">     465 </span>            :         ignore_unused(unused);
+<span class="lineNum">     466 </span>            :     }
+<span class="lineNum">     467 </span>            :     static void precall(function_call &amp;call) {
+<span class="lineNum">     468 </span>            :         int unused[] = { 0, (process_attribute&lt;typename std::decay&lt;Args&gt;::type&gt;::precall(call), 0) ... };
+<span class="lineNum">     469 </span>            :         ignore_unused(unused);
+<span class="lineNum">     470 </span>            :     }
+<span class="lineNum">     471 </span>            :     static void postcall(function_call &amp;call, handle fn_ret) {
+<span class="lineNum">     472 </span>            :         int unused[] = { 0, (process_attribute&lt;typename std::decay&lt;Args&gt;::type&gt;::postcall(call, fn_ret), 0) ... };
+<span class="lineNum">     473 </span>            :         ignore_unused(unused);
+<span class="lineNum">     474 </span>            :     }
+<span class="lineNum">     475 </span>            : };
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     478 </span>            : using is_call_guard = is_instantiation&lt;call_guard, T&gt;;
+<span class="lineNum">     479 </span>            : 
+<span class="lineNum">     480 </span>            : /// Extract the ``type`` from the first `call_guard` in `Extras...` (or `void_type` if none found)
+<span class="lineNum">     481 </span>            : template &lt;typename... Extra&gt;
+<span class="lineNum">     482 </span>            : using extract_guard_t = typename exactly_one_t&lt;is_call_guard, call_guard&lt;&gt;, Extra...&gt;::type;
+<span class="lineNum">     483 </span>            : 
+<span class="lineNum">     484 </span>            : /// Check the number of named arguments at compile time
+<span class="lineNum">     485 </span>            : template &lt;typename... Extra,
+<span class="lineNum">     486 </span>            :           size_t named = constexpr_sum(std::is_base_of&lt;arg, Extra&gt;::value...),
+<span class="lineNum">     487 </span>            :           size_t self  = constexpr_sum(std::is_same&lt;is_method, Extra&gt;::value...)&gt;
+<span class="lineNum">     488 </span>            : constexpr bool expected_num_args(size_t nargs, bool has_args, bool has_kwargs) {
+<span class="lineNum">     489 </span>            :     return named == 0 || (self + named + has_args + has_kwargs) == nargs;
+<span class="lineNum">     490 </span>            : }
+<span class="lineNum">     491 </span>            : 
+<span class="lineNum">     492 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     493 </span>            : NAMESPACE_END(PYBIND11_NAMESPACE)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

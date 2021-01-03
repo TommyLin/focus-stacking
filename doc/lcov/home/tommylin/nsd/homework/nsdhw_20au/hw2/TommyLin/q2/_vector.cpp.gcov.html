@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - _vector - /home/tommylin/nsd/homework/nsdhw_20au/hw2/TommyLin/q2/_vector.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../../index.html">top level</a> - <a href="index.html">home/tommylin/nsd/homework/nsdhw_20au/hw2/TommyLin/q2</a> - _vector.cpp<span style="font-size: 80%;"> (source / <a href="_vector.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">_vector</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-01-03 20:25:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include &lt;pybind11/pybind11.h&gt;</a>
+<span class="lineNum">       2 </span>            : #include &lt;pybind11/stl.h&gt;
+<span class="lineNum">       3 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">       4 </span>            : #include &lt;cmath&gt;
+<span class="lineNum">       5 </span>            : 
+<a name="6"><span class="lineNum">       6 </span>            : namespace py = pybind11;</a>
+<span class="lineNum">       7 </span>            : 
+<span class="lineNum">       8 </span><span class="lineCov">         73 : float angle(std::array&lt;float, 2&gt; vec1, std::array&lt;float, 2&gt; vec2) {</span>
+<span class="lineNum">       9 </span><span class="lineCov">         73 :     float len1 = vec1[0] * vec1[0] + vec1[1] * vec1[1];</span>
+<span class="lineNum">      10 </span><span class="lineCov">         73 :     float len2 = vec2[0] * vec2[0] + vec2[1] * vec2[1];</span>
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span><span class="lineCov">         73 :     if (len1 == 0 || len2 == 0)</span>
+<span class="lineNum">      13 </span><span class="lineCov">          3 :         throw std::invalid_argument(&quot;Vector length should not be zero&quot;);</span>
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span><span class="lineCov">         70 :     float dot_product = vec1[0] * vec2[0] + vec1[1] * vec2[1];</span>
+<span class="lineNum">      16 </span><span class="lineCov">        140 :     float value = dot_product / sqrt(len1 * len2);</span>
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span><span class="lineCov">         70 :     if (value &gt;= 1.0)</span>
+<span class="lineNum">      19 </span>            :         return 0.0;
+<span class="lineNum">      20 </span><span class="lineCov">         60 :     else if (value &lt;= -1.0)</span>
+<span class="lineNum">      21 </span>            :         return M_PI;
+<span class="lineNum">      22 </span>            :     else
+<span class="lineNum">      23 </span><span class="lineCov">         50 :         return acos(value);</span>
+<span class="lineNum">      24 </span>            : }
+<span class="lineNum">      25 </span>            : 
+<span class="lineNum">      26 </span><span class="lineCov">          2 : PYBIND11_MODULE(_vector, m) {</span>
+<a name="27"><span class="lineNum">      27 </span><span class="lineCov">          1 :     m.def(&quot;angle&quot;, &amp;angle, &quot;Calculate the angle (in radians) between two &quot;</span></a>
+<span class="lineNum">      28 </span>            :                            &quot;vectors in the 2-D Cartesian coordinate system.&quot;);
+<span class="lineNum">      29 </span><span class="lineCov">          2 : }</span>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

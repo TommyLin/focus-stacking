@@ -1,0 +1,904 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - _vector - pybind11/detail/common.h</title>
+  <link rel="stylesheet" type="text/css" href="../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">pybind11/detail</a> - common.h<span style="font-size: 80%;"> (source / <a href="common.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">_vector</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">16</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2021-01-03 20:25:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">13</td>
+            <td class="headerCovTableEntryLo">0.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Legend:</td>
+            <td class="headerValueLeg">            Lines:
+            <span class="coverLegendCov">hit</span>
+            <span class="coverLegendNoCov">not hit</span>
+</td>
+            <td></td>
+          </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : /*</a>
+<span class="lineNum">       2 </span>            :     pybind11/detail/common.h -- Basic macros
+<span class="lineNum">       3 </span>            : 
+<span class="lineNum">       4 </span>            :     Copyright (c) 2016 Wenzel Jakob &lt;wenzel.jakob@epfl.ch&gt;
+<span class="lineNum">       5 </span>            : 
+<span class="lineNum">       6 </span>            :     All rights reserved. Use of this source code is governed by a
+<span class="lineNum">       7 </span>            :     BSD-style license that can be found in the LICENSE file.
+<span class="lineNum">       8 </span>            : */
+<span class="lineNum">       9 </span>            : 
+<span class="lineNum">      10 </span>            : #pragma once
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #if !defined(NAMESPACE_BEGIN)
+<span class="lineNum">      13 </span>            : #  define NAMESPACE_BEGIN(name) namespace name {
+<span class="lineNum">      14 </span>            : #endif
+<span class="lineNum">      15 </span>            : #if !defined(NAMESPACE_END)
+<span class="lineNum">      16 </span>            : #  define NAMESPACE_END(name) }
+<span class="lineNum">      17 </span>            : #endif
+<span class="lineNum">      18 </span>            : 
+<span class="lineNum">      19 </span>            : // Robust support for some features and loading modules compiled against different pybind versions
+<span class="lineNum">      20 </span>            : // requires forcing hidden visibility on pybind code, so we enforce this by setting the attribute on
+<span class="lineNum">      21 </span>            : // the main `pybind11` namespace.
+<span class="lineNum">      22 </span>            : #if !defined(PYBIND11_NAMESPACE)
+<span class="lineNum">      23 </span>            : #  ifdef __GNUG__
+<span class="lineNum">      24 </span>            : #    define PYBIND11_NAMESPACE pybind11 __attribute__((visibility(&quot;hidden&quot;)))
+<span class="lineNum">      25 </span>            : #  else
+<span class="lineNum">      26 </span>            : #    define PYBIND11_NAMESPACE pybind11
+<span class="lineNum">      27 </span>            : #  endif
+<span class="lineNum">      28 </span>            : #endif
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : #if !(defined(_MSC_VER) &amp;&amp; __cplusplus == 199711L) &amp;&amp; !defined(__INTEL_COMPILER)
+<span class="lineNum">      31 </span>            : #  if __cplusplus &gt;= 201402L
+<span class="lineNum">      32 </span>            : #    define PYBIND11_CPP14
+<span class="lineNum">      33 </span>            : #    if __cplusplus &gt;= 201703L
+<span class="lineNum">      34 </span>            : #      define PYBIND11_CPP17
+<span class="lineNum">      35 </span>            : #    endif
+<span class="lineNum">      36 </span>            : #  endif
+<span class="lineNum">      37 </span>            : #elif defined(_MSC_VER) &amp;&amp; __cplusplus == 199711L
+<span class="lineNum">      38 </span>            : // MSVC sets _MSVC_LANG rather than __cplusplus (supposedly until the standard is fully implemented)
+<span class="lineNum">      39 </span>            : // Unless you use the /Zc:__cplusplus flag on Visual Studio 2017 15.7 Preview 3 or newer
+<span class="lineNum">      40 </span>            : #  if _MSVC_LANG &gt;= 201402L
+<span class="lineNum">      41 </span>            : #    define PYBIND11_CPP14
+<span class="lineNum">      42 </span>            : #    if _MSVC_LANG &gt; 201402L &amp;&amp; _MSC_VER &gt;= 1910
+<span class="lineNum">      43 </span>            : #      define PYBIND11_CPP17
+<span class="lineNum">      44 </span>            : #    endif
+<span class="lineNum">      45 </span>            : #  endif
+<span class="lineNum">      46 </span>            : #endif
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : // Compiler version assertions
+<span class="lineNum">      49 </span>            : #if defined(__INTEL_COMPILER)
+<span class="lineNum">      50 </span>            : #  if __INTEL_COMPILER &lt; 1700
+<span class="lineNum">      51 </span>            : #    error pybind11 requires Intel C++ compiler v17 or newer
+<span class="lineNum">      52 </span>            : #  endif
+<span class="lineNum">      53 </span>            : #elif defined(__clang__) &amp;&amp; !defined(__apple_build_version__)
+<span class="lineNum">      54 </span>            : #  if __clang_major__ &lt; 3 || (__clang_major__ == 3 &amp;&amp; __clang_minor__ &lt; 3)
+<span class="lineNum">      55 </span>            : #    error pybind11 requires clang 3.3 or newer
+<span class="lineNum">      56 </span>            : #  endif
+<span class="lineNum">      57 </span>            : #elif defined(__clang__)
+<span class="lineNum">      58 </span>            : // Apple changes clang version macros to its Xcode version; the first Xcode release based on
+<span class="lineNum">      59 </span>            : // (upstream) clang 3.3 was Xcode 5:
+<span class="lineNum">      60 </span>            : #  if __clang_major__ &lt; 5
+<span class="lineNum">      61 </span>            : #    error pybind11 requires Xcode/clang 5.0 or newer
+<span class="lineNum">      62 </span>            : #  endif
+<span class="lineNum">      63 </span>            : #elif defined(__GNUG__)
+<span class="lineNum">      64 </span>            : #  if __GNUC__ &lt; 4 || (__GNUC__ == 4 &amp;&amp; __GNUC_MINOR__ &lt; 8)
+<span class="lineNum">      65 </span>            : #    error pybind11 requires gcc 4.8 or newer
+<span class="lineNum">      66 </span>            : #  endif
+<span class="lineNum">      67 </span>            : #elif defined(_MSC_VER)
+<span class="lineNum">      68 </span>            : // Pybind hits various compiler bugs in 2015u2 and earlier, and also makes use of some stl features
+<span class="lineNum">      69 </span>            : // (e.g. std::negation) added in 2015u3:
+<span class="lineNum">      70 </span>            : #  if _MSC_FULL_VER &lt; 190024210
+<span class="lineNum">      71 </span>            : #    error pybind11 requires MSVC 2015 update 3 or newer
+<span class="lineNum">      72 </span>            : #  endif
+<span class="lineNum">      73 </span>            : #endif
+<span class="lineNum">      74 </span>            : 
+<span class="lineNum">      75 </span>            : #if !defined(PYBIND11_EXPORT)
+<span class="lineNum">      76 </span>            : #  if defined(WIN32) || defined(_WIN32)
+<span class="lineNum">      77 </span>            : #    define PYBIND11_EXPORT __declspec(dllexport)
+<span class="lineNum">      78 </span>            : #  else
+<span class="lineNum">      79 </span>            : #    define PYBIND11_EXPORT __attribute__ ((visibility(&quot;default&quot;)))
+<span class="lineNum">      80 </span>            : #  endif
+<span class="lineNum">      81 </span>            : #endif
+<span class="lineNum">      82 </span>            : 
+<span class="lineNum">      83 </span>            : #if defined(_MSC_VER)
+<span class="lineNum">      84 </span>            : #  define PYBIND11_NOINLINE __declspec(noinline)
+<span class="lineNum">      85 </span>            : #else
+<span class="lineNum">      86 </span>            : #  define PYBIND11_NOINLINE __attribute__ ((noinline))
+<span class="lineNum">      87 </span>            : #endif
+<span class="lineNum">      88 </span>            : 
+<span class="lineNum">      89 </span>            : #if defined(PYBIND11_CPP14)
+<span class="lineNum">      90 </span>            : #  define PYBIND11_DEPRECATED(reason) [[deprecated(reason)]]
+<span class="lineNum">      91 </span>            : #else
+<span class="lineNum">      92 </span>            : #  define PYBIND11_DEPRECATED(reason) __attribute__((deprecated(reason)))
+<span class="lineNum">      93 </span>            : #endif
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            : #define PYBIND11_VERSION_MAJOR 2
+<span class="lineNum">      96 </span>            : #define PYBIND11_VERSION_MINOR 5
+<span class="lineNum">      97 </span>            : #define PYBIND11_VERSION_PATCH 0
+<span class="lineNum">      98 </span>            : 
+<span class="lineNum">      99 </span>            : /// Include Python header, disable linking to pythonX_d.lib on Windows in debug mode
+<span class="lineNum">     100 </span>            : #if defined(_MSC_VER)
+<span class="lineNum">     101 </span>            : #  if (PY_MAJOR_VERSION == 3 &amp;&amp; PY_MINOR_VERSION &lt; 4)
+<span class="lineNum">     102 </span>            : #    define HAVE_ROUND 1
+<span class="lineNum">     103 </span>            : #  endif
+<span class="lineNum">     104 </span>            : #  pragma warning(push)
+<span class="lineNum">     105 </span>            : #  pragma warning(disable: 4510 4610 4512 4005)
+<span class="lineNum">     106 </span>            : #  if defined(_DEBUG) &amp;&amp; !defined(Py_DEBUG)
+<span class="lineNum">     107 </span>            : #    define PYBIND11_DEBUG_MARKER
+<span class="lineNum">     108 </span>            : #    undef _DEBUG
+<span class="lineNum">     109 </span>            : #  endif
+<span class="lineNum">     110 </span>            : #endif
+<span class="lineNum">     111 </span>            : 
+<span class="lineNum">     112 </span>            : #include &lt;Python.h&gt;
+<span class="lineNum">     113 </span>            : #include &lt;frameobject.h&gt;
+<span class="lineNum">     114 </span>            : #include &lt;pythread.h&gt;
+<span class="lineNum">     115 </span>            : 
+<span class="lineNum">     116 </span>            : /* Python #defines overrides on all sorts of core functions, which
+<span class="lineNum">     117 </span>            :    tends to weak havok in C++ codebases that expect these to work
+<span class="lineNum">     118 </span>            :    like regular functions (potentially with several overloads) */
+<span class="lineNum">     119 </span>            : #if defined(isalnum)
+<span class="lineNum">     120 </span>            : #  undef isalnum
+<span class="lineNum">     121 </span>            : #  undef isalpha
+<span class="lineNum">     122 </span>            : #  undef islower
+<span class="lineNum">     123 </span>            : #  undef isspace
+<span class="lineNum">     124 </span>            : #  undef isupper
+<span class="lineNum">     125 </span>            : #  undef tolower
+<span class="lineNum">     126 </span>            : #  undef toupper
+<span class="lineNum">     127 </span>            : #endif
+<span class="lineNum">     128 </span>            : 
+<span class="lineNum">     129 </span>            : #if defined(copysign)
+<span class="lineNum">     130 </span>            : #  undef copysign
+<span class="lineNum">     131 </span>            : #endif
+<span class="lineNum">     132 </span>            : 
+<span class="lineNum">     133 </span>            : #if defined(_MSC_VER)
+<span class="lineNum">     134 </span>            : #  if defined(PYBIND11_DEBUG_MARKER)
+<span class="lineNum">     135 </span>            : #    define _DEBUG
+<span class="lineNum">     136 </span>            : #    undef PYBIND11_DEBUG_MARKER
+<span class="lineNum">     137 </span>            : #  endif
+<span class="lineNum">     138 </span>            : #  pragma warning(pop)
+<span class="lineNum">     139 </span>            : #endif
+<span class="lineNum">     140 </span>            : 
+<span class="lineNum">     141 </span>            : #include &lt;cstddef&gt;
+<span class="lineNum">     142 </span>            : #include &lt;cstring&gt;
+<span class="lineNum">     143 </span>            : #include &lt;forward_list&gt;
+<span class="lineNum">     144 </span>            : #include &lt;vector&gt;
+<span class="lineNum">     145 </span>            : #include &lt;string&gt;
+<span class="lineNum">     146 </span>            : #include &lt;stdexcept&gt;
+<span class="lineNum">     147 </span>            : #include &lt;unordered_set&gt;
+<span class="lineNum">     148 </span>            : #include &lt;unordered_map&gt;
+<span class="lineNum">     149 </span>            : #include &lt;memory&gt;
+<span class="lineNum">     150 </span>            : #include &lt;typeindex&gt;
+<span class="lineNum">     151 </span>            : #include &lt;type_traits&gt;
+<span class="lineNum">     152 </span>            : 
+<span class="lineNum">     153 </span>            : #if PY_MAJOR_VERSION &gt;= 3 /// Compatibility macros for various Python versions
+<span class="lineNum">     154 </span>            : #define PYBIND11_INSTANCE_METHOD_NEW(ptr, class_) PyInstanceMethod_New(ptr)
+<span class="lineNum">     155 </span>            : #define PYBIND11_INSTANCE_METHOD_CHECK PyInstanceMethod_Check
+<span class="lineNum">     156 </span>            : #define PYBIND11_INSTANCE_METHOD_GET_FUNCTION PyInstanceMethod_GET_FUNCTION
+<span class="lineNum">     157 </span>            : #define PYBIND11_BYTES_CHECK PyBytes_Check
+<span class="lineNum">     158 </span>            : #define PYBIND11_BYTES_FROM_STRING PyBytes_FromString
+<span class="lineNum">     159 </span>            : #define PYBIND11_BYTES_FROM_STRING_AND_SIZE PyBytes_FromStringAndSize
+<span class="lineNum">     160 </span>            : #define PYBIND11_BYTES_AS_STRING_AND_SIZE PyBytes_AsStringAndSize
+<span class="lineNum">     161 </span>            : #define PYBIND11_BYTES_AS_STRING PyBytes_AsString
+<span class="lineNum">     162 </span>            : #define PYBIND11_BYTES_SIZE PyBytes_Size
+<span class="lineNum">     163 </span>            : #define PYBIND11_LONG_CHECK(o) PyLong_Check(o)
+<span class="lineNum">     164 </span>            : #define PYBIND11_LONG_AS_LONGLONG(o) PyLong_AsLongLong(o)
+<span class="lineNum">     165 </span>            : #define PYBIND11_LONG_FROM_SIGNED(o) PyLong_FromSsize_t((ssize_t) o)
+<span class="lineNum">     166 </span>            : #define PYBIND11_LONG_FROM_UNSIGNED(o) PyLong_FromSize_t((size_t) o)
+<span class="lineNum">     167 </span>            : #define PYBIND11_BYTES_NAME &quot;bytes&quot;
+<span class="lineNum">     168 </span>            : #define PYBIND11_STRING_NAME &quot;str&quot;
+<span class="lineNum">     169 </span>            : #define PYBIND11_SLICE_OBJECT PyObject
+<span class="lineNum">     170 </span>            : #define PYBIND11_FROM_STRING PyUnicode_FromString
+<span class="lineNum">     171 </span>            : #define PYBIND11_STR_TYPE ::pybind11::str
+<span class="lineNum">     172 </span>            : #define PYBIND11_BOOL_ATTR &quot;__bool__&quot;
+<span class="lineNum">     173 </span>            : #define PYBIND11_NB_BOOL(ptr) ((ptr)-&gt;nb_bool)
+<span class="lineNum">     174 </span>            : // Providing a separate declaration to make Clang's -Wmissing-prototypes happy
+<span class="lineNum">     175 </span>            : #define PYBIND11_PLUGIN_IMPL(name) \
+<span class="lineNum">     176 </span>            :     extern &quot;C&quot; PYBIND11_EXPORT PyObject *PyInit_##name();   \
+<span class="lineNum">     177 </span>            :     extern &quot;C&quot; PYBIND11_EXPORT PyObject *PyInit_##name()
+<span class="lineNum">     178 </span>            : 
+<span class="lineNum">     179 </span>            : #else
+<span class="lineNum">     180 </span>            : #define PYBIND11_INSTANCE_METHOD_NEW(ptr, class_) PyMethod_New(ptr, nullptr, class_)
+<span class="lineNum">     181 </span>            : #define PYBIND11_INSTANCE_METHOD_CHECK PyMethod_Check
+<span class="lineNum">     182 </span>            : #define PYBIND11_INSTANCE_METHOD_GET_FUNCTION PyMethod_GET_FUNCTION
+<span class="lineNum">     183 </span>            : #define PYBIND11_BYTES_CHECK PyString_Check
+<span class="lineNum">     184 </span>            : #define PYBIND11_BYTES_FROM_STRING PyString_FromString
+<span class="lineNum">     185 </span>            : #define PYBIND11_BYTES_FROM_STRING_AND_SIZE PyString_FromStringAndSize
+<span class="lineNum">     186 </span>            : #define PYBIND11_BYTES_AS_STRING_AND_SIZE PyString_AsStringAndSize
+<span class="lineNum">     187 </span>            : #define PYBIND11_BYTES_AS_STRING PyString_AsString
+<span class="lineNum">     188 </span>            : #define PYBIND11_BYTES_SIZE PyString_Size
+<span class="lineNum">     189 </span>            : #define PYBIND11_LONG_CHECK(o) (PyInt_Check(o) || PyLong_Check(o))
+<span class="lineNum">     190 </span>            : #define PYBIND11_LONG_AS_LONGLONG(o) (PyInt_Check(o) ? (long long) PyLong_AsLong(o) : PyLong_AsLongLong(o))
+<span class="lineNum">     191 </span>            : #define PYBIND11_LONG_FROM_SIGNED(o) PyInt_FromSsize_t((ssize_t) o) // Returns long if needed.
+<span class="lineNum">     192 </span>            : #define PYBIND11_LONG_FROM_UNSIGNED(o) PyInt_FromSize_t((size_t) o) // Returns long if needed.
+<span class="lineNum">     193 </span>            : #define PYBIND11_BYTES_NAME &quot;str&quot;
+<span class="lineNum">     194 </span>            : #define PYBIND11_STRING_NAME &quot;unicode&quot;
+<span class="lineNum">     195 </span>            : #define PYBIND11_SLICE_OBJECT PySliceObject
+<span class="lineNum">     196 </span>            : #define PYBIND11_FROM_STRING PyString_FromString
+<span class="lineNum">     197 </span>            : #define PYBIND11_STR_TYPE ::pybind11::bytes
+<span class="lineNum">     198 </span>            : #define PYBIND11_BOOL_ATTR &quot;__nonzero__&quot;
+<span class="lineNum">     199 </span>            : #define PYBIND11_NB_BOOL(ptr) ((ptr)-&gt;nb_nonzero)
+<span class="lineNum">     200 </span>            : // Providing a separate PyInit decl to make Clang's -Wmissing-prototypes happy
+<span class="lineNum">     201 </span>            : #define PYBIND11_PLUGIN_IMPL(name) \
+<span class="lineNum">     202 </span>            :     static PyObject *pybind11_init_wrapper();               \
+<span class="lineNum">     203 </span>            :     extern &quot;C&quot; PYBIND11_EXPORT void init##name();           \
+<span class="lineNum">     204 </span>            :     extern &quot;C&quot; PYBIND11_EXPORT void init##name() {          \
+<span class="lineNum">     205 </span>            :         (void)pybind11_init_wrapper();                      \
+<span class="lineNum">     206 </span>            :     }                                                       \
+<span class="lineNum">     207 </span>            :     PyObject *pybind11_init_wrapper()
+<span class="lineNum">     208 </span>            : #endif
+<span class="lineNum">     209 </span>            : 
+<span class="lineNum">     210 </span>            : #if PY_VERSION_HEX &gt;= 0x03050000 &amp;&amp; PY_VERSION_HEX &lt; 0x03050200
+<span class="lineNum">     211 </span>            : extern &quot;C&quot; {
+<span class="lineNum">     212 </span>            :     struct _Py_atomic_address { void *value; };
+<span class="lineNum">     213 </span>            :     PyAPI_DATA(_Py_atomic_address) _PyThreadState_Current;
+<span class="lineNum">     214 </span>            : }
+<span class="lineNum">     215 </span>            : #endif
+<span class="lineNum">     216 </span>            : 
+<span class="lineNum">     217 </span>            : #define PYBIND11_TRY_NEXT_OVERLOAD ((PyObject *) 1) // special failure return code
+<span class="lineNum">     218 </span>            : #define PYBIND11_STRINGIFY(x) #x
+<span class="lineNum">     219 </span>            : #define PYBIND11_TOSTRING(x) PYBIND11_STRINGIFY(x)
+<span class="lineNum">     220 </span>            : #define PYBIND11_CONCAT(first, second) first##second
+<span class="lineNum">     221 </span>            : #define PYBIND11_ENSURE_INTERNALS_READY \
+<span class="lineNum">     222 </span>            :     pybind11::detail::get_internals();
+<span class="lineNum">     223 </span>            : 
+<span class="lineNum">     224 </span>            : #define PYBIND11_CHECK_PYTHON_VERSION \
+<span class="lineNum">     225 </span>            :     {                                                                          \
+<span class="lineNum">     226 </span>            :         const char *compiled_ver = PYBIND11_TOSTRING(PY_MAJOR_VERSION)         \
+<span class="lineNum">     227 </span>            :             &quot;.&quot; PYBIND11_TOSTRING(PY_MINOR_VERSION);                           \
+<span class="lineNum">     228 </span>            :         const char *runtime_ver = Py_GetVersion();                             \
+<span class="lineNum">     229 </span>            :         size_t len = std::strlen(compiled_ver);                                \
+<span class="lineNum">     230 </span>            :         if (std::strncmp(runtime_ver, compiled_ver, len) != 0                  \
+<span class="lineNum">     231 </span>            :                 || (runtime_ver[len] &gt;= '0' &amp;&amp; runtime_ver[len] &lt;= '9')) {     \
+<span class="lineNum">     232 </span>            :             PyErr_Format(PyExc_ImportError,                                    \
+<span class="lineNum">     233 </span>            :                 &quot;Python version mismatch: module was compiled for Python %s, &quot; \
+<span class="lineNum">     234 </span>            :                 &quot;but the interpreter version is incompatible: %s.&quot;,            \
+<span class="lineNum">     235 </span>            :                 compiled_ver, runtime_ver);                                    \
+<span class="lineNum">     236 </span>            :             return nullptr;                                                    \
+<span class="lineNum">     237 </span>            :         }                                                                      \
+<span class="lineNum">     238 </span>            :     }
+<span class="lineNum">     239 </span>            : 
+<span class="lineNum">     240 </span>            : #define PYBIND11_CATCH_INIT_EXCEPTIONS \
+<span class="lineNum">     241 </span>            :         catch (pybind11::error_already_set &amp;e) {                               \
+<span class="lineNum">     242 </span>            :             PyErr_SetString(PyExc_ImportError, e.what());                      \
+<span class="lineNum">     243 </span>            :             return nullptr;                                                    \
+<span class="lineNum">     244 </span>            :         } catch (const std::exception &amp;e) {                                    \
+<span class="lineNum">     245 </span>            :             PyErr_SetString(PyExc_ImportError, e.what());                      \
+<span class="lineNum">     246 </span>            :             return nullptr;                                                    \
+<span class="lineNum">     247 </span>            :         }                                                                      \
+<span class="lineNum">     248 </span>            : 
+<span class="lineNum">     249 </span>            : /** \rst
+<span class="lineNum">     250 </span>            :     ***Deprecated in favor of PYBIND11_MODULE***
+<span class="lineNum">     251 </span>            : 
+<span class="lineNum">     252 </span>            :     This macro creates the entry point that will be invoked when the Python interpreter
+<span class="lineNum">     253 </span>            :     imports a plugin library. Please create a `module` in the function body and return
+<span class="lineNum">     254 </span>            :     the pointer to its underlying Python object at the end.
+<span class="lineNum">     255 </span>            : 
+<span class="lineNum">     256 </span>            :     .. code-block:: cpp
+<span class="lineNum">     257 </span>            : 
+<span class="lineNum">     258 </span>            :         PYBIND11_PLUGIN(example) {
+<span class="lineNum">     259 </span>            :             pybind11::module m(&quot;example&quot;, &quot;pybind11 example plugin&quot;);
+<span class="lineNum">     260 </span>            :             /// Set up bindings here
+<span class="lineNum">     261 </span>            :             return m.ptr();
+<span class="lineNum">     262 </span>            :         }
+<span class="lineNum">     263 </span>            : \endrst */
+<span class="lineNum">     264 </span>            : #define PYBIND11_PLUGIN(name)                                                  \
+<span class="lineNum">     265 </span>            :     PYBIND11_DEPRECATED(&quot;PYBIND11_PLUGIN is deprecated, use PYBIND11_MODULE&quot;)  \
+<span class="lineNum">     266 </span>            :     static PyObject *pybind11_init();                                          \
+<span class="lineNum">     267 </span>            :     PYBIND11_PLUGIN_IMPL(name) {                                               \
+<span class="lineNum">     268 </span>            :         PYBIND11_CHECK_PYTHON_VERSION                                          \
+<span class="lineNum">     269 </span>            :         PYBIND11_ENSURE_INTERNALS_READY                                        \
+<span class="lineNum">     270 </span>            :         try {                                                                  \
+<span class="lineNum">     271 </span>            :             return pybind11_init();                                            \
+<span class="lineNum">     272 </span>            :         } PYBIND11_CATCH_INIT_EXCEPTIONS                                       \
+<span class="lineNum">     273 </span>            :     }                                                                          \
+<span class="lineNum">     274 </span>            :     PyObject *pybind11_init()
+<span class="lineNum">     275 </span>            : 
+<span class="lineNum">     276 </span>            : /** \rst
+<span class="lineNum">     277 </span>            :     This macro creates the entry point that will be invoked when the Python interpreter
+<span class="lineNum">     278 </span>            :     imports an extension module. The module name is given as the fist argument and it
+<span class="lineNum">     279 </span>            :     should not be in quotes. The second macro argument defines a variable of type
+<span class="lineNum">     280 </span>            :     `py::module` which can be used to initialize the module.
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            :     .. code-block:: cpp
+<span class="lineNum">     283 </span>            : 
+<span class="lineNum">     284 </span>            :         PYBIND11_MODULE(example, m) {
+<span class="lineNum">     285 </span>            :             m.doc() = &quot;pybind11 example module&quot;;
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span>            :             // Add bindings here
+<span class="lineNum">     288 </span>            :             m.def(&quot;foo&quot;, []() {
+<span class="lineNum">     289 </span>            :                 return &quot;Hello, World!&quot;;
+<span class="lineNum">     290 </span>            :             });
+<span class="lineNum">     291 </span>            :         }
+<span class="lineNum">     292 </span>            : \endrst */
+<span class="lineNum">     293 </span>            : #define PYBIND11_MODULE(name, variable)                                        \
+<span class="lineNum">     294 </span>            :     static void PYBIND11_CONCAT(pybind11_init_, name)(pybind11::module &amp;);     \
+<span class="lineNum">     295 </span>            :     PYBIND11_PLUGIN_IMPL(name) {                                               \
+<span class="lineNum">     296 </span>            :         PYBIND11_CHECK_PYTHON_VERSION                                          \
+<span class="lineNum">     297 </span>            :         PYBIND11_ENSURE_INTERNALS_READY                                        \
+<span class="lineNum">     298 </span>            :         auto m = pybind11::module(PYBIND11_TOSTRING(name));                    \
+<span class="lineNum">     299 </span>            :         try {                                                                  \
+<span class="lineNum">     300 </span>            :             PYBIND11_CONCAT(pybind11_init_, name)(m);                          \
+<span class="lineNum">     301 </span>            :             return m.ptr();                                                    \
+<span class="lineNum">     302 </span>            :         } PYBIND11_CATCH_INIT_EXCEPTIONS                                       \
+<span class="lineNum">     303 </span>            :     }                                                                          \
+<span class="lineNum">     304 </span>            :     void PYBIND11_CONCAT(pybind11_init_, name)(pybind11::module &amp;variable)
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            : 
+<span class="lineNum">     307 </span>            : NAMESPACE_BEGIN(PYBIND11_NAMESPACE)
+<span class="lineNum">     308 </span>            : 
+<span class="lineNum">     309 </span>            : using ssize_t = Py_ssize_t;
+<span class="lineNum">     310 </span>            : using size_t  = std::size_t;
+<span class="lineNum">     311 </span>            : 
+<span class="lineNum">     312 </span>            : /// Approach used to cast a previously unknown C++ instance into a Python object
+<span class="lineNum">     313 </span>            : enum class return_value_policy : uint8_t {
+<span class="lineNum">     314 </span>            :     /** This is the default return value policy, which falls back to the policy
+<span class="lineNum">     315 </span>            :         return_value_policy::take_ownership when the return value is a pointer.
+<span class="lineNum">     316 </span>            :         Otherwise, it uses return_value::move or return_value::copy for rvalue
+<span class="lineNum">     317 </span>            :         and lvalue references, respectively. See below for a description of what
+<span class="lineNum">     318 </span>            :         all of these different policies do. */
+<span class="lineNum">     319 </span>            :     automatic = 0,
+<span class="lineNum">     320 </span>            : 
+<span class="lineNum">     321 </span>            :     /** As above, but use policy return_value_policy::reference when the return
+<span class="lineNum">     322 </span>            :         value is a pointer. This is the default conversion policy for function
+<span class="lineNum">     323 </span>            :         arguments when calling Python functions manually from C++ code (i.e. via
+<span class="lineNum">     324 </span>            :         handle::operator()). You probably won't need to use this. */
+<span class="lineNum">     325 </span>            :     automatic_reference,
+<span class="lineNum">     326 </span>            : 
+<span class="lineNum">     327 </span>            :     /** Reference an existing object (i.e. do not create a new copy) and take
+<span class="lineNum">     328 </span>            :         ownership. Python will call the destructor and delete operator when the
+<span class="lineNum">     329 </span>            :         object’s reference count reaches zero. Undefined behavior ensues when
+<span class="lineNum">     330 </span>            :         the C++ side does the same.. */
+<span class="lineNum">     331 </span>            :     take_ownership,
+<span class="lineNum">     332 </span>            : 
+<span class="lineNum">     333 </span>            :     /** Create a new copy of the returned object, which will be owned by
+<span class="lineNum">     334 </span>            :         Python. This policy is comparably safe because the lifetimes of the two
+<span class="lineNum">     335 </span>            :         instances are decoupled. */
+<span class="lineNum">     336 </span>            :     copy,
+<span class="lineNum">     337 </span>            : 
+<span class="lineNum">     338 </span>            :     /** Use std::move to move the return value contents into a new instance
+<span class="lineNum">     339 </span>            :         that will be owned by Python. This policy is comparably safe because the
+<span class="lineNum">     340 </span>            :         lifetimes of the two instances (move source and destination) are
+<span class="lineNum">     341 </span>            :         decoupled. */
+<span class="lineNum">     342 </span>            :     move,
+<span class="lineNum">     343 </span>            : 
+<span class="lineNum">     344 </span>            :     /** Reference an existing object, but do not take ownership. The C++ side
+<span class="lineNum">     345 </span>            :         is responsible for managing the object’s lifetime and deallocating it
+<span class="lineNum">     346 </span>            :         when it is no longer used. Warning: undefined behavior will ensue when
+<span class="lineNum">     347 </span>            :         the C++ side deletes an object that is still referenced and used by
+<span class="lineNum">     348 </span>            :         Python. */
+<span class="lineNum">     349 </span>            :     reference,
+<span class="lineNum">     350 </span>            : 
+<span class="lineNum">     351 </span>            :     /** This policy only applies to methods and properties. It references the
+<span class="lineNum">     352 </span>            :         object without taking ownership similar to the above
+<span class="lineNum">     353 </span>            :         return_value_policy::reference policy. In contrast to that policy, the
+<span class="lineNum">     354 </span>            :         function or property’s implicit this argument (called the parent) is
+<span class="lineNum">     355 </span>            :         considered to be the the owner of the return value (the child).
+<span class="lineNum">     356 </span>            :         pybind11 then couples the lifetime of the parent to the child via a
+<span class="lineNum">     357 </span>            :         reference relationship that ensures that the parent cannot be garbage
+<span class="lineNum">     358 </span>            :         collected while Python is still using the child. More advanced
+<span class="lineNum">     359 </span>            :         variations of this scheme are also possible using combinations of
+<span class="lineNum">     360 </span>            :         return_value_policy::reference and the keep_alive call policy */
+<span class="lineNum">     361 </span>            :     reference_internal
+<span class="lineNum">     362 </span>            : };
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span>            : inline static constexpr int log2(size_t n, int k = 0) { return (n &lt;= 1) ? k : log2(n &gt;&gt; 1, k + 1); }
+<span class="lineNum">     367 </span>            : 
+<span class="lineNum">     368 </span>            : // Returns the size as a multiple of sizeof(void *), rounded up.
+<span class="lineNum">     369 </span><span class="lineNoCov">          0 : inline static constexpr size_t size_in_ptrs(size_t s) { return 1 + ((s - 1) &gt;&gt; log2(sizeof(void *))); }</span>
+<span class="lineNum">     370 </span>            : 
+<span class="lineNum">     371 </span>            : /**
+<span class="lineNum">     372 </span>            :  * The space to allocate for simple layout instance holders (see below) in multiple of the size of
+<span class="lineNum">     373 </span>            :  * a pointer (e.g.  2 means 16 bytes on 64-bit architectures).  The default is the minimum required
+<span class="lineNum">     374 </span>            :  * to holder either a std::unique_ptr or std::shared_ptr (which is almost always
+<span class="lineNum">     375 </span>            :  * sizeof(std::shared_ptr&lt;T&gt;)).
+<span class="lineNum">     376 </span>            :  */
+<span class="lineNum">     377 </span>            : constexpr size_t instance_simple_holder_in_ptrs() {
+<span class="lineNum">     378 </span>            :     static_assert(sizeof(std::shared_ptr&lt;int&gt;) &gt;= sizeof(std::unique_ptr&lt;int&gt;),
+<span class="lineNum">     379 </span>            :             &quot;pybind assumes std::shared_ptrs are at least as big as std::unique_ptrs&quot;);
+<span class="lineNum">     380 </span>            :     return size_in_ptrs(sizeof(std::shared_ptr&lt;int&gt;));
+<span class="lineNum">     381 </span>            : }
+<span class="lineNum">     382 </span>            : 
+<span class="lineNum">     383 </span>            : // Forward declarations
+<span class="lineNum">     384 </span>            : struct type_info;
+<span class="lineNum">     385 </span>            : struct value_and_holder;
+<span class="lineNum">     386 </span>            : 
+<span class="lineNum">     387 </span>            : struct nonsimple_values_and_holders {
+<span class="lineNum">     388 </span>            :     void **values_and_holders;
+<span class="lineNum">     389 </span>            :     uint8_t *status;
+<span class="lineNum">     390 </span>            : };
+<span class="lineNum">     391 </span>            : 
+<span class="lineNum">     392 </span>            : /// The 'instance' type which needs to be standard layout (need to be able to use 'offsetof')
+<span class="lineNum">     393 </span>            : struct instance {
+<span class="lineNum">     394 </span>            :     PyObject_HEAD
+<span class="lineNum">     395 </span>            :     /// Storage for pointers and holder; see simple_layout, below, for a description
+<span class="lineNum">     396 </span>            :     union {
+<span class="lineNum">     397 </span>            :         void *simple_value_holder[1 + instance_simple_holder_in_ptrs()];
+<span class="lineNum">     398 </span>            :         nonsimple_values_and_holders nonsimple;
+<span class="lineNum">     399 </span>            :     };
+<span class="lineNum">     400 </span>            :     /// Weak references
+<span class="lineNum">     401 </span>            :     PyObject *weakrefs;
+<span class="lineNum">     402 </span>            :     /// If true, the pointer is owned which means we're free to manage it with a holder.
+<span class="lineNum">     403 </span>            :     bool owned : 1;
+<span class="lineNum">     404 </span>            :     /**
+<span class="lineNum">     405 </span>            :      * An instance has two possible value/holder layouts.
+<span class="lineNum">     406 </span>            :      *
+<span class="lineNum">     407 </span>            :      * Simple layout (when this flag is true), means the `simple_value_holder` is set with a pointer
+<span class="lineNum">     408 </span>            :      * and the holder object governing that pointer, i.e. [val1*][holder].  This layout is applied
+<span class="lineNum">     409 </span>            :      * whenever there is no python-side multiple inheritance of bound C++ types *and* the type's
+<span class="lineNum">     410 </span>            :      * holder will fit in the default space (which is large enough to hold either a std::unique_ptr
+<span class="lineNum">     411 </span>            :      * or std::shared_ptr).
+<span class="lineNum">     412 </span>            :      *
+<span class="lineNum">     413 </span>            :      * Non-simple layout applies when using custom holders that require more space than `shared_ptr`
+<span class="lineNum">     414 </span>            :      * (which is typically the size of two pointers), or when multiple inheritance is used on the
+<span class="lineNum">     415 </span>            :      * python side.  Non-simple layout allocates the required amount of memory to have multiple
+<span class="lineNum">     416 </span>            :      * bound C++ classes as parents.  Under this layout, `nonsimple.values_and_holders` is set to a
+<span class="lineNum">     417 </span>            :      * pointer to allocated space of the required space to hold a sequence of value pointers and
+<span class="lineNum">     418 </span>            :      * holders followed `status`, a set of bit flags (1 byte each), i.e.
+<span class="lineNum">     419 </span>            :      * [val1*][holder1][val2*][holder2]...[bb...]  where each [block] is rounded up to a multiple of
+<span class="lineNum">     420 </span>            :      * `sizeof(void *)`.  `nonsimple.status` is, for convenience, a pointer to the
+<span class="lineNum">     421 </span>            :      * beginning of the [bb...] block (but not independently allocated).
+<span class="lineNum">     422 </span>            :      *
+<span class="lineNum">     423 </span>            :      * Status bits indicate whether the associated holder is constructed (&amp;
+<span class="lineNum">     424 </span>            :      * status_holder_constructed) and whether the value pointer is registered (&amp;
+<span class="lineNum">     425 </span>            :      * status_instance_registered) in `registered_instances`.
+<span class="lineNum">     426 </span>            :      */
+<span class="lineNum">     427 </span>            :     bool simple_layout : 1;
+<span class="lineNum">     428 </span>            :     /// For simple layout, tracks whether the holder has been constructed
+<span class="lineNum">     429 </span>            :     bool simple_holder_constructed : 1;
+<span class="lineNum">     430 </span>            :     /// For simple layout, tracks whether the instance is registered in `registered_instances`
+<span class="lineNum">     431 </span>            :     bool simple_instance_registered : 1;
+<span class="lineNum">     432 </span>            :     /// If true, get_internals().patients has an entry for this object
+<span class="lineNum">     433 </span>            :     bool has_patients : 1;
+<span class="lineNum">     434 </span>            : 
+<span class="lineNum">     435 </span>            :     /// Initializes all of the above type/values/holders data (but not the instance values themselves)
+<span class="lineNum">     436 </span>            :     void allocate_layout();
+<span class="lineNum">     437 </span>            : 
+<span class="lineNum">     438 </span>            :     /// Destroys/deallocates all of the above
+<span class="lineNum">     439 </span>            :     void deallocate_layout();
+<span class="lineNum">     440 </span>            : 
+<span class="lineNum">     441 </span>            :     /// Returns the value_and_holder wrapper for the given type (or the first, if `find_type`
+<span class="lineNum">     442 </span>            :     /// omitted).  Returns a default-constructed (with `.inst = nullptr`) object on failure if
+<span class="lineNum">     443 </span>            :     /// `throw_if_missing` is false.
+<span class="lineNum">     444 </span>            :     value_and_holder get_value_and_holder(const type_info *find_type = nullptr, bool throw_if_missing = true);
+<span class="lineNum">     445 </span>            : 
+<span class="lineNum">     446 </span>            :     /// Bit values for the non-simple status flags
+<span class="lineNum">     447 </span>            :     static constexpr uint8_t status_holder_constructed  = 1;
+<span class="lineNum">     448 </span>            :     static constexpr uint8_t status_instance_registered = 2;
+<span class="lineNum">     449 </span>            : };
+<span class="lineNum">     450 </span>            : 
+<span class="lineNum">     451 </span>            : static_assert(std::is_standard_layout&lt;instance&gt;::value, &quot;Internal error: `pybind11::detail::instance` is not standard layout!&quot;);
+<span class="lineNum">     452 </span>            : 
+<span class="lineNum">     453 </span>            : /// from __cpp_future__ import (convenient aliases from C++14/17)
+<span class="lineNum">     454 </span>            : #if defined(PYBIND11_CPP14) &amp;&amp; (!defined(_MSC_VER) || _MSC_VER &gt;= 1910)
+<span class="lineNum">     455 </span>            : using std::enable_if_t;
+<span class="lineNum">     456 </span>            : using std::conditional_t;
+<span class="lineNum">     457 </span>            : using std::remove_cv_t;
+<span class="lineNum">     458 </span>            : using std::remove_reference_t;
+<span class="lineNum">     459 </span>            : #else
+<span class="lineNum">     460 </span>            : template &lt;bool B, typename T = void&gt; using enable_if_t = typename std::enable_if&lt;B, T&gt;::type;
+<span class="lineNum">     461 </span>            : template &lt;bool B, typename T, typename F&gt; using conditional_t = typename std::conditional&lt;B, T, F&gt;::type;
+<span class="lineNum">     462 </span>            : template &lt;typename T&gt; using remove_cv_t = typename std::remove_cv&lt;T&gt;::type;
+<span class="lineNum">     463 </span>            : template &lt;typename T&gt; using remove_reference_t = typename std::remove_reference&lt;T&gt;::type;
+<span class="lineNum">     464 </span>            : #endif
+<span class="lineNum">     465 </span>            : 
+<span class="lineNum">     466 </span>            : /// Index sequences
+<span class="lineNum">     467 </span>            : #if defined(PYBIND11_CPP14)
+<span class="lineNum">     468 </span>            : using std::index_sequence;
+<span class="lineNum">     469 </span>            : using std::make_index_sequence;
+<span class="lineNum">     470 </span>            : #else
+<span class="lineNum">     471 </span>            : template&lt;size_t ...&gt; struct index_sequence  { };
+<span class="lineNum">     472 </span>            : template&lt;size_t N, size_t ...S&gt; struct make_index_sequence_impl : make_index_sequence_impl &lt;N - 1, N - 1, S...&gt; { };
+<span class="lineNum">     473 </span>            : template&lt;size_t ...S&gt; struct make_index_sequence_impl &lt;0, S...&gt; { typedef index_sequence&lt;S...&gt; type; };
+<span class="lineNum">     474 </span>            : template&lt;size_t N&gt; using make_index_sequence = typename make_index_sequence_impl&lt;N&gt;::type;
+<span class="lineNum">     475 </span>            : #endif
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span>            : /// Make an index sequence of the indices of true arguments
+<span class="lineNum">     478 </span>            : template &lt;typename ISeq, size_t, bool...&gt; struct select_indices_impl { using type = ISeq; };
+<span class="lineNum">     479 </span>            : template &lt;size_t... IPrev, size_t I, bool B, bool... Bs&gt; struct select_indices_impl&lt;index_sequence&lt;IPrev...&gt;, I, B, Bs...&gt;
+<span class="lineNum">     480 </span>            :     : select_indices_impl&lt;conditional_t&lt;B, index_sequence&lt;IPrev..., I&gt;, index_sequence&lt;IPrev...&gt;&gt;, I + 1, Bs...&gt; {};
+<span class="lineNum">     481 </span>            : template &lt;bool... Bs&gt; using select_indices = typename select_indices_impl&lt;index_sequence&lt;&gt;, 0, Bs...&gt;::type;
+<span class="lineNum">     482 </span>            : 
+<span class="lineNum">     483 </span>            : /// Backports of std::bool_constant and std::negation to accommodate older compilers
+<span class="lineNum">     484 </span>            : template &lt;bool B&gt; using bool_constant = std::integral_constant&lt;bool, B&gt;;
+<span class="lineNum">     485 </span>            : template &lt;typename T&gt; struct negation : bool_constant&lt;!T::value&gt; { };
+<span class="lineNum">     486 </span>            : 
+<span class="lineNum">     487 </span>            : template &lt;typename...&gt; struct void_t_impl { using type = void; };
+<span class="lineNum">     488 </span>            : template &lt;typename... Ts&gt; using void_t = typename void_t_impl&lt;Ts...&gt;::type;
+<span class="lineNum">     489 </span>            : 
+<span class="lineNum">     490 </span>            : /// Compile-time all/any/none of that check the boolean value of all template types
+<span class="lineNum">     491 </span>            : #if defined(__cpp_fold_expressions) &amp;&amp; !(defined(_MSC_VER) &amp;&amp; (_MSC_VER &lt; 1916))
+<span class="lineNum">     492 </span>            : template &lt;class... Ts&gt; using all_of = bool_constant&lt;(Ts::value &amp;&amp; ...)&gt;;
+<span class="lineNum">     493 </span>            : template &lt;class... Ts&gt; using any_of = bool_constant&lt;(Ts::value || ...)&gt;;
+<span class="lineNum">     494 </span>            : #elif !defined(_MSC_VER)
+<span class="lineNum">     495 </span>            : template &lt;bool...&gt; struct bools {};
+<span class="lineNum">     496 </span>            : template &lt;class... Ts&gt; using all_of = std::is_same&lt;
+<span class="lineNum">     497 </span>            :     bools&lt;Ts::value..., true&gt;,
+<span class="lineNum">     498 </span>            :     bools&lt;true, Ts::value...&gt;&gt;;
+<span class="lineNum">     499 </span>            : template &lt;class... Ts&gt; using any_of = negation&lt;all_of&lt;negation&lt;Ts&gt;...&gt;&gt;;
+<span class="lineNum">     500 </span>            : #else
+<span class="lineNum">     501 </span>            : // MSVC has trouble with the above, but supports std::conjunction, which we can use instead (albeit
+<span class="lineNum">     502 </span>            : // at a slight loss of compilation efficiency).
+<span class="lineNum">     503 </span>            : template &lt;class... Ts&gt; using all_of = std::conjunction&lt;Ts...&gt;;
+<span class="lineNum">     504 </span>            : template &lt;class... Ts&gt; using any_of = std::disjunction&lt;Ts...&gt;;
+<span class="lineNum">     505 </span>            : #endif
+<span class="lineNum">     506 </span>            : template &lt;class... Ts&gt; using none_of = negation&lt;any_of&lt;Ts...&gt;&gt;;
+<span class="lineNum">     507 </span>            : 
+<span class="lineNum">     508 </span>            : template &lt;class T, template&lt;class&gt; class... Predicates&gt; using satisfies_all_of = all_of&lt;Predicates&lt;T&gt;...&gt;;
+<span class="lineNum">     509 </span>            : template &lt;class T, template&lt;class&gt; class... Predicates&gt; using satisfies_any_of = any_of&lt;Predicates&lt;T&gt;...&gt;;
+<span class="lineNum">     510 </span>            : template &lt;class T, template&lt;class&gt; class... Predicates&gt; using satisfies_none_of = none_of&lt;Predicates&lt;T&gt;...&gt;;
+<span class="lineNum">     511 </span>            : 
+<span class="lineNum">     512 </span>            : /// Strip the class from a method type
+<span class="lineNum">     513 </span>            : template &lt;typename T&gt; struct remove_class { };
+<span class="lineNum">     514 </span>            : template &lt;typename C, typename R, typename... A&gt; struct remove_class&lt;R (C::*)(A...)&gt; { typedef R type(A...); };
+<span class="lineNum">     515 </span>            : template &lt;typename C, typename R, typename... A&gt; struct remove_class&lt;R (C::*)(A...) const&gt; { typedef R type(A...); };
+<span class="lineNum">     516 </span>            : 
+<span class="lineNum">     517 </span>            : /// Helper template to strip away type modifiers
+<span class="lineNum">     518 </span>            : template &lt;typename T&gt; struct intrinsic_type                       { typedef T type; };
+<span class="lineNum">     519 </span>            : template &lt;typename T&gt; struct intrinsic_type&lt;const T&gt;              { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     520 </span>            : template &lt;typename T&gt; struct intrinsic_type&lt;T*&gt;                   { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     521 </span>            : template &lt;typename T&gt; struct intrinsic_type&lt;T&amp;&gt;                   { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     522 </span>            : template &lt;typename T&gt; struct intrinsic_type&lt;T&amp;&amp;&gt;                  { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     523 </span>            : template &lt;typename T, size_t N&gt; struct intrinsic_type&lt;const T[N]&gt; { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     524 </span>            : template &lt;typename T, size_t N&gt; struct intrinsic_type&lt;T[N]&gt;       { typedef typename intrinsic_type&lt;T&gt;::type type; };
+<span class="lineNum">     525 </span>            : template &lt;typename T&gt; using intrinsic_t = typename intrinsic_type&lt;T&gt;::type;
+<span class="lineNum">     526 </span>            : 
+<span class="lineNum">     527 </span>            : /// Helper type to replace 'void' in some expressions
+<span class="lineNum">     528 </span>            : struct void_type { };
+<span class="lineNum">     529 </span>            : 
+<span class="lineNum">     530 </span>            : /// Helper template which holds a list of types
+<span class="lineNum">     531 </span>            : template &lt;typename...&gt; struct type_list { };
+<span class="lineNum">     532 </span>            : 
+<span class="lineNum">     533 </span>            : /// Compile-time integer sum
+<span class="lineNum">     534 </span>            : #ifdef __cpp_fold_expressions
+<span class="lineNum">     535 </span>            : template &lt;typename... Ts&gt; constexpr size_t constexpr_sum(Ts... ns) { return (0 + ... + size_t{ns}); }
+<span class="lineNum">     536 </span>            : #else
+<span class="lineNum">     537 </span>            : constexpr size_t constexpr_sum() { return 0; }
+<span class="lineNum">     538 </span>            : template &lt;typename T, typename... Ts&gt;
+<span class="lineNum">     539 </span>            : constexpr size_t constexpr_sum(T n, Ts... ns) { return size_t{n} + constexpr_sum(ns...); }
+<span class="lineNum">     540 </span>            : #endif
+<span class="lineNum">     541 </span>            : 
+<span class="lineNum">     542 </span>            : NAMESPACE_BEGIN(constexpr_impl)
+<span class="lineNum">     543 </span>            : /// Implementation details for constexpr functions
+<span class="lineNum">     544 </span>            : constexpr int first(int i) { return i; }
+<span class="lineNum">     545 </span>            : template &lt;typename T, typename... Ts&gt;
+<span class="lineNum">     546 </span>            : constexpr int first(int i, T v, Ts... vs) { return v ? i : first(i + 1, vs...); }
+<span class="lineNum">     547 </span>            : 
+<span class="lineNum">     548 </span>            : constexpr int last(int /*i*/, int result) { return result; }
+<span class="lineNum">     549 </span>            : template &lt;typename T, typename... Ts&gt;
+<span class="lineNum">     550 </span>            : constexpr int last(int i, int result, T v, Ts... vs) { return last(i + 1, v ? i : result, vs...); }
+<span class="lineNum">     551 </span>            : NAMESPACE_END(constexpr_impl)
+<span class="lineNum">     552 </span>            : 
+<span class="lineNum">     553 </span>            : /// Return the index of the first type in Ts which satisfies Predicate&lt;T&gt;.  Returns sizeof...(Ts) if
+<span class="lineNum">     554 </span>            : /// none match.
+<span class="lineNum">     555 </span>            : template &lt;template&lt;typename&gt; class Predicate, typename... Ts&gt;
+<span class="lineNum">     556 </span>            : constexpr int constexpr_first() { return constexpr_impl::first(0, Predicate&lt;Ts&gt;::value...); }
+<span class="lineNum">     557 </span>            : 
+<span class="lineNum">     558 </span>            : /// Return the index of the last type in Ts which satisfies Predicate&lt;T&gt;, or -1 if none match.
+<span class="lineNum">     559 </span>            : template &lt;template&lt;typename&gt; class Predicate, typename... Ts&gt;
+<span class="lineNum">     560 </span>            : constexpr int constexpr_last() { return constexpr_impl::last(0, -1, Predicate&lt;Ts&gt;::value...); }
+<span class="lineNum">     561 </span>            : 
+<span class="lineNum">     562 </span>            : /// Return the Nth element from the parameter pack
+<span class="lineNum">     563 </span>            : template &lt;size_t N, typename T, typename... Ts&gt;
+<span class="lineNum">     564 </span>            : struct pack_element { using type = typename pack_element&lt;N - 1, Ts...&gt;::type; };
+<span class="lineNum">     565 </span>            : template &lt;typename T, typename... Ts&gt;
+<span class="lineNum">     566 </span>            : struct pack_element&lt;0, T, Ts...&gt; { using type = T; };
+<span class="lineNum">     567 </span>            : 
+<span class="lineNum">     568 </span>            : /// Return the one and only type which matches the predicate, or Default if none match.
+<span class="lineNum">     569 </span>            : /// If more than one type matches the predicate, fail at compile-time.
+<span class="lineNum">     570 </span>            : template &lt;template&lt;typename&gt; class Predicate, typename Default, typename... Ts&gt;
+<span class="lineNum">     571 </span>            : struct exactly_one {
+<span class="lineNum">     572 </span>            :     static constexpr auto found = constexpr_sum(Predicate&lt;Ts&gt;::value...);
+<span class="lineNum">     573 </span>            :     static_assert(found &lt;= 1, &quot;Found more than one type matching the predicate&quot;);
+<span class="lineNum">     574 </span>            : 
+<span class="lineNum">     575 </span>            :     static constexpr auto index = found ? constexpr_first&lt;Predicate, Ts...&gt;() : 0;
+<span class="lineNum">     576 </span>            :     using type = conditional_t&lt;found, typename pack_element&lt;index, Ts...&gt;::type, Default&gt;;
+<span class="lineNum">     577 </span>            : };
+<span class="lineNum">     578 </span>            : template &lt;template&lt;typename&gt; class P, typename Default&gt;
+<span class="lineNum">     579 </span>            : struct exactly_one&lt;P, Default&gt; { using type = Default; };
+<span class="lineNum">     580 </span>            : 
+<span class="lineNum">     581 </span>            : template &lt;template&lt;typename&gt; class Predicate, typename Default, typename... Ts&gt;
+<span class="lineNum">     582 </span>            : using exactly_one_t = typename exactly_one&lt;Predicate, Default, Ts...&gt;::type;
+<span class="lineNum">     583 </span>            : 
+<span class="lineNum">     584 </span>            : /// Defer the evaluation of type T until types Us are instantiated
+<span class="lineNum">     585 </span>            : template &lt;typename T, typename... /*Us*/&gt; struct deferred_type { using type = T; };
+<span class="lineNum">     586 </span>            : template &lt;typename T, typename... Us&gt; using deferred_t = typename deferred_type&lt;T, Us...&gt;::type;
+<span class="lineNum">     587 </span>            : 
+<span class="lineNum">     588 </span>            : /// Like is_base_of, but requires a strict base (i.e. `is_strict_base_of&lt;T, T&gt;::value == false`,
+<span class="lineNum">     589 </span>            : /// unlike `std::is_base_of`)
+<span class="lineNum">     590 </span>            : template &lt;typename Base, typename Derived&gt; using is_strict_base_of = bool_constant&lt;
+<span class="lineNum">     591 </span>            :     std::is_base_of&lt;Base, Derived&gt;::value &amp;&amp; !std::is_same&lt;Base, Derived&gt;::value&gt;;
+<span class="lineNum">     592 </span>            : 
+<span class="lineNum">     593 </span>            : /// Like is_base_of, but also requires that the base type is accessible (i.e. that a Derived pointer
+<span class="lineNum">     594 </span>            : /// can be converted to a Base pointer)
+<span class="lineNum">     595 </span>            : template &lt;typename Base, typename Derived&gt; using is_accessible_base_of = bool_constant&lt;
+<span class="lineNum">     596 </span>            :     std::is_base_of&lt;Base, Derived&gt;::value &amp;&amp; std::is_convertible&lt;Derived *, Base *&gt;::value&gt;;
+<span class="lineNum">     597 </span>            : 
+<span class="lineNum">     598 </span>            : template &lt;template&lt;typename...&gt; class Base&gt;
+<span class="lineNum">     599 </span>            : struct is_template_base_of_impl {
+<span class="lineNum">     600 </span>            :     template &lt;typename... Us&gt; static std::true_type check(Base&lt;Us...&gt; *);
+<span class="lineNum">     601 </span>            :     static std::false_type check(...);
+<span class="lineNum">     602 </span>            : };
+<span class="lineNum">     603 </span>            : 
+<span class="lineNum">     604 </span>            : /// Check if a template is the base of a type. For example:
+<span class="lineNum">     605 </span>            : /// `is_template_base_of&lt;Base, T&gt;` is true if `struct T : Base&lt;U&gt; {}` where U can be anything
+<span class="lineNum">     606 </span>            : template &lt;template&lt;typename...&gt; class Base, typename T&gt;
+<span class="lineNum">     607 </span>            : #if !defined(_MSC_VER)
+<span class="lineNum">     608 </span>            : using is_template_base_of = decltype(is_template_base_of_impl&lt;Base&gt;::check((intrinsic_t&lt;T&gt;*)nullptr));
+<span class="lineNum">     609 </span>            : #else // MSVC2015 has trouble with decltype in template aliases
+<span class="lineNum">     610 </span>            : struct is_template_base_of : decltype(is_template_base_of_impl&lt;Base&gt;::check((intrinsic_t&lt;T&gt;*)nullptr)) { };
+<span class="lineNum">     611 </span>            : #endif
+<span class="lineNum">     612 </span>            : 
+<span class="lineNum">     613 </span>            : /// Check if T is an instantiation of the template `Class`. For example:
+<span class="lineNum">     614 </span>            : /// `is_instantiation&lt;shared_ptr, T&gt;` is true if `T == shared_ptr&lt;U&gt;` where U can be anything.
+<span class="lineNum">     615 </span>            : template &lt;template&lt;typename...&gt; class Class, typename T&gt;
+<span class="lineNum">     616 </span>            : struct is_instantiation : std::false_type { };
+<span class="lineNum">     617 </span>            : template &lt;template&lt;typename...&gt; class Class, typename... Us&gt;
+<span class="lineNum">     618 </span>            : struct is_instantiation&lt;Class, Class&lt;Us...&gt;&gt; : std::true_type { };
+<span class="lineNum">     619 </span>            : 
+<span class="lineNum">     620 </span>            : /// Check if T is std::shared_ptr&lt;U&gt; where U can be anything
+<span class="lineNum">     621 </span>            : template &lt;typename T&gt; using is_shared_ptr = is_instantiation&lt;std::shared_ptr, T&gt;;
+<span class="lineNum">     622 </span>            : 
+<span class="lineNum">     623 </span>            : /// Check if T looks like an input iterator
+<span class="lineNum">     624 </span>            : template &lt;typename T, typename = void&gt; struct is_input_iterator : std::false_type {};
+<span class="lineNum">     625 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     626 </span>            : struct is_input_iterator&lt;T, void_t&lt;decltype(*std::declval&lt;T &amp;&gt;()), decltype(++std::declval&lt;T &amp;&gt;())&gt;&gt;
+<span class="lineNum">     627 </span>            :     : std::true_type {};
+<span class="lineNum">     628 </span>            : 
+<span class="lineNum">     629 </span>            : template &lt;typename T&gt; using is_function_pointer = bool_constant&lt;
+<span class="lineNum">     630 </span>            :     std::is_pointer&lt;T&gt;::value &amp;&amp; std::is_function&lt;typename std::remove_pointer&lt;T&gt;::type&gt;::value&gt;;
+<span class="lineNum">     631 </span>            : 
+<span class="lineNum">     632 </span>            : template &lt;typename F&gt; struct strip_function_object {
+<span class="lineNum">     633 </span>            :     using type = typename remove_class&lt;decltype(&amp;F::operator())&gt;::type;
+<span class="lineNum">     634 </span>            : };
+<span class="lineNum">     635 </span>            : 
+<span class="lineNum">     636 </span>            : // Extracts the function signature from a function, function pointer or lambda.
+<span class="lineNum">     637 </span>            : template &lt;typename Function, typename F = remove_reference_t&lt;Function&gt;&gt;
+<span class="lineNum">     638 </span>            : using function_signature_t = conditional_t&lt;
+<span class="lineNum">     639 </span>            :     std::is_function&lt;F&gt;::value,
+<span class="lineNum">     640 </span>            :     F,
+<span class="lineNum">     641 </span>            :     typename conditional_t&lt;
+<span class="lineNum">     642 </span>            :         std::is_pointer&lt;F&gt;::value || std::is_member_pointer&lt;F&gt;::value,
+<span class="lineNum">     643 </span>            :         std::remove_pointer&lt;F&gt;,
+<span class="lineNum">     644 </span>            :         strip_function_object&lt;F&gt;
+<span class="lineNum">     645 </span>            :     &gt;::type
+<span class="lineNum">     646 </span>            : &gt;;
+<span class="lineNum">     647 </span>            : 
+<span class="lineNum">     648 </span>            : /// Returns true if the type looks like a lambda: that is, isn't a function, pointer or member
+<span class="lineNum">     649 </span>            : /// pointer.  Note that this can catch all sorts of other things, too; this is intended to be used
+<span class="lineNum">     650 </span>            : /// in a place where passing a lambda makes sense.
+<span class="lineNum">     651 </span>            : template &lt;typename T&gt; using is_lambda = satisfies_none_of&lt;remove_reference_t&lt;T&gt;,
+<span class="lineNum">     652 </span>            :         std::is_function, std::is_pointer, std::is_member_pointer&gt;;
+<span class="lineNum">     653 </span>            : 
+<span class="lineNum">     654 </span>            : /// Ignore that a variable is unused in compiler warnings
+<span class="lineNum">     655 </span>            : inline void ignore_unused(const int *) { }
+<span class="lineNum">     656 </span>            : 
+<span class="lineNum">     657 </span>            : /// Apply a function over each element of a parameter pack
+<span class="lineNum">     658 </span>            : #ifdef __cpp_fold_expressions
+<span class="lineNum">     659 </span>            : #define PYBIND11_EXPAND_SIDE_EFFECTS(PATTERN) (((PATTERN), void()), ...)
+<span class="lineNum">     660 </span>            : #else
+<span class="lineNum">     661 </span>            : using expand_side_effects = bool[];
+<span class="lineNum">     662 </span>            : #define PYBIND11_EXPAND_SIDE_EFFECTS(PATTERN) pybind11::detail::expand_side_effects{ ((PATTERN), void(), false)..., false }
+<span class="lineNum">     663 </span>            : #endif
+<span class="lineNum">     664 </span>            : 
+<span class="lineNum">     665 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     666 </span>            : 
+<span class="lineNum">     667 </span>            : /// C++ bindings of builtin Python exceptions
+<span class="lineNum">     668 </span><span class="lineNoCov">          0 : class builtin_exception : public std::runtime_error {</span>
+<span class="lineNum">     669 </span>            : public:
+<span class="lineNum">     670 </span><span class="lineNoCov">          0 :     using std::runtime_error::runtime_error;</span>
+<span class="lineNum">     671 </span>            :     /// Set the error using the Python C API
+<span class="lineNum">     672 </span>            :     virtual void set_error() const = 0;
+<span class="lineNum">     673 </span>            : };
+<span class="lineNum">     674 </span>            : 
+<span class="lineNum">     675 </span>            : #define PYBIND11_RUNTIME_EXCEPTION(name, type) \
+<span class="lineNum">     676 </span>            :     class name : public builtin_exception { public: \
+<span class="lineNum">     677 </span>            :         using builtin_exception::builtin_exception; \
+<span class="lineNum">     678 </span>            :         name() : name(&quot;&quot;) { } \
+<span class="lineNum">     679 </span>            :         void set_error() const override { PyErr_SetString(type, what()); } \
+<a name="680"><span class="lineNum">     680 </span>            :     };</a>
+<a name="681"><span class="lineNum">     681 </span>            : </a>
+<a name="682"><span class="lineNum">     682 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(stop_iteration, PyExc_StopIteration)</span></a>
+<a name="683"><span class="lineNum">     683 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(index_error, PyExc_IndexError)</span></a>
+<a name="684"><span class="lineNum">     684 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(key_error, PyExc_KeyError)</span></a>
+<a name="685"><span class="lineNum">     685 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(value_error, PyExc_ValueError)</span></a>
+<a name="686"><span class="lineNum">     686 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(type_error, PyExc_TypeError)</span></a>
+<a name="687"><span class="lineNum">     687 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(buffer_error, PyExc_BufferError)</span></a>
+<a name="688"><span class="lineNum">     688 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(import_error, PyExc_ImportError)</span></a>
+<span class="lineNum">     689 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(cast_error, PyExc_RuntimeError) /// Thrown when pybind11::cast or handle::call fail due to a type casting error</span>
+<a name="690"><span class="lineNum">     690 </span><span class="lineNoCov">          0 : PYBIND11_RUNTIME_EXCEPTION(reference_cast_error, PyExc_RuntimeError) /// Used internally</span></a>
+<a name="691"><span class="lineNum">     691 </span>            : </a>
+<span class="lineNum">     692 </span><span class="lineNoCov">          0 : [[noreturn]] PYBIND11_NOINLINE inline void pybind11_fail(const char *reason) { throw std::runtime_error(reason); }</span>
+<span class="lineNum">     693 </span><span class="lineNoCov">          0 : [[noreturn]] PYBIND11_NOINLINE inline void pybind11_fail(const std::string &amp;reason) { throw std::runtime_error(reason); }</span>
+<span class="lineNum">     694 </span>            : 
+<span class="lineNum">     695 </span>            : template &lt;typename T, typename SFINAE = void&gt; struct format_descriptor { };
+<span class="lineNum">     696 </span>            : 
+<span class="lineNum">     697 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">     698 </span>            : // Returns the index of the given type in the type char array below, and in the list in numpy.h
+<span class="lineNum">     699 </span>            : // The order here is: bool; 8 ints ((signed,unsigned)x(8,16,32,64)bits); float,double,long double;
+<span class="lineNum">     700 </span>            : // complex float,double,long double.  Note that the long double types only participate when long
+<span class="lineNum">     701 </span>            : // double is actually longer than double (it isn't under MSVC).
+<span class="lineNum">     702 </span>            : // NB: not only the string below but also complex.h and numpy.h rely on this order.
+<span class="lineNum">     703 </span>            : template &lt;typename T, typename SFINAE = void&gt; struct is_fmt_numeric { static constexpr bool value = false; };
+<span class="lineNum">     704 </span>            : template &lt;typename T&gt; struct is_fmt_numeric&lt;T, enable_if_t&lt;std::is_arithmetic&lt;T&gt;::value&gt;&gt; {
+<span class="lineNum">     705 </span>            :     static constexpr bool value = true;
+<span class="lineNum">     706 </span>            :     static constexpr int index = std::is_same&lt;T, bool&gt;::value ? 0 : 1 + (
+<span class="lineNum">     707 </span>            :         std::is_integral&lt;T&gt;::value ? detail::log2(sizeof(T))*2 + std::is_unsigned&lt;T&gt;::value : 8 + (
+<span class="lineNum">     708 </span>            :         std::is_same&lt;T, double&gt;::value ? 1 : std::is_same&lt;T, long double&gt;::value ? 2 : 0));
+<span class="lineNum">     709 </span>            : };
+<span class="lineNum">     710 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     711 </span>            : 
+<span class="lineNum">     712 </span>            : template &lt;typename T&gt; struct format_descriptor&lt;T, detail::enable_if_t&lt;std::is_arithmetic&lt;T&gt;::value&gt;&gt; {
+<span class="lineNum">     713 </span>            :     static constexpr const char c = &quot;?bBhHiIqQfdg&quot;[detail::is_fmt_numeric&lt;T&gt;::index];
+<span class="lineNum">     714 </span>            :     static constexpr const char value[2] = { c, '\0' };
+<span class="lineNum">     715 </span>            :     static std::string format() { return std::string(1, c); }
+<span class="lineNum">     716 </span>            : };
+<span class="lineNum">     717 </span>            : 
+<span class="lineNum">     718 </span>            : #if !defined(PYBIND11_CPP17)
+<span class="lineNum">     719 </span>            : 
+<span class="lineNum">     720 </span>            : template &lt;typename T&gt; constexpr const char format_descriptor&lt;
+<span class="lineNum">     721 </span>            :     T, detail::enable_if_t&lt;std::is_arithmetic&lt;T&gt;::value&gt;&gt;::value[2];
+<span class="lineNum">     722 </span>            : 
+<span class="lineNum">     723 </span>            : #endif
+<span class="lineNum">     724 </span>            : 
+<span class="lineNum">     725 </span>            : /// RAII wrapper that temporarily clears any Python error state
+<span class="lineNum">     726 </span>            : struct error_scope {
+<span class="lineNum">     727 </span>            :     PyObject *type, *value, *trace;
+<span class="lineNum">     728 </span><span class="lineNoCov">          0 :     error_scope() { PyErr_Fetch(&amp;type, &amp;value, &amp;trace); }</span>
+<span class="lineNum">     729 </span><span class="lineNoCov">          0 :     ~error_scope() { PyErr_Restore(type, value, trace); }</span>
+<span class="lineNum">     730 </span>            : };
+<span class="lineNum">     731 </span>            : 
+<span class="lineNum">     732 </span>            : /// Dummy destructor wrapper that can be used to expose classes with a private destructor
+<span class="lineNum">     733 </span>            : struct nodelete { template &lt;typename T&gt; void operator()(T*) { } };
+<span class="lineNum">     734 </span>            : 
+<span class="lineNum">     735 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">     736 </span>            : template &lt;typename... Args&gt;
+<span class="lineNum">     737 </span>            : struct overload_cast_impl {
+<span class="lineNum">     738 </span>            :     constexpr overload_cast_impl() {} // MSVC 2015 needs this
+<span class="lineNum">     739 </span>            : 
+<span class="lineNum">     740 </span>            :     template &lt;typename Return&gt;
+<span class="lineNum">     741 </span>            :     constexpr auto operator()(Return (*pf)(Args...)) const noexcept
+<span class="lineNum">     742 </span>            :                               -&gt; decltype(pf) { return pf; }
+<span class="lineNum">     743 </span>            : 
+<span class="lineNum">     744 </span>            :     template &lt;typename Return, typename Class&gt;
+<span class="lineNum">     745 </span>            :     constexpr auto operator()(Return (Class::*pmf)(Args...), std::false_type = {}) const noexcept
+<span class="lineNum">     746 </span>            :                               -&gt; decltype(pmf) { return pmf; }
+<span class="lineNum">     747 </span>            : 
+<span class="lineNum">     748 </span>            :     template &lt;typename Return, typename Class&gt;
+<span class="lineNum">     749 </span>            :     constexpr auto operator()(Return (Class::*pmf)(Args...) const, std::true_type) const noexcept
+<span class="lineNum">     750 </span>            :                               -&gt; decltype(pmf) { return pmf; }
+<span class="lineNum">     751 </span>            : };
+<span class="lineNum">     752 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     753 </span>            : 
+<span class="lineNum">     754 </span>            : // overload_cast requires variable templates: C++14
+<span class="lineNum">     755 </span>            : #if defined(PYBIND11_CPP14)
+<span class="lineNum">     756 </span>            : #define PYBIND11_OVERLOAD_CAST 1
+<span class="lineNum">     757 </span>            : /// Syntax sugar for resolving overloaded function pointers:
+<span class="lineNum">     758 </span>            : ///  - regular: static_cast&lt;Return (Class::*)(Arg0, Arg1, Arg2)&gt;(&amp;Class::func)
+<span class="lineNum">     759 </span>            : ///  - sweet:   overload_cast&lt;Arg0, Arg1, Arg2&gt;(&amp;Class::func)
+<span class="lineNum">     760 </span>            : template &lt;typename... Args&gt;
+<span class="lineNum">     761 </span>            : static constexpr detail::overload_cast_impl&lt;Args...&gt; overload_cast = {};
+<span class="lineNum">     762 </span>            : // MSVC 2015 only accepts this particular initialization syntax for this variable template.
+<span class="lineNum">     763 </span>            : #endif
+<span class="lineNum">     764 </span>            : 
+<span class="lineNum">     765 </span>            : /// Const member function selector for overload_cast
+<span class="lineNum">     766 </span>            : ///  - regular: static_cast&lt;Return (Class::*)(Arg) const&gt;(&amp;Class::func)
+<span class="lineNum">     767 </span>            : ///  - sweet:   overload_cast&lt;Arg&gt;(&amp;Class::func, const_)
+<span class="lineNum">     768 </span>            : static constexpr auto const_ = std::true_type{};
+<span class="lineNum">     769 </span>            : 
+<span class="lineNum">     770 </span>            : #if !defined(PYBIND11_CPP14) // no overload_cast: providing something that static_assert-fails:
+<span class="lineNum">     771 </span>            : template &lt;typename... Args&gt; struct overload_cast {
+<span class="lineNum">     772 </span>            :     static_assert(detail::deferred_t&lt;std::false_type, Args...&gt;::value,
+<span class="lineNum">     773 </span>            :                   &quot;pybind11::overload_cast&lt;...&gt; requires compiling in C++14 mode&quot;);
+<span class="lineNum">     774 </span>            : };
+<span class="lineNum">     775 </span>            : #endif // overload_cast
+<span class="lineNum">     776 </span>            : 
+<span class="lineNum">     777 </span>            : NAMESPACE_BEGIN(detail)
+<span class="lineNum">     778 </span>            : 
+<span class="lineNum">     779 </span>            : // Adaptor for converting arbitrary container arguments into a vector; implicitly convertible from
+<span class="lineNum">     780 </span>            : // any standard container (or C-style array) supporting std::begin/std::end, any singleton
+<span class="lineNum">     781 </span>            : // arithmetic type (if T is arithmetic), or explicitly constructible from an iterator pair.
+<span class="lineNum">     782 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     783 </span>            : class any_container {
+<span class="lineNum">     784 </span>            :     std::vector&lt;T&gt; v;
+<span class="lineNum">     785 </span>            : public:
+<span class="lineNum">     786 </span>            :     any_container() = default;
+<span class="lineNum">     787 </span>            : 
+<span class="lineNum">     788 </span>            :     // Can construct from a pair of iterators
+<span class="lineNum">     789 </span>            :     template &lt;typename It, typename = enable_if_t&lt;is_input_iterator&lt;It&gt;::value&gt;&gt;
+<span class="lineNum">     790 </span>            :     any_container(It first, It last) : v(first, last) { }
+<span class="lineNum">     791 </span>            : 
+<span class="lineNum">     792 </span>            :     // Implicit conversion constructor from any arbitrary container type with values convertible to T
+<span class="lineNum">     793 </span>            :     template &lt;typename Container, typename = enable_if_t&lt;std::is_convertible&lt;decltype(*std::begin(std::declval&lt;const Container &amp;&gt;())), T&gt;::value&gt;&gt;
+<span class="lineNum">     794 </span>            :     any_container(const Container &amp;c) : any_container(std::begin(c), std::end(c)) { }
+<span class="lineNum">     795 </span>            : 
+<span class="lineNum">     796 </span>            :     // initializer_list's aren't deducible, so don't get matched by the above template; we need this
+<span class="lineNum">     797 </span>            :     // to explicitly allow implicit conversion from one:
+<span class="lineNum">     798 </span>            :     template &lt;typename TIn, typename = enable_if_t&lt;std::is_convertible&lt;TIn, T&gt;::value&gt;&gt;
+<span class="lineNum">     799 </span>            :     any_container(const std::initializer_list&lt;TIn&gt; &amp;c) : any_container(c.begin(), c.end()) { }
+<span class="lineNum">     800 </span>            : 
+<span class="lineNum">     801 </span>            :     // Avoid copying if given an rvalue vector of the correct type.
+<span class="lineNum">     802 </span>            :     any_container(std::vector&lt;T&gt; &amp;&amp;v) : v(std::move(v)) { }
+<span class="lineNum">     803 </span>            : 
+<span class="lineNum">     804 </span>            :     // Moves the vector out of an rvalue any_container
+<span class="lineNum">     805 </span>            :     operator std::vector&lt;T&gt; &amp;&amp;() &amp;&amp; { return std::move(v); }
+<span class="lineNum">     806 </span>            : 
+<span class="lineNum">     807 </span>            :     // Dereferencing obtains a reference to the underlying vector
+<span class="lineNum">     808 </span>            :     std::vector&lt;T&gt; &amp;operator*() { return v; }
+<span class="lineNum">     809 </span>            :     const std::vector&lt;T&gt; &amp;operator*() const { return v; }
+<span class="lineNum">     810 </span>            : 
+<span class="lineNum">     811 </span>            :     // -&gt; lets you call methods on the underlying vector
+<span class="lineNum">     812 </span>            :     std::vector&lt;T&gt; *operator-&gt;() { return &amp;v; }
+<span class="lineNum">     813 </span>            :     const std::vector&lt;T&gt; *operator-&gt;() const { return &amp;v; }
+<span class="lineNum">     814 </span>            : };
+<span class="lineNum">     815 </span>            : 
+<span class="lineNum">     816 </span>            : NAMESPACE_END(detail)
+<span class="lineNum">     817 </span>            : 
+<span class="lineNum">     818 </span>            : 
+<span class="lineNum">     819 </span>            : 
+<span class="lineNum">     820 </span>            : NAMESPACE_END(PYBIND11_NAMESPACE)
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
