@@ -47,6 +47,7 @@ print(target_dir, imagefiles)
 files = ["../images/fly1.jpg", "../images/fly2.jpg"]
 
 images = []
+edges = []
 
 for i, file_name in enumerate(imagefiles):
     images.append(mpimg.imread(target_dir + file_name))
@@ -61,11 +62,11 @@ for i, image in enumerate(images):
     plt.axis("off")
     plt.imshow(image)
 
-    edges = filters.sobel(image)
+    edge = filters.sobel(image)
     ax = fig.add_subplot(2, 2, 2)
     ax.set_title("Edge(Orig)")
     plt.axis("off")
-    plt.imshow(rgb2gray(edges))
+    plt.imshow(rgb2gray(edge))
 
     blurred = filters.gaussian(image, sigma=1, multichannel=True)
     if save_image:
@@ -74,19 +75,23 @@ for i, image in enumerate(images):
     ax.set_title("Blur(Orig)")
     plt.imshow(blurred)
 
-    edges = filters.sobel(blurred)
+    edge = filters.sobel(blurred)
+    edges.append(edge)
     if save_image:
-        mpimg.imsave("result-02.jpg", edges)
+        mpimg.imsave("result-02.jpg", edge)
     ax = fig.add_subplot(2, 2, 4)
     ax.set_title("Edge(Blurred)")
     plt.axis("off")
-    plt.imshow(rgb2gray(edges))
+    plt.imshow(rgb2gray(edge))
 
-    plt.show(block=False)
-    plt.pause(3)
-    fig.savefig("result-01.png")
+#    plt.show(block=False)
+#    plt.pause(3)
+    fig.savefig("result-{i}.png".format(i=i))
 
 # debug part
-height = image.shape[0]
-width = image.shape[1]
-print("Image size", image.size, "= (", height, "x", width, ") x 3")
+height = images[0].shape[0]
+width = images[0].shape[1]
+print("Image size", images[0].size, "= (", height, "x", width, ") x 3")
+
+print("image", images[0].shape)
+print("edge", edges[0].shape)
