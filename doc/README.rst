@@ -180,10 +180,24 @@ To evaluate the algorism performance in this project, testing images are created
 from a source image(focused). This also prevent alignment procedure to do focus
 stacking. Here is the steps to evaluate algorism performance.
 
-1. Get a clear and focused source image (image1)
-2. Smooth souce image with a set of mask by Gaussian blur kernel
-3. Through the focus stacking to combine these blurred images into image2
-4. Calculate SSIM of image1 and image2 to tell the performance of focus stacking algorism.
+1. Get a clear and focused source image (Original)
+2. Smooth souce image with a set of mask by Gaussian blur kernel (image1. image2)
+3. Through the focus stacking to combine these blurred images into "result"
+4. Calculate SSIM of these images to tell the performance of focus stacking algorism.
+
++----------+----------+--------+--------+--------+
+|          | Original | image1 | image2 | result |
++----------+----------+--------+--------+--------+
+| Original | 1.0000   | 0.9809 | 0.9856 | 0.9718 |
++----------+----------+--------+--------+--------+
+| image1   |          | 1.0000 | 0.9663 | 0.9638 |
++----------+----------+--------+--------+--------+
+| image2   |          |        | 1.0000 | 0.9625 |
++----------+----------+--------+--------+--------+
+| reult    |          |        |        | 1.0000 |
++----------+----------+--------+--------+--------+
+
+
 
 Coding Style Check
 __________________
