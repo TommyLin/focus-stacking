@@ -170,83 +170,6 @@ _____________________________
 
 .. [#] Alignment and white balance are not included in this project. Tested images are created and always aligned and white balanced.
 
-API Description
-===============
-
-User APIs: (Open to users)
-__________________________
-
-.. [focus_stacking] Auto scan mode: Users select specific directory that contain photos. This API
-  will scan directory and determinate the groups of photos depend on SSIM value. Then stack these
-  images together within one group.
-
-``int focus_stacking(path target_path, fd* image_fd)``
-    Do focus stacking in specified folder
-
-Return value:
-  0: Success
-
-  Others: Fail
-
-target_path:
-  Folder to store photos
-
-image_fd:
-  Photo file descriptors
-
-
-Private APIs (Internal used only)
-________________________________________
-
-``image gaussian_blur(image input, kernel gaussian)``
-  Blur image with gaussian filter
-
-``image edge_detect(image input, kernel laplacian)``
-  Detect edge with lapacian filter
-
-``image stacking(image source[], image log_mask)``
-  Stcking multiple images with correponding "Laplacian on Gaussian" mask
-
-``int ssim(image image1, image image2)``
-  Calculate SSIM of two input images
-
-Types and Strcutures
-====================
-
-C style
-
-::
-
-  struct image_t {
-      int   hight;
-      int   width;
-      char** raw_data;
-  }
-
-::
-
-  struct kernel_t {
-      int   rank;
-      char* kernel;
-  }
-
-C++ style (prefer this style to use modern C++ technology)
-
-::
-
-  class image {
-     int hight;
-     int width;
-     <array> raw_data
-  }
-
-::
-
-  class kernel {
-     int rank;
-     vector<vector<int> > matrix(3);
-  }
-
 Engineering Infrastructure
 ==========================
 
@@ -259,7 +182,7 @@ stacking. Here is the steps to evaluate algorism performance.
 
 1. Get a clear and focused source image (image1)
 2. Smooth souce image with a set of mask by Gaussian blur kernel
-3. Through the focus stacking API [focus_stacking]_ to combine these blurred images into image2
+3. Through the focus stacking to combine these blurred images into image2
 4. Calculate SSIM of image1 and image2 to tell the performance of focus stacking algorism.
 
 Coding Style Check
