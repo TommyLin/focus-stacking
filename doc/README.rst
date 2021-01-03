@@ -320,6 +320,8 @@ Steps to create code coverage information:
 
 4. Browse result at ``./output/index.html`` with browser.
 
+ `Example: CPP source code coverage of HW2 <https://github.com/TommyLin/focus-stacking/blob/master/doc/lcov/index.html>`_
+
 Estimated Computations
 ======================
 
