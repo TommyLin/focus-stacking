@@ -24,7 +24,7 @@ ax = fig.add_subplot(rows, 2, 1)
 ax.set_title("Original")
 plt.axis("off")
 plt.imshow(image0)
-image0.save("00.png");
+image0.save("group/00.png");
 
 
 image1 = image0.crop((0, 0, (w >> 1), h))
@@ -54,7 +54,7 @@ image3.paste(image2, ((w >> 1), 0, w, h))
 ax = fig.add_subplot(rows, 2, rows * 2 - 1)
 ax.set_title("Blurred left")
 plt.imshow(image3)
-image3.save("01.png");
+image3.save("group/01.png");
 
 
 image4 = Image.new("RGB", (w, h))
@@ -64,6 +64,6 @@ image4.paste(blurred2, ((w >> 1), 0, w, h))
 ax = fig.add_subplot(rows, 2, rows * 2)
 ax.set_title("Blurred right")
 plt.imshow(image4)
-image4.save("02.png");
+image4.save("group/02.png");
 
 plt.show()
