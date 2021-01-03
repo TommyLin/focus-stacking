@@ -6,6 +6,7 @@ import sys
 from os import listdir
 from os.path import isfile, join
 from skimage import filters
+from PIL import Image, ImageFilter
 
 save_image = False
 
@@ -86,7 +87,7 @@ for i, image in enumerate(images):
 
 #    plt.show(block=False)
 #    plt.pause(3)
-    fig.savefig("result-{i}.png".format(i=i))
+    fig.savefig("debug-{i}.png".format(i=i))
 
 # debug part
 height = images[0].shape[0]
@@ -95,3 +96,17 @@ print("Image size", images[0].size, "= (", height, "x", width, ") x 3")
 
 print("image", images[0].shape)
 print("edge", edges[0].shape)
+
+for i in range(height):
+    for j in range(width):
+#        for k in range(len(images)):
+        if get_gray(edges[0][i][j]) > get_gray(edges[1][i][j]):
+            image[i][j] = images[0][i][j]
+        else:
+            image[i][j] = images[1][i][j]
+
+
+mpimg.imsave("result.jpg", image)
+
+png0 = Image.open("result.jpg")
+png0.save("result.png");
